@@ -82,11 +82,6 @@ uint32_t createVertexData(uint32_t* VBO) {
 		-0.5f, 0.5f, 0.0f,
 	};
 
-	uint32_t indices[] = {
-		0, 2, 1,
-		3, 5, 4, //Creamos los indices del nuevo vertice
-	};
-
 	uint32_t VAO;
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, VBO);
