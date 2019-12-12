@@ -77,16 +77,11 @@ uint32_t createVertexData(uint32_t* VBO) {
 		1.0f, -0.5f, 0.0f,
 		0.5f, 0.5f, 0.0f,
 
-		-1.0f, -0.5f, 0.0f, //Creamos los 3 nuevos vértices. Al utilizar glDrawArrays, no podemos utilizar el vertice que comparten.
+		-1.0f, -0.5f, 0.0f, //Creamos los 3 nuevos vÃ©rtices. Al utilizar glDrawArrays, no podemos utilizar el vertice que comparten.
 		0.0f, -0.5f, 0.0f,
 		-0.5f, 0.5f, 0.0f,
 	};
-
-	uint32_t indices[] = {
-		0, 2, 1,
-		3, 5, 4, //Creamos los indices del nuevo vertice
-	};
-
+	
 	uint32_t VAO;
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, VBO);
