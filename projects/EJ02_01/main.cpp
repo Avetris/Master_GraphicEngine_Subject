@@ -81,7 +81,11 @@ uint32_t createVertexData(uint32_t* VBO) {
 		0.0f, -0.5f, 0.0f,
 		-0.5f, 0.5f, 0.0f,
 	};
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> develop
 	uint32_t VAO;
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, VBO);
