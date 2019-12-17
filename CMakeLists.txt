@@ -16,6 +16,7 @@ include(cmake/compiler.cmake)
 #Engine Source Files
 
 set(ENGINE_SRC_FILES
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/camera.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/deps.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/shader.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/texture.cpp
@@ -25,6 +26,7 @@ set(ENGINE_SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/geometry/quad.cpp)
 
 set(ENGINE_HEADER_FILES
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/camera.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/input.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/shader.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/texture.hpp
