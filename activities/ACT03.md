@@ -8,7 +8,7 @@ Implementar 6 ejercicios complementarios a AG05, basándose en la implementació
 
 - EJ05.01 - Generar un cubo de manera procedural, a partir de un centro y un radio.
 - EJ05.02 - Cambiar las UVs del cubo, para soportar el unwrapping completo, y pintar el cubo con la textura adjunta.
-- EJ05.03 - A partir de la actividad AG_05, en la escena con los cubos rotando, invertir el orden de la aplicación de las transformaciones (traslación y rotación) y verificar que el orden de aplicación es relevante.
+- EJ05.03 - A partir de la actividad AG_05, en la escena con el cubo rotando, invertir el orden de la aplicación de las transformaciones (traslación y rotación) y verificar que el orden de aplicación es relevante.
 - EJ05.04 - Crear una escena con un suelo, y varios cubos apoyados en él, a diversas alturas, distancias y tamaños.
 
 ## EJ06
