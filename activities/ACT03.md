@@ -22,7 +22,7 @@ Implementar 2 ejercicios complementarios a AG06, basándose en la implementació
 
 Implementar 5 ejercicios complementarios a AG07, basándose en la implementación de dicha AG07 vista en clase realizar:
 
-- EJ07.01 - Mover la luz alrededor del cubo describiendo un circulo sobre el eje Y.
+- EJ07.01 - Mover la luz alrededor de la esfera describiendo un circulo sobre el eje Y.
 - EJ07.02 - Cambiar valores de ambient, diffuse, specular y shininess y ver como se comporta el modelo de iluminación.
 - EJ07.03 - Hacer el modelo de iluminación Phong en espacio de view, en lugar de en espacio de mundo.
 - EJ07.04 - Implementar el modelo de iluminación Gouraud (Phong en el shader de vertices).
