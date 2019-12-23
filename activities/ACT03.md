@@ -33,9 +33,9 @@ Implementar 5 ejercicios complementarios a AG07, basándose en la implementació
 Implementar 5 ejercicios complementarios a AG08, basándose en la implementación de dicha AG08 vista en clase realizar:
 
 - EJ08.01 - Simular varios objetos reales con sus materiales según la tabla en http://devernay.free.fr/cours/opengl/materials.html (tener en cuenta que esos valores están calculados para luces blancas vec3(1.0) 
-- EJ08.02 - Cambiar valores de ambient, diffuse, specular de la luz y ver como afecta a como se ve el cubo.
+- EJ08.02 - Cambiar valores de ambient, diffuse, specular de la luz y ver como afecta a como se ve la esfera.
 - EJ08.03 - Invertir el efecto del mapa specular, para que se vean más brillantes las zonas oscuras y viceversa.
-- EJ08.04 - Añadir un mapa emisivo, es una textura que almacena valores de color emisivo por fragmento. Son colores que un objeto emite como si tuviera una luz interna, de esta manera un objeto puede emitir luz independientemente del origen de luz. Usar como textura emisiva la imagen adjunta. Usarla para tener un tercer mapa en el modelo de iluminación y pintar sobre el cubo iluminado.
+- EJ08.04 - Añadir un mapa emisivo, es una textura que almacena valores de color emisivo por fragmento. Son colores que un objeto emite como si tuviera una luz interna, de esta manera un objeto puede emitir luz independientemente del origen de luz. Usar como textura emisiva la imagen adjunta. Usarla para tener un tercer mapa en el modelo de iluminación y pintar sobre la esfera iluminada.
 - EJ08.05 - Intentar crear un mapa specular (con algún editor de imagenes Photoshop, Gimp, ...) a partir de un mapa difuso que en lugar de blanco y negro use colores reales, y usar ese mapa en el Phong en lugar del specular habitual y verificar el cambio de comportamiento.
 
 Cada uno de los proyectos en ejecución mostrará una ventana pintando lo solicitado en cada uno.
