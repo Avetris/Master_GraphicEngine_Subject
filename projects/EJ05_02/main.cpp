@@ -38,38 +38,39 @@ int main(int, char* []) {
     glClearColor(0.0f, 0.3f, 0.6f, 1.0f);
 
     const Shader shader("../projects/EJ05_02/vertex.vs", "../projects/EJ05_02/fragment.fs");
+    // Generate ubs array with the position of each element.
     float uvs[] = {
-            1.0f, 1.0f,
-            0.0f, 1.0f,
-            0.0f, 0.75f,
+            0.5f, 0.75f, // front
+            0.25f, 0.75f,
+            0.25f, 0.5f,
+            0.5f, 0.5f,
+
+            0.5f, 0.5f, // bottom
+            0.25f, 0.5f,
+            0.25f, 0.25f,
+            0.5f, 0.25f,
+
+            0.75f, 0.5f,   //back
+            1.0f, 0.5f,
             1.0f, 0.75f,
+            0.75f, 0.75f,
 
-            1.0f, 1.0f,
-            0.0f, 1.0f,
-            0.0f, 0.0f,
-            1.0f, 0.0f,
+            0.5f, 1.0f, // top
+            0.25f, 1.0f,
+            0.25f, 0.75f,
+            0.5f, 0.75f,
 
-            1.0f, 1.0f,
-            0.0f, 1.0f,
-            0.0f, 0.0f,
-            1.0f, 0.0f,
+            0.25f, 0.75f, // left
+            0.0f, 0.75f,
+            0.0f, 0.5f,
+            0.25f, 0.5f,
 
-            1.0f, 1.0f,
-            0.0f, 1.0f,
-            0.0f, 0.0f,
-            1.0f, 0.0f,
-
-            1.0f, 1.0f,
-            0.0f, 1.0f,
-            0.0f, 0.0f,
-            1.0f, 0.0f,
-
-            1.0f, 1.0f,
-            0.0f, 1.0f,
-            0.0f, 0.0f,
-            1.0f, 0.0f
+            0.75f, 0.75f, // right
+            0.5f, 0.75f,
+            0.5f, 0.5f,
+            0.75f, 0.5f,
     };
-    const Cube cube(1.0f, uvs);
+    const Cube cube(1.0f, uvs); // It is called the new cube's constructor with the uvs setted.
 
     Texture tex("../assets/textures/EJ05.02_cube_uv_b.jpg", Texture::Format::RGB);
 

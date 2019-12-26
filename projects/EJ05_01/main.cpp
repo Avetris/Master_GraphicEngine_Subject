@@ -38,7 +38,7 @@ int main(int, char* []) {
     glClearColor(0.0f, 0.3f, 0.6f, 1.0f);
 
     const Shader shader("../projects/EJ05_01/vertex.vs", "../projects/EJ05_01/fragment.fs");
-    const Cube cube(1.0f);
+    const Cube cube(1.0f); // Every changes has been done inside cube class, so giving the size of each face (x, y or z) it is taken the radius and generated the cube.
 
     Texture tex("../assets/textures/blue_blocks.jpg", Texture::Format::RGB);
 
