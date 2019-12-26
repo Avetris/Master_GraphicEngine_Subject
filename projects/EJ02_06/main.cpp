@@ -7,13 +7,6 @@
 #include <iostream>
 #include <math.h> 
 
-void handleInput() {
-	std::vector<std::pair<int, int>> keys = Input::instance()->getKeys();
-	for (auto& key : keys) {
-		std::cout << key.first << " - " << key.second << std::endl;
-	}
-}
-
 bool checkShader(uint32_t shader) {
 	int success;
 	char infoLog[512];
@@ -151,7 +144,6 @@ int main(int, char* []) {
 	glCullFace(GL_BACK);
 
 	while (window->alive()) {
-		handleInput();
 		render(VAO, program);
 		window->frame();
 	}

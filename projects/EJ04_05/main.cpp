@@ -13,23 +13,17 @@
 float interpolation = 0.0;
 
 void handleInput() {
-    std::vector<std::pair<int, int>> keys = Input::instance()->getKeys();
-    for (auto& key : keys) {
-        std::cout << key.first << " - " << key.second << " - " << interpolation << std::endl;
-		if (key.second == GLFW_PRESS) {
-			if (key.first == GLFW_KEY_UP) { // En caso de pulsar la tecla UP, subiremos la interpolacion hasta 1
-				interpolation += 0.1;
-				if (interpolation > 1) {
-					interpolation = 1;
-				}
-			}else if (key.first == GLFW_KEY_DOWN) { // En caso de pulsar la tecla DOWN, bajaremos la interpolacion hasta 0
-				interpolation -= 0.1;
-				if (interpolation < 0) {
-					interpolation = 0;
-				}
-			}
-		}		
-    }
+	if (Input::instance()->isKeyPressed(GLFW_KEY_UP)) { // En caso de pulsar la tecla UP, subiremos la interpolacion hasta 1
+		interpolation += 0.005;
+		if (interpolation > 1) {
+			interpolation = 1;
+		}
+	}else if (Input::instance()->isKeyPressed(GLFW_KEY_DOWN)) { // En caso de pulsar la tecla DOWN, bajaremos la interpolacion hasta 0
+		interpolation -= 0.005;
+		if (interpolation < 0) {
+			interpolation = 0;
+		}
+	}	
 }
 
 uint32_t createVertexData(uint32_t* VBO, uint32_t* EBO) {
