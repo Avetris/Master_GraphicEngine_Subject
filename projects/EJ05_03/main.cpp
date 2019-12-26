@@ -37,8 +37,8 @@ int main(int, char* []) {
 
     glClearColor(0.0f, 0.3f, 0.6f, 1.0f);
 
-    const Shader shader("../projects/AG05/vertex.vs", "../projects/AG05/fragment.fs");
-    const Cube cube(1.0f);
+    const Shader shader("../projects/EJ05_03/vertex.vs", "../projects/EJ05_03/fragment.fs");
+    const Cube cube(0.5f); // Reducimos el tamano del cubo para ver mejor los cambios
 
     Texture tex("../assets/textures/blue_blocks.jpg", Texture::Format::RGB);
 
