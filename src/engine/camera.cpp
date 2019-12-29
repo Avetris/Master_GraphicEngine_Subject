@@ -36,15 +36,21 @@ void Camera::updateCameraVectors() {
     _up = glm::normalize(glm::cross(_right, _front));
 }
 
-void Camera::handleKeyboard(Movement direction, float dt) {
+void Camera::handleKeyboard(Movement direction, float dt, bool canFly = true) {
     const float velocity = k_Speed * dt;
+    glm::vec3 movement(0,0,0);
 
     switch (direction) {
-        case Movement::Forward: _position += _front * velocity; break;
-        case Movement::Backward: _position -= _front * velocity; break;
-        case Movement::Left: _position -= _right * velocity; break;
-        case Movement::Right: _position += _right * velocity; break;
+        case Movement::Forward: movement = _front * velocity;break;
+        case Movement::Backward: movement = _front * -velocity; break;
+        case Movement::Left: movement = _right * -velocity; break;
+        case Movement::Right: movement = _right * velocity; break;
         default:;
+    }
+    _position.x += movement.x;
+    _position.z += movement.z;
+    if (canFly) {
+        _position.y += movement.y;
     }
 }
 

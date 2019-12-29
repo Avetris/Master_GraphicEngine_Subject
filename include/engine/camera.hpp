@@ -24,7 +24,7 @@ class Camera {
         float getFOV() const;
         glm::vec3 getPosition() const;
 
-        void handleKeyboard(Movement direction, float dt);
+        void handleKeyboard(Movement direction, float dt, bool canFly);
         void handleMouseMovement(float xoffset, float yoffset, bool constrainPitch = true);
         void handleMouseScroll(float yoffset);
 
