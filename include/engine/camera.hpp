@@ -20,11 +20,11 @@ class Camera {
         Camera(const glm::vec3& position = glm::vec3(0.0f, 0.0f, 0.0f), const glm::vec3& up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = k_Yaw, float pitch = k_Pitch);
         Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch);
 
-        glm::mat4 getViewMatrix() const;
+        glm::mat4 getViewMatrix(bool customLookAt = false) const;
         float getFOV() const;
         glm::vec3 getPosition() const;
 
-        void handleKeyboard(Movement direction, float dt, bool canFly);
+        void handleKeyboard(Movement direction, float dt, bool canFly = true);
         void handleMouseMovement(float xoffset, float yoffset, bool constrainPitch = true);
         void handleMouseScroll(float yoffset);
 
