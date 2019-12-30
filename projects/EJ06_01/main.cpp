@@ -93,7 +93,7 @@ int main(int, char* []) {
 
     glClearColor(0.0f, 0.3f, 0.6f, 1.0f);
 
-    const Shader shader("../projects/AG06/vertex.vs", "../projects/AG06/fragment.fs");
+    const Shader shader("../projects/EJ06_01/vertex.vs", "../projects/EJ06_01/fragment.fs");
 
     const size_t numberOfElements = 11;
 
