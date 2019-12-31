@@ -165,8 +165,8 @@ int main(int, char* []) {
 
     glClearColor(0.0f, 0.3f, 0.6f, 1.0f);
 
-    const Shader s_phong("../projects/AG08_01/phong.vs", "../projects/AG08_01/blinn.fs");
-    const Shader s_light("../projects/AG08_01/light.vs", "../projects/AG08_01/light.fs");
+    const Shader s_phong("../projects/EJ08_01/phong.vs", "../projects/EJ08_01/blinn.fs");
+    const Shader s_light("../projects/EJ08_01/light.vs", "../projects/EJ08_01/light.fs");
     const Sphere sphere(1.0f, 50, 50);
 
     Texture tex("../assets/textures/blue_blocks.jpg", Texture::Format::RGB);
