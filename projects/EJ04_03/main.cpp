@@ -9,13 +9,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-void handleInput() {
-    std::vector<std::pair<int, int>> keys = Input::instance()->getKeys();
-    for (auto& key : keys) {
-        std::cout << key.first << " - " << key.second << std::endl;
-    }
-}
-
 uint32_t createVertexData(uint32_t* VBO, uint32_t* EBO) {
     float vertices[] = {
         0.5f, 0.5f, 0.0f,      1.0f, 0.0f, 0.0f,   2.0f, 2.0f, // Duplicamos el UV para que la textura sea el doble. De esta forma, se aplicara el wrapping de repeticion
@@ -115,7 +108,6 @@ int main(int, char* []) {
     glCullFace(GL_BACK);
 
     while (window->alive()) {
-        handleInput();
         render(VAO, shader, tex1);
         window->frame();
     }
