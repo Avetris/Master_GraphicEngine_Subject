@@ -19,6 +19,7 @@ class Light {
         Light(Light&&) noexcept = default;
         Light& operator=(Light&&) noexcept = default;
 
+        void setName(std::string name);
         void setPosition(glm::vec3 position);
         void setColor(const glm::vec3 ambient, const glm::vec3 diffuse, const glm::vec3 specular);
 
