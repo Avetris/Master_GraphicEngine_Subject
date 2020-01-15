@@ -34,6 +34,10 @@ glm::mat4 Camera::getViewMatrix(bool customLookAt) const {
     }
 }
 
+glm::vec3 Camera::getCameraDirection() const {
+    return glm::normalize(_front);
+}
+
 float Camera::getFOV() const {
     return _fov;
 }
