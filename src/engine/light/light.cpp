@@ -8,6 +8,7 @@
 Light::Light(std::string name, glm::vec3 position, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular) : _name(name), _position(position), _ambient(ambient), _diffuse(diffuse), _specular(specular){
 }
 
+void Light::setName(std::string name) { _name = name; }
 void Light::setPosition(glm::vec3 position) { _position = position; }
 void Light::setColor(const glm::vec3 ambient, const glm::vec3 diffuse, const glm::vec3 specular) {
     _ambient = ambient;
