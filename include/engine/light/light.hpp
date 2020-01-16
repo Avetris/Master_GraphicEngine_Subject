@@ -11,7 +11,6 @@ class Shader;
 class Light {
     public:
         Light(std::string name, glm::vec3 position, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular);
-        Light() = delete;
 
         Light(const Light&) = default;
         Light& operator=(const Light&) = default;
@@ -21,7 +20,9 @@ class Light {
 
         void setName(std::string name);
         void setPosition(glm::vec3 position);
+        glm::vec3 getPosition() const;
         void setColor(const glm::vec3 ambient, const glm::vec3 diffuse, const glm::vec3 specular);
+        glm::vec3 getSpecular() const;
 
         virtual void use(const Shader& shader) const;
         //void render(glm::mat4 view, glm::mat4 proj) const;

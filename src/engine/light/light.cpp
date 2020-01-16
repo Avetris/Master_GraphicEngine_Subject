@@ -10,11 +10,13 @@ Light::Light(std::string name, glm::vec3 position, glm::vec3 ambient, glm::vec3 
 
 void Light::setName(std::string name) { _name = name; }
 void Light::setPosition(glm::vec3 position) { _position = position; }
+glm::vec3 Light::getPosition() const { return _position; }
 void Light::setColor(const glm::vec3 ambient, const glm::vec3 diffuse, const glm::vec3 specular) {
     _ambient = ambient;
     _diffuse = diffuse;
     _specular = specular;
 }
+glm::vec3 Light::getSpecular() const { return _specular; }
 
 void Light::use(const Shader& shader) const {
 
