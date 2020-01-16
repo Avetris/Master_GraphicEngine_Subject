@@ -38,16 +38,16 @@ void handleInput(float dt) {
     Input* input = Input::instance();
 
     if (input->isKeyPressed(GLFW_KEY_W)) {
-        camera.handleKeyboard(Camera::Movement::Forward, dt);
+        camera.handleKeyboard(Camera::Movement::Forward, dt, false);
     }
     if (input->isKeyPressed(GLFW_KEY_S)) {
-        camera.handleKeyboard(Camera::Movement::Backward, dt);
+        camera.handleKeyboard(Camera::Movement::Backward, dt, false);
     }
     if (input->isKeyPressed(GLFW_KEY_A)) {
-        camera.handleKeyboard(Camera::Movement::Left, dt);
+        camera.handleKeyboard(Camera::Movement::Left, dt, false);
     }
     if (input->isKeyPressed(GLFW_KEY_D)) {
-        camera.handleKeyboard(Camera::Movement::Right, dt);
+        camera.handleKeyboard(Camera::Movement::Right, dt, false);
     }
 }
 
@@ -135,7 +135,7 @@ int main(int, char* []) {
     SpotLight spotLight("spotLight",
         glm::vec3(0.0f, 3.0f, 0.0f),
         glm::vec3(0.02f, 0.02f, 0.02f),
-        glm::vec3(0.2f, 0.2f, 0.2f),
+        glm::vec3(1.0f, 1.0f, 1.0f),
         glm::vec3(0.5f, 0.5f, 0.5f),
         1.0f, 0.09f, 0.032f,
         glm::vec3(0.0f, -1.0f, 0.0f), 
