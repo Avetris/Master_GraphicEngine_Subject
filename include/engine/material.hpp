@@ -9,7 +9,7 @@ class Shader;
 
 class Material {
     public:
-        Material(const Texture& albedo, const Texture& specular, int shininess);
+        Material(const Texture& diffuse, const Texture& specular, int shininess);
         Material() = delete;
       //  ~Material();
 
@@ -21,7 +21,7 @@ class Material {
         void use(const Shader& shader) const;
         
     private:
-        Texture _albedo;
+        Texture _diffuse;
         Texture _specular;
         int _shininess;
 };
