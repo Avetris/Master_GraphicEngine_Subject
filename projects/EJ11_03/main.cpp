@@ -14,7 +14,7 @@
 Camera camera(glm::vec3(0.0f, 0.0f, 4.0f));
 glm::vec3 lightPos(4.0f, 1.0f, 0.0f);
 
-glm::vec3 cubePositions[] = {
+glm::vec3 quadPositions[] = {
     glm::vec3(0.0f, 0.0f, -4.0f),
     glm::vec3(0.0f, 0.0f, -2.0f),
     glm::vec3(0.0f, 0.0f, 0.0f),
@@ -71,7 +71,7 @@ void onScrollMoved(float x, float y) {
     camera.handleMouseScroll(y);
 }
 
-void render(const Geometry& floor, const Geometry& object, const Shader& s_phong, const Shader& s_stencil,
+void render(const Geometry& quad, const Shader& s_phong, const Shader& s_stencil,
     const Texture& t_albedo, const Texture& t_specular) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -101,26 +101,26 @@ void render(const Geometry& floor, const Geometry& object, const Shader& s_phong
     t_specular.use(s_phong, "material.specular", 1);
     s_phong.set("material.shininess", 32);
     
-    floor.render();
+    quad.render();
 
     model = glm::mat4(1.0f);
-    model = glm::translate(model, cubePositions[0]);
+    model = glm::translate(model, quadPositions[0]);
     s_phong.set("model", model);
 
     normalMat = glm::inverse(glm::transpose(glm::mat3(model)));
     s_phong.set("normalMat", normalMat);
 
-    object.render();
+    quad.render();
 
     s_stencil.use();
     s_stencil.set("view", view);
     s_stencil.set("proj", proj);
 
     size_t i = 0;
-    for (const auto& cubePos : cubePositions) {
+    for (const auto& quadPos : quadPositions) {
         if (i > 0) {
             model = glm::mat4(1.0f);
-            model = glm::translate(model, cubePos);
+            model = glm::translate(model, quadPos);
             s_stencil.set("model", model);
             switch (i)
             {
@@ -131,7 +131,7 @@ void render(const Geometry& floor, const Geometry& object, const Shader& s_phong
                 break;
             }
 
-            object.render();
+            quad.render();
         }
         i++;
     }
@@ -168,7 +168,7 @@ int main(int, char* []) {
         lastFrame = currentFrame;
 
         handleInput(deltaTime);
-        render(quad, cube, s_phong, s_stencil, t_albedo, t_specular);
+        render(quad, s_phong, s_stencil, t_albedo, t_specular);
         window->frame();
     }
 
