@@ -146,7 +146,6 @@ int main(int, char* []) {
     const Shader s_stencil("../projects/EJ11_03/stencil.vs", "../projects/EJ11_03/stencil.fs");
     const Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);
     const Texture t_specular("../assets/textures/bricks_specular.png", Texture::Format::RGB);
-    const Cube cube(1.0f);
     const Quad quad(1.0f);
 
     glEnable(GL_CULL_FACE);
