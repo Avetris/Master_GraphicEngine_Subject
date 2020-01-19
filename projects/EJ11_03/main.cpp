@@ -124,7 +124,7 @@ void render(const Geometry& quad, const Shader& s_phong, const Shader& s_stencil
             s_stencil.set("model", model);
             switch (i)
             {
-            case 1: s_stencil.set("color", 0.0f, 0.0f, 1.0f, 0.6f); break;
+            case 1: s_stencil.set("color", 0.0f, 0.0f, 1.0f, 0.6f); break;  // Indicamos los colores que tendra cada quad solido, junto con la transparencia que tendran.
             case 2: s_stencil.set("color", 0.0f, 1.0f, 0.0f, 0.4f); break;
             case 3: s_stencil.set("color", 1.0f, 0.0f, 0.0f, 0.2f); break;
             default:

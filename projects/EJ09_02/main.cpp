@@ -80,7 +80,7 @@ void onScrollMoved(float x, float y) {
     camera.handleMouseScroll(y);
 }
 
-void render(const Geometry& floor, const Geometry& object, const Geometry& light, const Shader& s_phong, const Material& material, SpotLight& spotLight) {
+void render(const Geometry& floor, const Geometry& object, const Shader& s_phong, const Material& material, SpotLight& spotLight) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glm::mat4 view = camera.getViewMatrix();
@@ -141,7 +141,6 @@ int main(int, char* []) {
         glm::vec3(0.0f, -1.0f, 0.0f), 
         glm::cos(glm::radians(20.0f)),
         glm::cos(glm::radians(25.0f)));
-    const Sphere sphere(1.0f, 50, 50);
     const Teapot teapot(20);
     const Quad quad(1.0f);
 
@@ -163,7 +162,7 @@ int main(int, char* []) {
         lastFrame = currentFrame;
 
         handleInput(deltaTime);
-        render(quad, teapot, sphere, s_phong, material, spotLight);
+        render(quad, teapot, s_phong, material, spotLight);
         window->frame();
     }
 
