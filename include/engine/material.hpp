@@ -9,20 +9,20 @@ class Shader;
 
 class Material {
     public:
-        Material(const Texture& diffuse, const Texture& specular, int shininess);
+        Material(const Texture& diffuse, const Texture& specular, const Texture& normal, int shininess);
         Material() = delete;
-      //  ~Material();
 
         Material(const Material&) = default;
         Material(Material&&) = default;
         Material& operator=(const Material&) = default;
         Material& operator=(Material&&) = default;
 
-        void use(const Shader& shader) const;
+        void use(const Shader& shader, const bool useNormal = false) const;
         
     private:
         Texture _diffuse;
         Texture _specular;
+        Texture _normal;
         int _shininess;
 };
 
