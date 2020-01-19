@@ -27,13 +27,19 @@ glm::vec3 grassPositions[] = {
     glm::vec3(4.5f, 0.0f, 3.9f),
     glm::vec3(-4.5f, 0.0f, 3.9f),
     glm::vec3(4.5f, 0.0f, -3.9f),
-    glm::vec3(-4.5f, 0.0f, -3.9f)
+    glm::vec3(-4.5f, 0.0f, -3.9f),
+    glm::vec3(0.0f, 0.0f, -4.5f),
+    glm::vec3(3.9f, 0.0f, 4.5f),
+    glm::vec3(0.0f, 0.0f, 4.5f)
 };
 float grassRotations[] = {
     glm::radians(180.0f),
     glm::radians(180.0f),
     0.0f,
-    0.0f
+    0.0f,
+    glm::radians(90.0f),
+    glm::radians(-90.0f),
+    glm::radians(-90.0f)
 };
 
 float lastFrame = 0.0f;
@@ -87,7 +93,7 @@ void onScrollMoved(float x, float y) {
 }
 
 void render(const Geometry& floor, const Geometry& object, const Shader& s_phong, const Shader& s_blend, 
-    const Material& m_floor, const Texture* t_wood, const Texture& t_grass) {
+    const Material& m_floor, const Material& m_wood, const Texture& t_grass) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glm::mat4 view = camera.getViewMatrix();
@@ -123,8 +129,7 @@ void render(const Geometry& floor, const Geometry& object, const Shader& s_phong
 
         normalMat = glm::inverse(glm::transpose(glm::mat3(model)));
         s_phong.set("normalMat", normalMat);
-        t_wood[i].use(s_phong, "material.diffuse", 0);
-        s_phong.set("material.shininess", 32);
+        m_wood.use(s_phong);
 
         object.render();
     }
@@ -133,7 +138,7 @@ void render(const Geometry& floor, const Geometry& object, const Shader& s_phong
     for (size_t i = 0; i < sizeof(grassPositions) / sizeof(glm::vec3); ++i) {
         model = glm::mat4(1.0f);
         model = glm::translate(model, grassPositions[i]);
-        model = glm::rotate(model, grassRotations[i], glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::rotate(model, grassRotations[i], glm::vec3(0.0f, 1.0f, 0.0f)); // Debido a que la rotacion es fija, si nos ponemos al lado contrario de donde esta mirando, no veremos la hierba.
         s_blend.set("model", model);
         s_blend.set("view", view);
         s_blend.set("proj", proj);
@@ -154,15 +159,12 @@ int main(int, char* []) {
     const Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);
     const Texture t_specular("../assets/textures/bricks_specular.png", Texture::Format::RGB);
     const Texture t_grass("../assets/textures/grass.png", Texture::Format::RGBA);
+    const Texture t_wood("../assets/textures/wood.png", Texture::Format::RGBA);
+    const Texture t_specular_wood("../assets/textures/wood_specular.png", Texture::Format::RGBA);
+    const Material m_wood(t_wood, t_specular_wood, 32); // Creamos el material de madera con su textura difusa y specular
     const Cube cube(1.0f);
     const Quad quad(1.0f);
     const Material m_floor(t_albedo, t_specular, 32);
-    const Texture t_wood[] = {
-        Texture("../assets/textures/wood1.jpg", Texture::Format::RGB),
-        Texture("../assets/textures/wood2.jpg", Texture::Format::RGB),
-        Texture("../assets/textures/wood3.jpg", Texture::Format::RGB),
-        Texture("../assets/textures/wood4.jpg", Texture::Format::RGB)
-    };
 
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
@@ -183,7 +185,7 @@ int main(int, char* []) {
         lastFrame = currentFrame;
 
         handleInput(deltaTime);
-        render(quad, cube, s_phong, s_blend, m_floor, t_wood, t_grass);
+        render(quad, cube, s_phong, s_blend, m_floor, m_wood, t_grass);
         window->frame();
     }
 
