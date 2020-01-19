@@ -3,6 +3,7 @@
 #include "engine/geometry/cube.hpp"
 
 #include <cmath>
+#include <iostream>
 
 Cube::Cube(float size) : _size(size) {
     _nVertices = 6 * 4;   //6 faces * 4 vertices;
@@ -15,6 +16,16 @@ Cube::Cube(float size) : _size(size) {
     const auto indices = new uint32_t[_nElements];
 
     generateVertexData(positions, uvs, normals, indices, false);
+    size_t k = 0;
+    for (size_t i = 0; i < static_cast<size_t>(_nVertices) * 3; i=i+3) {
+        std::cout << "x: " << positions[i] << ",y: " << positions[i + 1] << ",z: " << positions[i + 2] << std::endl;
+        k++;
+        if (k == 4) {
+            std::cout << std::endl;
+            k = 0;
+        }
+    }
+    std::cout << std::endl << std::endl << std::endl << std::endl;
     uploadData(positions, uvs, normals, indices);
 
     delete[] positions;
@@ -96,15 +107,15 @@ void Cube::generateVertexData(float* positions, float* uvs, float* normals, uint
         
         if (!uvsDone) {
             uvs[tIdx] = 1.0f;
-            uvs[tIdx + 1] = 1.0f;
+            uvs[tIdx + 1] = 0.0f;
 
             uvs[tIdx + 2] = 0.0f;
-            uvs[tIdx + 3] = 1.0f;
+            uvs[tIdx + 3] = 0.0f;
 
             uvs[tIdx + 4] = 0.0f;
-            uvs[tIdx + 5] = 0.0f;
+            uvs[tIdx + 5] = 1.0f;
 
-            uvs[tIdx + 6] = 0.0f;
+            uvs[tIdx + 6] = 1.0f;
             uvs[tIdx + 7] = 1.0f;
             tIdx += 8;
         }
