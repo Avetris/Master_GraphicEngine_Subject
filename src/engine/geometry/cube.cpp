@@ -3,7 +3,6 @@
 #include "engine/geometry/cube.hpp"
 
 #include <cmath>
-#include <iostream>
 
 Cube::Cube(float size) : _size(size) {
     _nVertices = 6 * 4;   //6 faces * 4 vertices;
@@ -16,16 +15,6 @@ Cube::Cube(float size) : _size(size) {
     const auto indices = new uint32_t[_nElements];
 
     generateVertexData(positions, uvs, normals, indices, false);
-    size_t k = 0;
-    for (size_t i = 0; i < static_cast<size_t>(_nVertices) * 3; i=i+3) {
-        std::cout << "x: " << positions[i] << ",y: " << positions[i + 1] << ",z: " << positions[i + 2] << std::endl;
-        k++;
-        if (k == 4) {
-            std::cout << std::endl;
-            k = 0;
-        }
-    }
-    std::cout << std::endl << std::endl << std::endl << std::endl;
     uploadData(positions, uvs, normals, indices);
 
     delete[] positions;
