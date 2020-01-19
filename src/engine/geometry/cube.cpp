@@ -96,15 +96,15 @@ void Cube::generateVertexData(float* positions, float* uvs, float* normals, uint
         
         if (!uvsDone) {
             uvs[tIdx] = 1.0f;
-            uvs[tIdx + 1] = 1.0f;
+            uvs[tIdx + 1] = 0.0f;
 
             uvs[tIdx + 2] = 0.0f;
-            uvs[tIdx + 3] = 1.0f;
+            uvs[tIdx + 3] = 0.0f;
 
             uvs[tIdx + 4] = 0.0f;
-            uvs[tIdx + 5] = 0.0f;
+            uvs[tIdx + 5] = 1.0f;
 
-            uvs[tIdx + 6] = 0.0f;
+            uvs[tIdx + 6] = 1.0f;
             uvs[tIdx + 7] = 1.0f;
             tIdx += 8;
         }
