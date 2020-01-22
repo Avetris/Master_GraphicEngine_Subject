@@ -28,6 +28,7 @@ FBO::FBO() {
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
         std::cout << "Framebuffer Incomplete" << std::endl;
     }
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 FBO::~FBO() {
@@ -38,22 +39,17 @@ FBO::~FBO() {
 
 void FBO::render() const {
     glEnable(GL_DEPTH_TEST);
-    glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
+    glBindFramebuffer(GL_FRAMEBUFFER, _fbo);    
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void FBO::renderTexture(const Shader& shader) const {
 
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glDisable(GL_DEPTH_TEST);
-
-    glClear(GL_COLOR_BUFFER_BIT);
-
     shader.use();
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _textureColor);
-
     shader.set("screenTexture", 0);
 }
