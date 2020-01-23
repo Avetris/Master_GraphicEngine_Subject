@@ -210,9 +210,9 @@ int main(int, char* []) {
     const Shader s_phong("../projects/EJ13_01/phong.vs", "../projects/EJ13_01/blinn.fs");
     const Shader s_fbo("../projects/EJ13_01/fbo.vs", "../projects/EJ13_01/fbo.fs");
     const Shader s_light("../projects/EJ13_01/light.vs", "../projects/EJ13_01/light.fs");
-    const Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);
-    const Texture t_specular("../assets/textures/bricks_specular.png", Texture::Format::RGB);
-    const Material material(t_albedo, t_specular, t_albedo, 32);
+    Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);
+    Texture t_specular("../assets/textures/bricks_specular.png", Texture::Format::RGB);
+    const Material material(&t_albedo, &t_specular, 32);
     SpotLight lantermLight("spotLight[0]",
         glm::vec3(0.0f, 3.0f, 0.0f),
         glm::vec3(0.02f, 0.02f, 0.02f),

@@ -170,9 +170,9 @@ int main(int, char* []) {
 
     const Shader s_phong("../projects/EJ09_03/phong.vs", "../projects/EJ09_03/blinn.fs");
     const Shader s_light("../projects/EJ09_03/light.vs", "../projects/EJ09_03/light.fs");
-    const Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);
-    const Texture t_specular("../assets/textures/bricks_specular.png", Texture::Format::RGB);
-    const Material material(t_albedo, t_specular, 32);
+    Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);
+    Texture t_specular("../assets/textures/bricks_specular.png", Texture::Format::RGB);
+    const Material material(&t_albedo, &t_specular, 32);
     DirectionalLight directionalLight(
         "dirLight",
         glm::vec3(0, 0, 0),

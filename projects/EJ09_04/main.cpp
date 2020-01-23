@@ -154,9 +154,9 @@ int main(int, char* []) {
 
     const Shader s_phong("../projects/EJ09_04/phong.vs", "../projects/EJ09_04/blinn.fs");
     const Shader s_light("../projects/EJ09_04/light.vs", "../projects/EJ09_04/light.fs");
-    const Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);
-    const Texture t_specular("../assets/textures/bricks_specular.png", Texture::Format::RGB);
-    const Material material(t_albedo, t_specular, 32);
+    Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);
+    Texture t_specular("../assets/textures/bricks_specular.png", Texture::Format::RGB);
+    const Material material(&t_albedo, &t_specular, 32);
 
     const float height = 2.0f;
     const float far = 2.0f;

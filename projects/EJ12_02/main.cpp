@@ -118,7 +118,7 @@ void render(const Model& object, const Shader& s_phong, const Shader& s_normal,
         s_normal.set("light.diffuse", 0.5f, 0.5f, 0.5f);
         s_normal.set("light.specular", 1.0f, 1.0f, 1.0f);
 
-        material.use(s_normal, true);
+        material.use(s_normal);
 
         object.render(s_normal);
     }
@@ -131,10 +131,10 @@ int main(int, char* []) {
 
     const Shader s_phong("../projects/EJ12_02/phong.vs", "../projects/EJ12_02/blinn.fs");
     const Shader s_normal("../projects/EJ12_02/normal.vs", "../projects/EJ12_02/normal.fs");
-    const Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);
-    const Texture t_specular("../assets/textures/bricks_specular.png", Texture::Format::RGB);
-    const Texture t_normal("../assets/textures/bricks_normal.png", Texture::Format::RGB);
-    const Material material(t_albedo, t_specular, t_normal, 32);
+    Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);
+    Texture t_specular("../assets/textures/bricks_specular.png", Texture::Format::RGB);
+    Texture t_normal("../assets/textures/bricks_normal.png", Texture::Format::RGB);
+    const Material material(&t_albedo, &t_specular, &t_normal, 32);
     const Model object("../assets/models/generator/generator.obj"); // Cargamos el modelo
 
     glEnable(GL_CULL_FACE);

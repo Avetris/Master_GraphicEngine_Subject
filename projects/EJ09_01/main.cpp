@@ -141,9 +141,9 @@ int main(int, char* []) {
     const Shader s_phong("../projects/EJ09_01/phong.vs", "../projects/EJ09_01/blinn.fs");
     const Shader s_light("../projects/EJ09_01/light.vs", "../projects/EJ09_01/light.fs");
 
-    const Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);
-    const Texture t_specular("../assets/textures/bricks_specular.png", Texture::Format::RGB);
-    const Material material(t_albedo, t_specular, 32);
+    Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);
+    Texture t_specular("../assets/textures/bricks_specular.png", Texture::Format::RGB);
+    const Material material(&t_albedo, &t_specular, 32);
     const Sphere sphere(1.0f, 50, 50);
     const Teapot teapot(20);
     const Quad quad(1.0f);
