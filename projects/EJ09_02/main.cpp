@@ -129,9 +129,9 @@ int main(int, char* []) {
     glClearColor(0.0f, 0.3f, 0.6f, 1.0f);
 
     const Shader s_phong("../projects/EJ09_02/phong.vs", "../projects/EJ09_02/blinn.fs");
-    const Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);
-    const Texture t_specular("../assets/textures/bricks_specular.png", Texture::Format::RGB);
-    const Material material(t_albedo, t_specular, 32);
+    Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);
+    Texture t_specular("../assets/textures/bricks_specular.png", Texture::Format::RGB);
+    const Material material(&t_albedo, &t_specular, 32);
     SpotLight spotLight("spotLight",
         glm::vec3(0.0f, 3.0f, 0.0f),
         glm::vec3(0.02f, 0.02f, 0.02f),

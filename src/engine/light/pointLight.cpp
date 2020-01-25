@@ -6,10 +6,8 @@
 #include <iostream>
 
 
-PointLight::PointLight(std::string name, glm::vec3 position, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float constant, float linear, float quadratic) : Light(name, position, ambient, diffuse, specular), _constant(constant), _linear(linear), _quadratic(quadratic) {
-    std::cout << name << std::endl;
-    std::cout << _name << std::endl;
-}
+PointLight::PointLight(std::string name, glm::vec3 position, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float constant, float linear, float quadratic) 
+    : Light(name, position, ambient, diffuse, specular), _constant(constant), _linear(linear), _quadratic(quadratic) {}
 
 void PointLight::setConstat(float constant) {_constant = constant;}
 void PointLight::setLinear(float linear) {_linear = linear;}

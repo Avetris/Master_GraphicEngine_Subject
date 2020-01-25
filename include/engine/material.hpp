@@ -9,9 +9,9 @@ class Shader;
 
 class Material {
     public:
-        Material(const Texture& diffuse, const Texture& specular, int shininess);
+        Material(Texture* diffuse, Texture* specular, Texture* normal, int shininess);
+        Material(Texture* diffuse, Texture* specular, int shininess);
         Material() = delete;
-      //  ~Material();
 
         Material(const Material&) = default;
         Material(Material&&) = default;
@@ -21,8 +21,9 @@ class Material {
         void use(const Shader& shader) const;
         
     private:
-        Texture _diffuse;
-        Texture _specular;
+        Texture* _diffuse;
+        Texture* _specular;
+        Texture* _normal = nullptr;
         int _shininess;
 };
 

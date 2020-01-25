@@ -156,15 +156,15 @@ int main(int, char* []) {
 
     const Shader s_phong("../projects/EJ11_01/phong.vs", "../projects/EJ11_01/blinn.fs");
     const Shader s_blend("../projects/EJ11_01/blend.vs", "../projects/EJ11_01/blend.fs");
-    const Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);
-    const Texture t_specular("../assets/textures/bricks_specular.png", Texture::Format::RGB);
-    const Texture t_grass("../assets/textures/grass.png", Texture::Format::RGBA);
-    const Texture t_wood("../assets/textures/wood.png", Texture::Format::RGBA);
-    const Texture t_specular_wood("../assets/textures/wood_specular.png", Texture::Format::RGBA);
-    const Material m_wood(t_wood, t_specular_wood, 32); // Creamos el material de madera con su textura difusa y specular
+    Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);
+    Texture t_specular("../assets/textures/bricks_specular.png", Texture::Format::RGB);
+    Texture t_grass("../assets/textures/grass.png", Texture::Format::RGBA);
+    Texture t_wood("../assets/textures/wood.png", Texture::Format::RGBA);
+    Texture t_specular_wood("../assets/textures/wood_specular.png", Texture::Format::RGBA);
+    const Material m_wood(&t_wood, &t_specular_wood, 32); // Creamos el material de madera con su textura difusa y specular
     const Cube cube(1.0f);
     const Quad quad(1.0f);
-    const Material m_floor(t_albedo, t_specular, 32);
+    const Material m_floor(&t_albedo, &t_specular, 32);
 
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
