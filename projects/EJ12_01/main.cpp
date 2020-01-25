@@ -116,7 +116,6 @@ void render(const Geometry& object, const Shader& s_phong, const Shader& s_norma
         s_normal.set("light.specular", 1.0f, 1.0f, 1.0f);
 
         material.use(s_normal);
-        s_normal.set("material.shininess", 32);
 
         object.render();
     }

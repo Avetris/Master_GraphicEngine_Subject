@@ -13,6 +13,7 @@
 #include <iostream>
 #include <engine\material.hpp>
 #include <engine\model.hpp>
+#include <engine\fbo.hpp>
 
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
@@ -67,43 +68,12 @@ void onScrollMoved(float x, float y) {
     camera.handleMouseScroll(y);
 }
 
-std::tuple<uint32_t, uint32_t, uint32_t> createFBO() {
-    uint32_t fbo;
-    glGenFramebuffers(1, &fbo);
-    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-
-    uint32_t textureColor;
-    glGenTextures(1, &textureColor);
-    glBindTexture(GL_TEXTURE_2D, textureColor);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Window::instance()->getWidth(), Window::instance()->getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glBindTexture(GL_TEXTURE_2D, 0);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColor, 0);
-
-    uint32_t rbo;
-    glGenRenderbuffers(1, &rbo);
-    glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, Window::instance()->getWidth(), Window::instance()->getHeight());
-    glBindRenderbuffer(GL_RENDERBUFFER, 0);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rbo);
-
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-        std::cout << "Framebuffer Incomplete" << std::endl;
-    }
-
-    return std::make_tuple(fbo, textureColor, rbo);
-}
-
-void render(const Geometry& quad, const Model& object, const Shader& s_phong, const Shader& s_fbo,const uint32_t fbo, const uint32_t fbo_texture) {
+void render(const Geometry& quad, const Model& object, const Shader& s_phong, const Shader& s_fbo, const FBO& fbo) {
     glm::mat4 view = camera.getViewMatrix();
     glm::mat4 proj = glm::perspective(glm::radians(camera.getFOV()), static_cast<float>(Window::instance()->getWidth()) / Window::instance()->getHeight(), 0.1f, 100.0f);
 
     //FIRST PASS
-    glEnable(GL_DEPTH_TEST);
-    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    fbo.render();
 
     s_phong.use();
     s_phong.set("view", view);
@@ -136,11 +106,7 @@ void render(const Geometry& quad, const Model& object, const Shader& s_phong, co
 
     glClear(GL_COLOR_BUFFER_BIT);
 
-    s_fbo.use();
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, fbo_texture);
-    s_fbo.set("screenTexture", 0);
+    fbo.renderTexture(s_fbo);
 
     quad.render();
 }
@@ -156,7 +122,7 @@ int main(int, char* []) {
     const Quad quad(2.0f);
     const Cube cube(1.0f);
 
-    auto fbo = createFBO();
+    const FBO fbo = FBO();
 
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
@@ -171,13 +137,9 @@ int main(int, char* []) {
         lastFrame = currentFrame;
 
         handleInput(deltaTime);
-        render(quad, object, s_phong, s_fbo, std::get<0>(fbo), std::get<1>(fbo));
+        render(quad, object, s_phong, s_fbo, fbo);
         window->frame();
     }
-
-    glDeleteFramebuffers(1, &std::get<0>(fbo));
-    glDeleteTextures(1, &std::get<1>(fbo));
-    glDeleteRenderbuffers(1, &std::get<2>(fbo));
 
     return 0;
 }
