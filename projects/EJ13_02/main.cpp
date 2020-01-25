@@ -99,14 +99,14 @@ void render(const Geometry& quad, const Model& object, const Shader& s_phong, co
 
     //SECOND PASS
 
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glDisable(GL_DEPTH_TEST);
 
     glClear(GL_COLOR_BUFFER_BIT);
 
     fbo.renderTexture(s_fbo);
+    s_fbo.set("offsetX", 1.0f / static_cast<float>(Window::instance()->getWidth()));
+    s_fbo.set("offsetY", 1.0f / static_cast<float>(Window::instance()->getHeight()));
 
     quad.render();
 }

@@ -195,8 +195,8 @@ void render(const Geometry& quad, const Geometry& object, const Geometry& light,
 
     // We set the position and scale of second camera view
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(-0.75f, 0.75f, 0.0f));
-    model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+    model = glm::translate(model, glm::vec3(-0.60f, 0.70f, 0.0f));
+    model = glm::scale(model, glm::vec3(0.8f, 0.6f, 0.5f)); // Mantenemos la relacion de aspecto de pantalla. (800x600) / 1000 = (0.8x0.6)
     s_fbo.set("model", model);
     s_fbo.set("view", camera.getViewMatrix());
     quad.render();

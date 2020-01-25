@@ -6,8 +6,8 @@ in vec2 uv;
 
 uniform sampler2D screenTexture;
 
-const float offsetX = 1.0 / 800.0;
-const float offsetY = 1.0 / 600.0;
+uniform float offsetX;
+uniform float offsetY;
 
 void main() {
 
