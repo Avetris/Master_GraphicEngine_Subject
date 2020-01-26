@@ -3,6 +3,7 @@
 #include "engine/geometry/cube.hpp"
 
 #include <cmath>
+#include <iostream>
 
 Cube::Cube(float size) : _size(size) {
     _nVertices = 6 * 4;   //6 faces * 4 vertices;
@@ -13,8 +14,8 @@ Cube::Cube(float size) : _size(size) {
     const auto normals = new float[static_cast<size_t>(_nVertices) * 3]{ 0.0f };
 
     const auto indices = new uint32_t[_nElements];
-
     generateVertexData(positions, uvs, normals, indices, false);
+
     uploadData(positions, uvs, normals, indices);
 
     delete[] positions;
@@ -49,14 +50,14 @@ void Cube::generateVertexData(float* positions, float* uvs, float* normals, uint
 
     uint32_t idx = 0, tIdx = 0;
     int32_t pos[8][3] = { // It is setted the position of each vertex here so the index array can be created easier.
-        {0,-15,21},
-        {1,-14,-16},
-        {2,5,-19},
-        {3,4,22},
-        {6,-9,-18},
-        {7,-8,23},
-        {-11,-12,20},
-        {-10,-13,-17}
+        {21,15,0},
+        {-16,14,1},
+        {-19,-5,2},
+        {22,-4,3},
+        {-18,-6,-9},
+        {23,-7,-8},
+        {20,12,-11},
+        {-17 ,13,-10}
     };
     // Generate positions and normals
     for (size_t i = 0; i < 2; i++) {
