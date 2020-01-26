@@ -11,7 +11,7 @@
 #include "engine/geometry/sphere.hpp"
 #include "engine/geometry/quad.hpp"
 #include <iostream>
-#include <engine\fbo.hpp>
+#include <engine\fbo\fbo.hpp>
 #include <engine\material.hpp>
 #include <engine\light\spotLight.hpp>
 #include <engine\geometry\teapot.hpp>
