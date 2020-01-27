@@ -15,7 +15,7 @@
 #include <engine\material.hpp>
 #include <engine\light\spotLight.hpp>
 
-Camera camera(glm::vec3(0.0f, 7.0f, 3.0f), glm::vec3(0.0f, 0.5f, -0.83f), -90.0f, -50.0f);
+Camera camera(glm::vec3(0.0f, 7.0f, 3.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, -50.0f);
 
 const uint32_t k_shadow_height = 1024;
 const uint32_t k_shadow_width = 1024;
@@ -87,11 +87,13 @@ void handleInput(float dt) {
         glm::vec3 pos = spotLight.getPosition();
         const float zNew = pos.z * c - pos.y * s;
         const float yNew = pos.z * s + pos.y * c;
-        pos.z = zNew;
-        pos.y = yNew;
+        if (yNew > 0) {
+            pos.z = zNew;
+            pos.y = yNew;
 
-        spotLight.setPosition(pos);
-        spotLight.setDirection(-pos);
+            spotLight.setPosition(pos);
+            spotLight.setDirection(-pos);
+        }
     }
 }
 
