@@ -21,6 +21,8 @@ class SpotLight : public Light {
         void setCutOff(const float cutOff);
         void setOuterCutOff(const float outerCutOff);
 
+        glm::vec3 getDirection() const;
+
         void use(const Shader& shader) const;
 
     private:

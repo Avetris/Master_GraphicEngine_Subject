@@ -1,4 +1,4 @@
-#include "engine/fbo.hpp"
+#include "engine/fbo/fbo.hpp"
 
 #include <glad/glad.h>
 #include <glm/vec3.hpp>

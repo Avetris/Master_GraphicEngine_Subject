@@ -23,7 +23,8 @@ set(ENGINE_SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/shader.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/texture.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/material.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/fbo.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/fbo/fbo.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/fbo/shadow.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/window.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/geometry/cube.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/geometry/geometry.cpp
@@ -44,7 +45,8 @@ set(ENGINE_HEADER_FILES
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/shader.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/texture.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/material.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/fbo.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/fbo/fbo.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/fbo/shadow.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/window.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/geometry/cube.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/geometry/geometry.hpp
@@ -83,7 +85,7 @@ add_custom_command(TARGET EngineLib POST_BUILD
 #****************************************************
 # List of projects
 set(PROJECT_LIST AG01 AG02 AG03 AG04 AG05 AG06 AG07 AG08_01 AG08_02
-    AG09_01 AG09_02 AG09_03 AG09_04 AG10 AG11_01 AG11_02 AG11_03 AG12 AG13 AG14
+    AG09_01 AG09_02 AG09_03 AG09_04 AG10 AG11_01 AG11_02 AG11_03 AG12 AG13 AG14 AG15
     EJ02_01 EJ02_02 EJ02_03 EJ02_04 EJ02_05 EJ02_06
     EJ03_01 EJ03_02 EJ03_03 EJ03_04
     EJ04_01 EJ04_02 EJ04_03 EJ04_04 EJ04_05
