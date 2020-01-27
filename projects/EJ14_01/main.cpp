@@ -13,14 +13,25 @@
 #include <iostream>
 #include <engine\fbo\shadow.hpp>
 #include <engine\material.hpp>
+#include <engine\light\spotLight.hpp>
 
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
-glm::vec3 lightPos(1.2f, 3.0f, 2.0f);
+Camera camera(glm::vec3(0.0f, 7.0f, 3.0f), glm::vec3(0.0f, 0.5f, -0.83f), -90.0f, -50.0f);
 
 const uint32_t k_shadow_height = 1024;
 const uint32_t k_shadow_width = 1024;
 const float k_shadow_near = 1.0f;
-const float k_shadow_far = 7.5f;
+const float k_shadow_far = 10.5f;
+
+glm::vec3 position(3.0f, 3.0f, 3.0f);
+SpotLight spotLight("spotLight",
+    position,
+    glm::vec3(0.02f, 0.02f, 0.02f),
+    glm::vec3(1.0f, 1.0f, 1.0f),
+    glm::vec3(1.0f, 1.0f, 1.0f),
+    1.0f, 0.09f, 0.032f,
+    -position,
+    glm::cos(glm::radians(20.0f)),
+    glm::cos(glm::radians(25.0f)));
 
 float lastFrame = 0.0f;
 float lastX, lastY;
@@ -40,6 +51,47 @@ void handleInput(float dt) {
     }
     if (input->isKeyPressed(GLFW_KEY_D)) {
         camera.handleKeyboard(Camera::Movement::Right, dt);
+    }
+
+    if (input->isKeyPressed(GLFW_KEY_LEFT) || input->isKeyPressed(GLFW_KEY_RIGHT)) {
+        float angle = 0.0f;
+        if (input->isKeyPressed(GLFW_KEY_LEFT)) {
+            angle = 5.0f;
+        }
+        else {
+            angle = -5.0f;
+        }
+
+        float s = sin(glm::radians(angle));
+        float c = cos(glm::radians(angle));
+        glm::vec3 pos = spotLight.getPosition();
+        const float xNew = pos.x * c - pos.z * s;
+        const float zNew = pos.x * s + pos.z * c;
+        pos.x = xNew;
+        pos.z = zNew;
+
+        spotLight.setPosition(pos);
+        spotLight.setDirection(-pos);
+    }
+    if (input->isKeyPressed(GLFW_KEY_UP) || input->isKeyPressed(GLFW_KEY_DOWN)) {
+        float angle = 0.0f;
+        if (input->isKeyPressed(GLFW_KEY_UP)) {
+            angle = 5.0f;
+        }
+        else {
+            angle = -5.0f;
+        }
+
+        float s = sin(glm::radians(angle));
+        float c = cos(glm::radians(angle));
+        glm::vec3 pos = spotLight.getPosition();
+        const float zNew = pos.z * c - pos.y * s;
+        const float yNew = pos.z * s + pos.y * c;
+        pos.z = zNew;
+        pos.y = yNew;
+
+        spotLight.setPosition(pos);
+        spotLight.setDirection(-pos);
     }
 }
 
@@ -72,8 +124,7 @@ void onScrollMoved(float x, float y) {
     camera.handleMouseScroll(y);
 }
 
-void renderScene(const Shader& shader, const Geometry& quad, const Geometry& cube, const Geometry& sphere,
-    const Material& material) {
+void renderScene(const Shader& shader, const Geometry& quad, const Geometry& cube, const Geometry& sphere, const Material& material) {
     material.use(shader);
 
     glm::mat4 model = glm::mat4(1.0);
@@ -100,21 +151,18 @@ void renderScene(const Shader& shader, const Geometry& quad, const Geometry& cub
 }
 
 void render(const Geometry& quad, const Geometry& cube, const Geometry& sphere,
-    const Shader& s_phong, const Shader& s_depth, const Shader& s_debug, const Shader& s_light,
-    const Material& material, const ShadowFBO& fbo) {
+    const Shader& s_phong, const Shader& s_depth, const Shader& s_debug, const Shader& s_light, 
+    const Material& material, SpotLight& spotLight, const ShadowFBO& fbo) {
 
     //FIRST PASS
     fbo.render();
-
-    const glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, k_shadow_near, k_shadow_far);
-    const glm::mat4 lightView = glm::lookAt(lightPos, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    
+    const glm::mat4 lightProjection = glm::perspective<float>(glm::radians(45.0f), 1.0f, k_shadow_near, k_shadow_far);
+    const glm::mat4 lightView = glm::lookAt(spotLight.getPosition(), spotLight.getDirection(), glm::vec3(0.0f, 1.0f, 0.0f));
     const glm::mat4 lightSpaceMatrix = lightProjection * lightView;
 
-    s_depth.use();
-    s_depth.set("lightSpaceMatrix", lightSpaceMatrix);
-    //glCullFace(GL_FRONT);
+    s_depth.use();s_depth.set("lightSpaceMatrix", lightSpaceMatrix);
     renderScene(s_depth, quad, cube, sphere, material);
-    //glCullFace(GL_BACK);
 
     //SECOND PASS
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -123,6 +171,15 @@ void render(const Geometry& quad, const Geometry& cube, const Geometry& sphere,
 
     glm::mat4 view = camera.getViewMatrix();
     glm::mat4 proj = glm::perspective(glm::radians(camera.getFOV()), static_cast<float>(Window::instance()->getWidth()) / Window::instance()->getHeight(), 0.1f, 100.0f);
+    
+    s_light.use();
+    glm::mat4 model = glm::mat4(1.0);
+    model = glm::translate(model, spotLight.getPosition());
+    s_light.set("model", model);
+    s_light.set("view", view);
+    s_light.set("proj", proj);
+    s_light.set("lightColor", 1.0f, 1.0f, 1.0f);
+    sphere.render();
 
     s_phong.use();
 
@@ -131,10 +188,9 @@ void render(const Geometry& quad, const Geometry& cube, const Geometry& sphere,
 
     s_phong.set("viewPos", camera.getPosition());
 
-    s_phong.set("light.position", lightPos);
-    s_phong.set("light.ambient", 0.1f, 0.1f, 0.1f);
-    s_phong.set("light.diffuse", 0.5f, 0.5f, 0.5f);
-    s_phong.set("light.specular", 1.0f, 1.0f, 1.0f);
+    spotLight.use(s_phong);
+
+    material.use(s_phong);
 
     s_phong.set("lightSpaceMatrix", lightSpaceMatrix);
 
@@ -142,17 +198,16 @@ void render(const Geometry& quad, const Geometry& cube, const Geometry& sphere,
 
     renderScene(s_phong, quad, cube, sphere, material);
 
-    //glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    //glViewport(0, 0, Window::instance()->getWidth(), Window::instance()->getHeight());
-    //glClear(GL_COLOR_BUFFER_BIT);
-    //glDisable(GL_DEPTH_TEST);
+   /* glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glViewport(0, 0, Window::instance()->getWidth(), Window::instance()->getHeight());
+    glClear(GL_COLOR_BUFFER_BIT);
+    glDisable(GL_DEPTH_TEST);
 
-    //s_debug.use();
-    //glActiveTexture(GL_TEXTURE0);
-    //glBindTexture(GL_TEXTURE_2D, fbo_texture);
-    //s_debug.set("depthMap", 0);
+    s_debug.use();
+    fbo.renderTexture(s_debug);
+    s_debug.set("depthMap", 0);
 
-    //quad.render();
+    quad.render();*/
 }
 
 int main(int, char* []) {
@@ -166,7 +221,7 @@ int main(int, char* []) {
     const Shader s_light("../projects/EJ14_01/light.vs", "../projects/EJ14_01/light.fs");
     Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);
     Texture t_specular("../assets/textures/bricks_specular.png", Texture::Format::RGB);
-    const Material material(&t_albedo, &t_specular);
+    const Material material(&t_albedo, &t_specular, 32);
     const Quad quad(2.0f);
     const Cube cube(1.0f);
     const Sphere sphere(1.0f, 25, 25);
@@ -186,7 +241,7 @@ int main(int, char* []) {
         lastFrame = currentFrame;
 
         handleInput(deltaTime);
-        render(quad, cube, sphere, s_phong, s_depth, s_debug, s_light, material, fbo);
+        render(quad, cube, sphere, s_phong, s_depth, s_debug, s_light, material, spotLight, fbo);
         window->frame();
     }
     return 0;

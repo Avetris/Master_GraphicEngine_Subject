@@ -11,12 +11,14 @@
 SpotLight::SpotLight(std::string name, glm::vec3 position, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float constant, float linear, float quadratic, glm::vec3 direction, float cutOff, float outerCutOff) : Light(name, position, ambient, diffuse, specular), _constant(constant), _linear(linear), _quadratic(quadratic), _direction(direction), _cutOff(cutOff), _outerCutOff(outerCutOff) {
 }
 
+glm::vec3 SpotLight::getDirection() const { return _direction; }
 void SpotLight::setDirection(const glm::vec3 direction) { _direction = direction; }
 void SpotLight::setConstat(const float constant) { _constant = constant; }
 void SpotLight::setLinear(const float linear) { _linear = linear; }
 void SpotLight::setQuadratic(const float quadratic) { _quadratic = quadratic; }
 void SpotLight::setCutOff(const float cutOff) { _cutOff = cutOff; }
 void SpotLight::setOuterCutOff(const float outerCutOff) { _outerCutOff = outerCutOff; }
+
 
 
 void SpotLight::use(const Shader& shader) const {

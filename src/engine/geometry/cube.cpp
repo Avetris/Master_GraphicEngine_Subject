@@ -3,7 +3,6 @@
 #include "engine/geometry/cube.hpp"
 
 #include <cmath>
-#include <iostream>
 
 Cube::Cube(float size) : _size(size) {
     _nVertices = 6 * 4;   //6 faces * 4 vertices;
