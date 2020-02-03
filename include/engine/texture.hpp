@@ -3,30 +3,13 @@
 
 #include <cstdint>
 #include <string>
+#include <engine\gpu.hpp>
 
 class Shader;
 
 class Texture {
     public:
-        enum class Wrap {
-            Repeat,
-            Mirrored_Repeat,
-            Clamp_To_Border,
-            Clamp_To_Edge
-        };
-
-        enum class Filter {
-            None,
-            Nearest,
-            Linear
-        };
-
-        enum class Format {
-            RGB,
-            RGBA
-        };
-
-        Texture(const char* path, Format format);
+        Texture(const char* path, GPU::Format format);
         Texture() = delete;
         ~Texture();
 
@@ -37,21 +20,17 @@ class Texture {
 
         void use(const Shader& shader, const char* name, uint32_t unit = 0) const;
 
-        void setWrap(Wrap s, Wrap t);
-        void setFilter(Filter mag, Filter min, Filter mipMapMag = Filter::None, Filter mipMapMin = Filter::None);
-
-    private:
-        void applyWrapping() const;
-        void applyFilter() const;
+        void setWrap(GPU::Wrap s, GPU::Wrap t);
+        void setFilter(GPU::Filter mag, GPU::Filter min, GPU::Filter mipMapMag = GPU::Filter::None, GPU::Filter mipMapMin = GPU::Filter::None);
 
     private:
         uint32_t _id = 0;
-        Format _format = Format::RGB;
+        GPU::Format _format = GPU::Format::RGB;
         int32_t _width = 0, _height = 0;
         int32_t _depth = 0;
-        std::pair<Wrap, Wrap>_wrap{ Wrap::Repeat, Wrap::Repeat };
-        std::pair<Filter, Filter>_filter{ Filter::Linear, Filter::Linear };
-        std::pair<Filter, Filter>_filterMipMap{ Filter::None, Filter::None };
+        std::pair<GPU::Wrap, GPU::Wrap>_wrap{ GPU::Wrap::Repeat, GPU::GPU::Wrap::Repeat };
+        std::pair<GPU::GPU::Filter, GPU::Filter>_filter{ GPU::Filter::Linear, GPU::Filter::Linear };
+        std::pair<GPU::GPU::Filter, GPU::Filter>_filterMipMap{ GPU::Filter::None, GPU::Filter::None };
 };
 
 #endif

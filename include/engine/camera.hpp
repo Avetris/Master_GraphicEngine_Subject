@@ -30,11 +30,10 @@ class Camera {
         void handleMouseScroll(float yoffset);
 
     private:
-        void updateCameraVectors();
-    private:
         glm::vec3 _position, _front, _up, _right, _worldUp;
         float _yaw, _pitch;
         float _fov;
+        void updateCameraVectors();
 };
 
 #endif
