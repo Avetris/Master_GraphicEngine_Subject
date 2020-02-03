@@ -2,47 +2,64 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-Camera::Camera(const Vector3<float> position, const const Vector3<float> up, float yaw, float pitch)
+Camera::Camera(const glm::vec3& position, const glm::vec3& up, float yaw, float pitch)
  : _position(position), _worldUp(up), _yaw(yaw), _pitch(pitch), _fov(k_FOV) {
     updateCameraVectors();
 }
 
 Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch)
-    : _position(Vector3<float>(posX, posY, posZ)), _worldUp(Vector3<float>(upX, upY, upZ)), _yaw(yaw), _pitch(pitch), _fov(k_FOV) {
+    : _position(glm::vec3(posX, posY, posZ)), _worldUp(glm::vec3(upX, upY, upZ)), _yaw(yaw), _pitch(pitch), _fov(k_FOV) {
     updateCameraVectors();
 }
 
 
-glm::mat4 Camera::getViewMatrix() const {
-    return GPU::lookAt(_position, _position + _front, _up);
+glm::mat4 Camera::getViewMatrix(bool customLookAt) const {
+    if (customLookAt) {
+        glm::mat4 translation(1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            -_position.x, -_position.y, -_position.z, 1);
+        glm::vec3 cameraDirection = glm::normalize(_front);
+        glm::vec3 cameraRight = glm::normalize(glm::cross(cameraDirection, _up));
+        glm::vec3 cameraUp = glm::cross(cameraRight, cameraDirection);
+        glm::mat4 matrix(cameraRight.x, cameraUp.x, -cameraDirection.x, 0,
+            cameraRight.y, cameraUp.y, -cameraDirection.y, 0,
+            cameraRight.z, cameraUp.z, -cameraDirection.z, 0,
+            0, 0, 0, 1);
+
+        return matrix * translation;
+    }
+    else {
+        return glm::lookAt(_position, _position + _front, _up);
+    }
 }
 
-Vector3<float> Camera::getCameraDirection() const {
-    return GPU::normalize(_front);
+glm::vec3 Camera::getCameraDirection() const {
+    return glm::normalize(_front);
 }
 
 float Camera::getFOV() const {
     return _fov;
 }
 
-Vector3<float> Camera::getPosition() const {
+glm::vec3 Camera::getPosition() const {
     return _position;
 }
 
 void Camera::updateCameraVectors() {
-    Vector3<float> front;
+    glm::vec3 front;
     front.x = cos(glm::radians(_yaw)) * cos(glm::radians(_pitch));
     front.y = sin(glm::radians(_pitch));
     front.z = sin(glm::radians(_yaw)) * cos(glm::radians(_pitch));
-    _front = GPU::normalize(front);
+    _front = glm::normalize(front);
 
-    _right = GPU::normalize(GPU::cross(_front, _worldUp));
-    _up = GPU::normalize(GPU::cross(_right, _front));
+    _right = glm::normalize(glm::cross(_front, _worldUp));
+    _up = glm::normalize(glm::cross(_right, _front));
 }
 
 void Camera::handleKeyboard(Movement direction, float dt, bool canFly) {
     const float velocity = k_Speed * dt;
-    Vector3<float> movement(0,0,0);
+    glm::vec3 movement(0,0,0);
 
     switch (direction) {
         case Movement::Forward: movement = _front * velocity;break;

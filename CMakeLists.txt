@@ -16,8 +16,6 @@ include(cmake/compiler.cmake)
 #Engine Source Files
 
 set(ENGINE_SRC_FILES
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/gpuModels.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/gpu.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/camera.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/deps.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/mesh.cpp
@@ -40,8 +38,6 @@ set(ENGINE_SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/light/spotLight.cpp)
 
 set(ENGINE_HEADER_FILES
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/gpuModels.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/gpu.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/camera.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/input.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/mesh.hpp
