@@ -1,5 +1,7 @@
 #ifndef __CAMERA_H__
 #define __CAMERA_H__
+
+#include <engine/components/Component.hpp>
 #include <glm/glm.hpp>
 
 const float k_Yaw = -90.0f;
@@ -8,7 +10,7 @@ const float k_Speed = 2.5f;
 const float k_Sensitivity = 0.1f;
 const float k_FOV = 45.0f;
 
-class Camera {
+class CameraComponent : public Component{
     public:
         enum class Movement {
             Forward = 0,
@@ -17,21 +19,22 @@ class Camera {
             Right = 3,
         };
 
-        Camera(const glm::vec3& position = glm::vec3(0.0f, 0.0f, 0.0f), const glm::vec3& up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = k_Yaw, float pitch = k_Pitch);
-        Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch);
+        CameraComponent(uint16_t UID, Handle* gameObject);
+        void init();
+        void update(float dt);
+        ~CameraComponent();
 
-        glm::mat4 getViewMatrix(bool customLookAt = false) const;
+        glm::mat4 getViewMatrix() const;
         glm::vec3 getCameraDirection() const;
         float getFOV() const;
-        glm::vec3 getPosition() const;
 
-        void handleKeyboard(Movement direction, float dt, bool canFly = true);
+        void handleKeyboard(Movement direction, float dt);
         void handleMouseMovement(float xoffset, float yoffset, bool constrainPitch = true);
         void handleMouseScroll(float yoffset);
 
     private:
-        glm::vec3 _position, _front, _up, _right, _worldUp;
-        float _yaw, _pitch;
+        glm::vec3 _front, _up = glm::vec3(0.0f, 1.0f, 0.0f), _right, _worldUp;
+        float _yaw = k_Yaw, _pitch = k_Pitch;
         float _fov;
         void updateCameraVectors();
 };

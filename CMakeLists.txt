@@ -16,8 +16,22 @@ include(cmake/compiler.cmake)
 #Engine Source Files
 
 set(ENGINE_SRC_FILES
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/handle/handleManager.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/object.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/engine.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/gameObject.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/managers/gameObjectManager.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/message.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/managers/componentManager.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/component.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/transformComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/graphicComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/cameraComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/system.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/cameraSystem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/graphicSystem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/transformSystem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/gpu.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/camera.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/deps.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/mesh.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/model.cpp
@@ -39,8 +53,23 @@ set(ENGINE_SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/light/spotLight.cpp)
 
 set(ENGINE_HEADER_FILES
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/handle/handle.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/handle/handleManager.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/object.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/engine.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/gameObject.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/managers/gameObjectManager.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/message.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/managers/componentManager.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/component.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/cameraComponent.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/transformComponent.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/graphicComponent.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/system.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/cameraSystem.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/graphicSystem.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/transformSystem.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/gpu.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/camera.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/input.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/mesh.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/model.hpp
