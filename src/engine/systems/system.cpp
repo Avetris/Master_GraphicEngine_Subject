@@ -1,6 +1,8 @@
 #include "engine/systems/system.hpp"
 #include <engine\handle\handleManager.hpp>
 
+System::System() : Object(0) {}
+
 System::~System()
 {
 	Component* component;
@@ -27,5 +29,3 @@ void System::removeComponent(Component* component)
 		}
 	}
 }
-
-System::System(): Object(0){}

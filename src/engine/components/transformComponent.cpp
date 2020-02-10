@@ -4,6 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <engine\systems\transformSystem.hpp>
 #include <engine\systems\graphicSystem.hpp>
+#include <engine\engine.hpp>
 
 
 TransformComponent::TransformComponent(uint16_t UID, Handle* gameObject) :Component(UID, gameObject) {}
@@ -18,7 +19,7 @@ void TransformComponent::update(float dt)
 
 TransformComponent::~TransformComponent()
 {
-	TransformSystem::instance()->removeComponent(this);
+	//Engine::instance()->getSystem<TransformSystem>()->removeComponent(this);
 	GameObject* gameObject;
 	HandleManager::instance()->GetAs(_gameObject, gameObject);
 	gameObject->removeComponent(GRAPHIC_COMPONENT);
@@ -97,5 +98,8 @@ void TransformComponent::updateModel(glm::mat4 parentModel)
 		}*/
 	}
 	_modelToUpdate = false;
-	GraphicSystem::instance()->positionRefresh();
+	GraphicSystem* graphicSystem = nullptr;
+	if (Engine::instance()->getSystem<GraphicSystem>(graphicSystem)) {
+		graphicSystem->positionRefresh();
+	}
 }

@@ -5,10 +5,10 @@
 #include <vector>
 #include <engine\object.hpp>
 #include <engine\components\component.hpp>
-#include <engine\message.hpp>
 
 class System : public Object{
     public:
+        System();
         ~System();
         virtual void init() = 0;
         virtual void update(const float dt) = 0;
@@ -17,7 +17,6 @@ class System : public Object{
         void removeComponent(Component* component);
 
     protected:
-        System();
         std::vector<Handle*> _componentList;
 };
 

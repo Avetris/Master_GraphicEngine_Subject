@@ -8,14 +8,10 @@
 
 class CameraSystem : public System{
     public:
-        static CameraSystem* instance() {
-            static CameraSystem camInstance;
-            return &camInstance;
-        }
+        CameraSystem();
         void init();
         void update(const float dt);
     private:
-        CameraSystem();
 };
 
 #endif

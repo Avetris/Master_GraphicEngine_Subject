@@ -18,6 +18,9 @@ class Engine {
         void init();
         void update(const float dt);
         void mainLoop();
+
+        template<class T>
+        bool getSystem(T* system) const;
     private:
         Engine();
         Window* window;

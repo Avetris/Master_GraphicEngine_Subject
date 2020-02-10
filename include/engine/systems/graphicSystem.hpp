@@ -9,17 +9,13 @@
 
 class GraphicSystem : public System{
     public:
-        static GraphicSystem* instance() {
-            GraphicSystem graphInstance;
-            return &graphInstance;
-        }
+        GraphicSystem();
         void init();
         void update(const float dt);
 
         void positionRefresh();
         
     private:
-        GraphicSystem();
         std::vector<Handle*> _objectsToRender;
         void checkObjectsToRender();
 

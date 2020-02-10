@@ -6,23 +6,33 @@
 #include <engine\components\transformComponent.hpp>
 #include <engine\components\cameraComponent.hpp>
 #include <engine\components\graphicComponent.hpp>
+#include <engine\engine.hpp>
 
 Component* ComponentManager::createComponent(Handle* gameObject, TYPE componentType)
 {
-	Component* component;
+	Component* component = nullptr;
 	switch (componentType)
 	{
 	case TRANSFORM_COMPONENT:
 		component = new TransformComponent(_GUID, gameObject);
-		TransformSystem::instance()->addComponent(component->getHandle());
+		TransformSystem* transfromSystem;
+		if (Engine::instance()->getSystem(transfromSystem)) {
+			transfromSystem->addComponent(component->getHandle());
+		}
 		break;
 	case CAMERA_COMPONENT:
 		component = new CameraComponent(_GUID, gameObject);
-		CameraSystem::instance()->addComponent(component->getHandle());
+		CameraSystem* cameraSystem;
+		if (Engine::instance()->getSystem(cameraSystem)) {
+			cameraSystem->addComponent(component->getHandle());
+		}
 		break;
 	case GRAPHIC_COMPONENT:
 		component = new GraphicComponent(_GUID, gameObject);
-		GraphicSystem::instance()->addComponent(component->getHandle());
+		GraphicSystem* graphicSystem;
+		if (Engine::instance()->getSystem(graphicSystem)) {
+			graphicSystem->addComponent(component->getHandle());
+		}
 		break;
 	case PHYSIC_COMPONENT:
 		break;

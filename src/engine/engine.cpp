@@ -13,13 +13,9 @@ Engine::Engine() {
 void Engine::init()
 {
 	// The order of insertion determine the orden of 
-	std::cout << "ENTRA" << std::endl;
-	std::cout << _systemList.size() << std::endl;
-	_systemList.push_back(TransformSystem::instance());
-	_systemList.push_back(CameraSystem::instance());
-	///*_systemList.push_back(GraphicSystem::instance());
-	//_systemList.push_back(GraphicSystem::instance());*/
-	_systemList.push_back(GraphicSystem::instance());
+	_systemList.push_back(new TransformSystem());
+	_systemList.push_back(new CameraSystem());
+	_systemList.push_back(new GraphicSystem());
 	std::cout << "SALE" << std::endl;
 	_nextGameTick = GetTickCount64();
 	window = Window::instance();
@@ -46,4 +42,15 @@ void Engine::mainLoop() {
 		}
 		window->frame();
 	}
+}
+
+template<class T>
+bool Engine::getSystem(T* system) const {
+	for (auto system : _systemList) {
+		if (dynamic_cast<const T*>(system) != nullptr) {
+			T = system;
+			return true;
+		}
+	}
+	return false;
 }
