@@ -1,10 +1,10 @@
 #ifndef __SPHERE_H__
 #define __SPHERE_H__ 1
 
-#include "geometry.hpp"
+#include "../geometryComponent.hpp"
 #include <vector>
 
-class Sphere final : public Geometry {
+class Sphere final : public GeometryComponent {
     public:
         Sphere() = delete;
         Sphere(float radius, uint32_t stacks, uint32_t slices);

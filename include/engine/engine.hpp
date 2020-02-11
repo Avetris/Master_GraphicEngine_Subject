@@ -19,8 +19,8 @@ class Engine {
         void update(const float dt);
         void mainLoop();
 
-        template<class T>
-        bool getSystem(T* system) const;
+        template<typename System>
+        System* getSystem() const;
     private:
         Engine();
         Window* window;
@@ -30,4 +30,15 @@ class Engine {
         bool _gameIsRunning = true;
 };
 
+template<typename System>
+inline System* Engine::getSystem() const{
+    System* output = nullptr;
+    for (auto system : _systemList) {
+        output = dynamic_cast<System*>(system);
+        if (output) {
+            break;
+        }
+    }
+    return output;
+}
 #endif

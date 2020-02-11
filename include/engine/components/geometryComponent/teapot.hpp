@@ -1,11 +1,11 @@
 #ifndef __TEAPOT_H__
 #define __TEAPOT_H__ 1
 
-#include "geometry.hpp"
+#include "../geometryComponent.hpp"
 
 #include <glm/glm.hpp>
 
-class Teapot final :public Geometry {
+class Teapot final :public GeometryComponent {
     public:
         Teapot() = delete;
         explicit Teapot(uint32_t grid, glm::mat4 lidTransform = glm::mat4(1.0f));

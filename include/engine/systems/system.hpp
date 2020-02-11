@@ -9,7 +9,7 @@
 class System : public Object{
     public:
         System();
-        ~System();
+        virtual ~System();
         virtual void init() = 0;
         virtual void update(const float dt) = 0;
 

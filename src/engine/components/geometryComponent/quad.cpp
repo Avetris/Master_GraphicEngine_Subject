@@ -1,4 +1,4 @@
-#include "engine/geometry/quad.hpp"
+#include <engine/components/geometryComponent/quad.hpp>
 
 Quad::Quad(float size) : _size(size) {
     _nVertices = 1 * 2 * 3;  //1 face * 2 triangles * 3 vertices

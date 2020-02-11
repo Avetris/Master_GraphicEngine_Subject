@@ -98,8 +98,5 @@ void TransformComponent::updateModel(glm::mat4 parentModel)
 		}*/
 	}
 	_modelToUpdate = false;
-	GraphicSystem* graphicSystem = nullptr;
-	if (Engine::instance()->getSystem<GraphicSystem>(graphicSystem)) {
-		graphicSystem->positionRefresh();
-	}
+	Engine::instance()->getSystem<GraphicSystem>()->positionRefresh();
 }

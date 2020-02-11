@@ -83,23 +83,13 @@ void GameObject::removeComponent(TYPE componentType)
 	}
 }
 
-template<typename T>
-T* GameObject::addComponent(TYPE componentType)
+template<typename Component>
+Component* GameObject::addComponent(TYPE componentType)
 {
-	T* component = getComponent(componentType);
+	Component* component = getComponent(componentType);
 	if (component == nullptr) {
 		component = ComponentManager::instance()->createComponent(_handle, componentType);
 		_componentList[componentType] = component->getHandle();
-	}
-	return component;
-}
-
-template<typename T>
-T* GameObject::getComponent(TYPE componentType) const
-{
-	T* component = nullptr;
-	if (componentType >= 0 && _componentList[componentType] != nullptr) {
-		HandleManager::instance()->GetAs(_componentList[componentType], component);
 	}
 	return component;
 }

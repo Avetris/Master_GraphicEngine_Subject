@@ -15,24 +15,18 @@ Component* ComponentManager::createComponent(Handle* gameObject, TYPE componentT
 	{
 	case TRANSFORM_COMPONENT:
 		component = new TransformComponent(_GUID, gameObject);
-		TransformSystem* transfromSystem;
-		if (Engine::instance()->getSystem(transfromSystem)) {
-			transfromSystem->addComponent(component->getHandle());
-		}
+		Engine::instance()->getSystem<TransformSystem>()->addComponent(component->getHandle());
 		break;
 	case CAMERA_COMPONENT:
 		component = new CameraComponent(_GUID, gameObject);
-		CameraSystem* cameraSystem;
-		if (Engine::instance()->getSystem(cameraSystem)) {
-			cameraSystem->addComponent(component->getHandle());
-		}
+		Engine::instance()->getSystem<CameraSystem>()->addComponent(component->getHandle());
 		break;
 	case GRAPHIC_COMPONENT:
 		component = new GraphicComponent(_GUID, gameObject);
-		GraphicSystem* graphicSystem;
-		if (Engine::instance()->getSystem(graphicSystem)) {
-			graphicSystem->addComponent(component->getHandle());
-		}
+		Engine::instance()->getSystem<GraphicSystem>()->addComponent(component->getHandle());
+		break;
+	case GEOMETTRY_COMPONENT:
+
 		break;
 	case PHYSIC_COMPONENT:
 		break;

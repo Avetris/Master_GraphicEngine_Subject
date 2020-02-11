@@ -4,6 +4,7 @@
 #include <engine\systems\graphicSystem.hpp>
 #include <engine\systems\cameraSystem.hpp>
 #include <engine\systems\transformSystem.hpp>
+#include <engine\systems\geometrySystem.hpp>
 #include <iostream>
 
 Engine::Engine() {
@@ -16,6 +17,7 @@ void Engine::init()
 	_systemList.push_back(new TransformSystem());
 	_systemList.push_back(new CameraSystem());
 	_systemList.push_back(new GraphicSystem());
+	_systemList.push_back(new GeometrySystem());
 	std::cout << "SALE" << std::endl;
 	_nextGameTick = GetTickCount64();
 	window = Window::instance();
@@ -28,7 +30,7 @@ void Engine::init()
 void Engine::update(const float dt) {
 	GPU::enableCullFace();
 	for (auto it = _systemList.begin(); it < _systemList.end(); it++) {
-		//(*it)->update(dt);
+		(*it)->update(dt);
 	}
 }
 
@@ -44,13 +46,13 @@ void Engine::mainLoop() {
 	}
 }
 
-template<class T>
-bool Engine::getSystem(T* system) const {
-	for (auto system : _systemList) {
-		if (dynamic_cast<const T*>(system) != nullptr) {
-			T = system;
-			return true;
-		}
-	}
-	return false;
-}
+//template<typename System>
+//bool Engine::getSystem(System* outSystem) const {
+//	for (auto system : _systemList) {
+//		if (dynamic_cast<System*>(system)) {
+//			outSystem = system;
+//			return true;
+//		}
+//	}
+//	return false;
+//}

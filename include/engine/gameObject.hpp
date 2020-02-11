@@ -24,12 +24,16 @@ class GameObject : public Object {
         void setRotation(float angle, glm::vec3 rotation);
         void setScale(glm::vec3 scale);
 
-        template<typename T>
-        T* addComponent(TYPE componentType);
+        template<typename Component>
+        Component* addComponent(TYPE componentType);
         void removeComponent(Handle* component);
         void removeComponent(TYPE componentType);
-        template<typename T>
-        T* getComponent(TYPE componentType) const;
+
+        template<typename Component>
+        Component* getComponent(TYPE componentType) const;
+
+        template<typename Component>
+        Component* getComponent() const;
 
         void addChildren(Handle* child);
         std::vector<Handle*> getChildren() const;
@@ -46,4 +50,25 @@ class GameObject : public Object {
         glm::vec3 _scale;
         Handle* _componentList[NUMBER_COMPONENTS];
 };
+
+
+template<typename Component>
+inline Component* GameObject::getComponent(TYPE componentType) const
+{
+    Component* component = nullptr;
+    if (componentType >= 0 && _componentList[componentType] != nullptr) {
+        HandleManager::instance()->GetAs(_componentList[componentType], component);
+    }
+    return component;
+}
+
+template<typename Component>
+inline Component* GameObject::getComponent<Component>() const
+{
+    Component* component = nullptr;
+    if (componentType >= 0 && _componentList[componentType] != nullptr) {
+        HandleManager::instance()->GetAs(_componentList[componentType], component);
+    }
+    return component;
+}
 #endif

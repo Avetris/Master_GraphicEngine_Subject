@@ -1,6 +1,6 @@
 #define _USE_MATH_DEFINES
 
-#include "engine/geometry/sphere.hpp"
+#include <engine/components/geometryComponent/sphere.hpp>
 
 #include <cmath>
 

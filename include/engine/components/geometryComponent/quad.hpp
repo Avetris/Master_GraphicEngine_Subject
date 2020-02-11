@@ -1,9 +1,9 @@
 #ifndef __QUAD_H__
 #define __QUAD_H__ 1
 
-#include "geometry.hpp"
+#include "../geometryComponent.hpp"
 
-class Quad final: public Geometry {
+class Quad final: public GeometryComponent {
     public:
         Quad() = delete;
         explicit Quad(float size);

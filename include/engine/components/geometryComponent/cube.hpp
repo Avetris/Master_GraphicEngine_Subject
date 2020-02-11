@@ -1,9 +1,9 @@
 #ifndef __CUBE_H__
 #define __CUBE_H__ 1
 
-#include "geometry.hpp"
+#include "../geometryComponent.hpp"
 
-class Cube final : public Geometry {
+class Cube final : public GeometryComponent {
     public:
         Cube() = delete;
         explicit Cube(float size);

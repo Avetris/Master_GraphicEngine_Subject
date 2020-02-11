@@ -1,5 +1,5 @@
-#include "engine/geometry/teapot.hpp"
-#include "engine/geometry/teapotdata.hpp"
+#include <engine/components/geometryComponent/teapot.hpp>
+#include <engine/components/geometryComponent/teapotdata.hpp>
 
 #include <glm/gtc/matrix_transform.hpp>
 

@@ -27,10 +27,16 @@ set(ENGINE_SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/transformComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/graphicComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/cameraComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/geometryComponent/cube.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/geometryComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/geometryComponent/quad.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/geometryComponent/sphere.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/geometryComponent/teapot.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/system.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/cameraSystem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/graphicSystem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/transformSystem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/geometrySystem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/gpu.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/deps.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/mesh.cpp
@@ -41,12 +47,6 @@ set(ENGINE_SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/fbo/fbo.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/fbo/shadow.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/window.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/geometry/cube.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/geometry/geometry.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/geometry/quad.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/geometry/plane.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/geometry/sphere.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/geometry/teapot.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/light/light.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/light/directionalLight.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/light/pointLight.cpp
@@ -65,10 +65,17 @@ set(ENGINE_HEADER_FILES
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/cameraComponent.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/transformComponent.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/graphicComponent.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/geometryComponent.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/geometryComponent/cube.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/geometryComponent/quad.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/geometryComponent/sphere.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/geometryComponent/teapot.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/geometryComponent/teapotdata.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/system.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/cameraSystem.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/graphicSystem.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/transformSystem.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/geometrySystem.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/gpu.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/input.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/mesh.hpp
@@ -79,13 +86,6 @@ set(ENGINE_HEADER_FILES
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/fbo/fbo.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/fbo/shadow.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/window.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/geometry/cube.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/geometry/geometry.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/geometry/quad.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/geometry/plane.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/geometry/sphere.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/geometry/teapot.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/geometry/teapotdata.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/light/light.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/light/directionalLight.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/light/pointLight.hpp

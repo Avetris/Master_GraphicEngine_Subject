@@ -1,23 +1,24 @@
-#ifndef __GEOMETRY_H__
-#define __GEOMETRY_H__ 1
+#ifndef __GEOMETRY_COMPONENT_H__
+#define __GEOMETRY_COMPONENT_H__ 1
 
 #include <cstdint>
+#include "component.hpp"
 
 //Attributes
 //0 - positions
 //1 - uvs
 //2 - normals
 
-class Geometry {
+class GeometryComponent : public Component{
     public:
-        Geometry() = default;
-        virtual ~Geometry();
+        GeometryComponent() = default;
+        virtual ~GeometryComponent();
 
-        Geometry(const Geometry&) = default;
-        Geometry& operator=(const Geometry&) = default;
+        GeometryComponent(const GeometryComponent&) = default;
+        GeometryComponent& operator=(const GeometryComponent&) = default;
 
-        Geometry(Geometry&&) noexcept = default;
-        Geometry& operator=(Geometry&&) noexcept = default;
+        GeometryComponent(GeometryComponent&&) noexcept = default;
+        GeometryComponent& operator=(GeometryComponent&&) noexcept = default;
 
         virtual void render() const;
 

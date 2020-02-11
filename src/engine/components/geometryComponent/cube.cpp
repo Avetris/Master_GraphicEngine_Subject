@@ -1,6 +1,6 @@
 #define _USE_MATH_DEFINES
 
-#include "engine/geometry/cube.hpp"
+#include <engine/components/geometryComponent/cube.hpp>
 
 #include <cmath>
 

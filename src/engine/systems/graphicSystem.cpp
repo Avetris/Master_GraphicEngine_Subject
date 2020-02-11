@@ -1,6 +1,7 @@
 #include <engine/systems/graphicSystem.hpp>
 #include <engine/components/graphicComponent.hpp>
 #include <engine\handle\handleManager.hpp>
+#include <engine\shader.hpp>
 
 GraphicSystem::GraphicSystem() {}
 
@@ -20,6 +21,31 @@ void GraphicSystem::update(const float dt) {
 
 		}
 	}
+}
+
+Handle* GraphicSystem::getShader(GENERIC_SHADER_TYPE type) const
+{
+	Handle* shader = nullptr;
+	auto p = _defaultShaders.find(type);
+	if (p != _defaultShaders.end()) {
+		HandleManager::instance()->GetAs(p->second, shader);
+	}
+	else {
+		Shader* s;
+		switch (type)
+		{
+			case BLINN:
+			s = new Shader(SHADER_PATH + "binn.vs", SHADER_PATH + "binn.fs");
+			break;
+		}
+
+		if (s != nullptr) {
+			shader = HandleManager::instance()->Add(&s, 0);
+			std::pair<GENERIC_SHADER_TYPE, Handle*> r(type, shader);
+			_defaultShaders.insert(std::pair<GENERIC_SHADER_TYPE, Handle*>(type, shader));
+		}
+	}
+	return shader;
 }
 
 void GraphicSystem::positionRefresh()
