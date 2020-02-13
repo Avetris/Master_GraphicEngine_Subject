@@ -1,5 +1,5 @@
-#ifndef __GEOMETRY_COMPONENT_H__
-#define __GEOMETRY_COMPONENT_H__ 1
+#ifndef __RENDER_COMPONENT_H__
+#define __RENDER_COMPONENT_H__ 1
 
 #include <cstdint>
 #include "component.hpp"
@@ -9,16 +9,19 @@
 //1 - uvs
 //2 - normals
 
-class GeometryComponent : public Component{
+class RenderComponent : public Component{
     public:
-        GeometryComponent() = default;
-        virtual ~GeometryComponent();
+        RenderComponent(uint16_t UID, GameObject* gameObject);
+        virtual ~RenderComponent();
 
-        GeometryComponent(const GeometryComponent&) = default;
-        GeometryComponent& operator=(const GeometryComponent&) = default;
+        RenderComponent(const RenderComponent&) = default;
+        RenderComponent& operator=(const RenderComponent&) = default;
 
-        GeometryComponent(GeometryComponent&&) noexcept = default;
-        GeometryComponent& operator=(GeometryComponent&&) noexcept = default;
+        RenderComponent(RenderComponent&&) noexcept = default;
+        RenderComponent& operator=(RenderComponent&&) noexcept = default;
+
+        void init();
+        void update(float dt);
 
         virtual void render() const;
 

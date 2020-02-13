@@ -1,12 +1,14 @@
 #ifndef __COMPONENT_H__
 #define __COMPONENT_H__
 
-#include <engine\handle\handle.hpp>
+class GameObject;
+
 #include <engine\object.hpp>
+
 
 class Component : public Object{
     public:
-        Component(uint16_t UID, Handle* gameObject);
+        Component(uint16_t UID, GameObject* gameObject);
         virtual void init() = 0;
         virtual void update(float dt) = 0;
         ~Component();
@@ -14,9 +16,9 @@ class Component : public Object{
         bool isEnable() const;
 
     protected:
-        Handle* _gameObject = nullptr;
+        GameObject* _gameObject;
     private:
-        bool _isEnable = true;
+        bool _enable = true;
 };
 
 #endif

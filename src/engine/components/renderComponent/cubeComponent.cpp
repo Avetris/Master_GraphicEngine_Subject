@@ -1,10 +1,10 @@
 #define _USE_MATH_DEFINES
 
-#include <engine/components/geometryComponent/cube.hpp>
+#include <engine/components/geometryComponent/cubeComponent.hpp>
 
 #include <cmath>
 
-Cube::Cube(float size) : _size(size) {
+CubeComponent::CubeComponent(uint16_t UID, GameObject* gameObject, float size) : GeometryComponent(UID, gameObject), _size(size) {
     _nVertices = 6 * 4;   //6 faces * 4 vertices;
     _nElements = 6 * 2 * 3; // 6 faces * 2 triangles * 3 vertices
 
@@ -23,24 +23,7 @@ Cube::Cube(float size) : _size(size) {
     delete[] indices;
 }
 
-Cube::Cube(float size, float* uvs) : _size(size) {
-    _nVertices = 6 * 4;   //6 faces * 4 vertices;
-    _nElements = 6 * 2 * 3; // 6 faces * 2 triangles * 3 vertices
-
-    const auto positions = new float[static_cast<size_t>(_nVertices) * 3];
-    const auto normals = new float[static_cast<size_t>(_nVertices) * 3]{ 0.0f };
-
-    const auto indices = new uint32_t[_nElements];
-
-    generateVertexData(positions, uvs, normals, indices, true);
-    uploadData(positions, uvs, normals, indices);
-
-    delete[] positions;
-    delete[] normals;
-    delete[] indices;    
-}
-
-void Cube::generateVertexData(float* positions, float* uvs, float* normals, uint32_t* indices, bool uvsDone) const {
+void CubeComponent::generateVertexData(float* positions, float* uvs, float* normals, uint32_t* indices, bool uvsDone) const {
     const auto half = _size / 2; 
     const auto radius = sqrt(3 * pow(half, 2)); // radius with the formula sqrt(x^2 + y^2 + z^2)
 

@@ -3,35 +3,35 @@
 
 #include <cstdint>
 #include <vector>
+#include <string>
 #include <unordered_map>
 #include <engine\systems\system.hpp>
 #include <engine\components\component.hpp>
 #include <engine\managers\componentManager.hpp>
 
-std::string SHADER_PATH = "../projects/AG10/";
+static std::string SHADER_PATH = "shaders/";
 
 class GraphicSystem : public System{
     public:
         enum GENERIC_SHADER_TYPE {
-            BLINN = 0,
-            BLEND = 1,
-            LIGHT = 2,
-            SHADOW = 3,
+            BLINN,
+            BLEND,
+            LIGHT,
+            SHADOW,
         };
 
         GraphicSystem();
         void init();
         void update(const float dt);
 
-        Handle* getShader(GENERIC_SHADER_TYPE type) const;
+        Shader* getShader(GENERIC_SHADER_TYPE type);
         void positionRefresh();
         
     private:
-        std::vector<Handle*> _objectsToRender;
-        void checkObjectsToRender();
+        void sortObjectsToRender();
 
         bool _positionRefresh = true;
-        std::unordered_map<GENERIC_SHADER_TYPE, Handle*> _defaultShaders;
+        std::unordered_map<GENERIC_SHADER_TYPE, Shader*> _defaultShaders;
 };
 
 #endif

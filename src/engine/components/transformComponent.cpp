@@ -1,13 +1,12 @@
 #include "engine/components/transformComponent.hpp"
-#include <engine\gameObject.hpp>
-#include <engine\handle\handleManager.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <engine\systems\transformSystem.hpp>
 #include <engine\systems\graphicSystem.hpp>
 #include <engine\engine.hpp>
+#include <engine\gameObject.hpp>
 
 
-TransformComponent::TransformComponent(uint16_t UID, Handle* gameObject) :Component(UID, gameObject) {}
+TransformComponent::TransformComponent(uint16_t UID, GameObject* gameObject) :Component(UID, gameObject) {}
 
 void TransformComponent::init()
 {
@@ -19,56 +18,42 @@ void TransformComponent::update(float dt)
 
 TransformComponent::~TransformComponent()
 {
-	//Engine::instance()->getSystem<TransformSystem>()->removeComponent(this);
-	GameObject* gameObject;
-	HandleManager::instance()->GetAs(_gameObject, gameObject);
-	gameObject->removeComponent(GRAPHIC_COMPONENT);
+	_gameObject->removeComponent(GRAPHIC_COMPONENT);
+	Engine::instance()->getSystem<TransformSystem>()->removeComponent(static_cast<Component*>(this));
 }
 
 void TransformComponent::move(glm::vec3 direction, bool add)
 {
-	GameObject* object;
-	HandleManager::instance()->GetAs(_gameObject, object);
-	if (object != nullptr) {
-		if (add) {
-			object->setPosition(object->getPosition() + direction);
-		}
-		else {
-			object->setPosition(direction);
-		}
-		_modelToUpdate = true;
+	if (add) {
+		_gameObject->setPosition(_gameObject->getPosition() + direction);
 	}
+	else {
+		_gameObject->setPosition(direction);
+	}
+	_modelToUpdate = true;
 }
 
 void TransformComponent::scale(glm::vec3 scale, bool add)
 {
-	GameObject* object;
-	HandleManager::instance()->GetAs(_gameObject, object);
-	if (object != nullptr) {
-		if (add) {
-			object->setScale(object->getScale() + scale);
-		}
-		else {
-			object->setScale(scale);
-		}
-		_modelToUpdate = true;
+	if (add) {
+		_gameObject->setScale(_gameObject->getScale() + scale);
 	}
+	else {
+		_gameObject->setScale(scale);
+	}
+	_modelToUpdate = true;
 }
 
 void TransformComponent::rotate(float angle, glm::vec3 axis, bool add)
 {
-	GameObject* object;
-	HandleManager::instance()->GetAs(_gameObject, object);
-	if (object != nullptr) {
-		if (add) {
-			// TODO --> This is incorrect!
-			object->setRotation(angle + angle, object->getRotation() + axis);
-		}
-		else {
-			object->setRotation(angle, axis);
-		}
-		_modelToUpdate = true;
+	if (add) {
+		// TODO --> This is incorrect!
+		_gameObject->setRotation(angle + angle, _gameObject->getRotation() + axis);
 	}
+	else {
+		_gameObject->setRotation(angle, axis);
+	}
+	_modelToUpdate = true;
 }
 
 bool TransformComponent::modelNeedsToUpdate() const
@@ -78,24 +63,19 @@ bool TransformComponent::modelNeedsToUpdate() const
 
 void TransformComponent::updateModel(glm::mat4 parentModel)
 {
-	GameObject* object;
-	HandleManager::instance()->GetAs(_gameObject, object);
-
 	_model = glm::mat4(1.0f);
-	_model = glm::translate(_model, object->getPosition());
-	_model = glm::rotate(_model, object->getRotationAngle(), object->getRotation());
-	_model = glm::scale(_model, object->getScale());
+	_model = glm::translate(_model, _gameObject->getPosition());
+	_model = glm::rotate(_model, _gameObject->getRotationAngle(), _gameObject->getRotation());
+	_model = glm::scale(_model, _gameObject->getScale());
 	_model = parentModel * _model;
 	_normalMat = glm::inverse(glm::transpose(glm::mat3(_model)));
 
-	std::vector<Handle*> children = object->getChildren();
-	GameObject* child;
+	std::vector<GameObject*> children = _gameObject->getChildren();
 	for (auto it = children.begin(); it < children.end(); it++) {
-		HandleManager::instance()->GetAs(*it, child);
-		/*TransformComponent* com = child->getComponent<TransformComponent>(TRANSFORM_COMPONENT);
+		TransformComponent* com = (*it)->getComponent<TransformComponent>(TRANSFORM_COMPONENT);
 		if (com != nullptr) {
 			com->updateModel(_model);
-		}*/
+		}
 	}
 	_modelToUpdate = false;
 	Engine::instance()->getSystem<GraphicSystem>()->positionRefresh();

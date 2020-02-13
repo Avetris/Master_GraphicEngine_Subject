@@ -2,10 +2,9 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <engine\gameObject.hpp>
-#include <engine\handle\handleManager.hpp>
 #include <engine\components\transformComponent.hpp>
 
-CameraComponent::CameraComponent(uint16_t UID, Handle* gameObject):Component(UID, gameObject){ updateCameraVectors(); }
+CameraComponent::CameraComponent(uint16_t UID, GameObject* gameObject):Component(UID, gameObject){ updateCameraVectors(); }
 
 void CameraComponent::init() {
     updateCameraVectors();
@@ -20,11 +19,7 @@ CameraComponent::~CameraComponent() {
 }
 
 glm::mat4 CameraComponent::getViewMatrix() const {
-    GameObject* object;
-    if (HandleManager::instance()->GetAs(_gameObject, object)) {
-        return glm::lookAt(object->getPosition(), object->getPosition() + _front, _up);
-    }
-    return glm::mat4(0.0f);
+    return glm::lookAt(_gameObject->getPosition(), _gameObject->getPosition() + _front, _up);
 }
 
 glm::vec3 CameraComponent::getCameraDirection() const {
@@ -50,19 +45,16 @@ void CameraComponent::handleKeyboard(Movement direction, float dt) {
     const float velocity = k_Speed * dt;
     glm::vec3 movement(0,0,0);
 
-    GameObject* object;
-    if (HandleManager::instance()->GetAs(_gameObject, object)) {
-        switch (direction) {
-            case Movement::Forward: movement = _front * velocity; break;
-            case Movement::Backward: movement = _front * -velocity; break;
-            case Movement::Left: movement = _right * -velocity; break;
-            case Movement::Right: movement = _right * velocity; break;
-            default:;
-        }
-        TransformComponent* transform = object->getComponent<TransformComponent>(TRANSFORM_COMPONENT);
-        if(transform != nullptr){
-            transform->move(movement);
-        }
+    switch (direction) {
+        case Movement::Forward: movement = _front * velocity; break;
+        case Movement::Backward: movement = _front * -velocity; break;
+        case Movement::Left: movement = _right * -velocity; break;
+        case Movement::Right: movement = _right * velocity; break;
+        default:;
+    }
+    TransformComponent* transform = _gameObject->getComponent<TransformComponent>(TRANSFORM_COMPONENT);
+    if(transform != nullptr){
+        transform->move(movement);
     }
 
 }

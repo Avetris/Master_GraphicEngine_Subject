@@ -1,6 +1,5 @@
 #include <engine/systems/graphicSystem.hpp>
 #include <engine/components/graphicComponent.hpp>
-#include <engine\handle\handleManager.hpp>
 #include <engine\shader.hpp>
 
 GraphicSystem::GraphicSystem() {}
@@ -11,61 +10,46 @@ void GraphicSystem::init() {
 
 void GraphicSystem::update(const float dt) {
 	GraphicComponent* component;
-	if (_positionRefresh) {
-		checkObjectsToRender();
-	}
 	GPU::enableCullFace();
-	for (auto it = _objectsToRender.begin(); it < _objectsToRender.end(); it++) {
-		HandleManager::instance()->GetAs(*it, component);
-		if (component != nullptr && component->isEnable()) {
+	for (auto it = _componentList.begin(); it < _componentList.end(); it++) {
+		if ((*it)->isEnable()) {
 
 		}
 	}
 }
 
-Handle* GraphicSystem::getShader(GENERIC_SHADER_TYPE type) const
+Shader* GraphicSystem::getShader(GENERIC_SHADER_TYPE type)
 {
-	Handle* shader = nullptr;
+	Shader* shader = nullptr;
 	auto p = _defaultShaders.find(type);
 	if (p != _defaultShaders.end()) {
-		HandleManager::instance()->GetAs(p->second, shader);
+		shader = p->second;
 	}
 	else {
 		Shader* s;
+		std::string vertexShader = SHADER_PATH;
+		std::string fragmentShader = SHADER_PATH;
 		switch (type)
 		{
-			case BLINN:
-			s = new Shader(SHADER_PATH + "binn.vs", SHADER_PATH + "binn.fs");
-			break;
+			case BLINN: 
+				vertexShader.append("binn.vs");
+				fragmentShader.append("binn.fs");
+				break;
+			case BLEND:
+				vertexShader.append("blend.vs");
+				fragmentShader.append("blend.fs");
+				break;
+			case LIGHT:
+				vertexShader.append("light.vs");
+				fragmentShader.append("light.fs");
+				break;
+			case SHADOW:
+				vertexShader.append("depth.vs");
+				fragmentShader.append("depth.fs");
+				break;
 		}
-
-		if (s != nullptr) {
-			shader = HandleManager::instance()->Add(&s, 0);
-			std::pair<GENERIC_SHADER_TYPE, Handle*> r(type, shader);
-			_defaultShaders.insert(std::pair<GENERIC_SHADER_TYPE, Handle*>(type, shader));
-		}
+		s = new Shader(vertexShader.c_str(), fragmentShader.c_str());
+		_defaultShaders[type] = shader;
 	}
 	return shader;
 }
-
-void GraphicSystem::positionRefresh()
-{
-	_positionRefresh = true;
-}
-
-void GraphicSystem::checkObjectsToRender()
-{
-	_objectsToRender.clear();
-	GraphicComponent* component;
-
-	for (auto it = _componentList.begin(); it < _componentList.end(); it++) {
-		HandleManager::instance()->GetAs(*it, component);
-		if (component != nullptr && component->isEnable()) {
-
-		}
-	}
-}
-
-//bool GraphicSystem::isBeingShown() {
-//	return true;
-//}

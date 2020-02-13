@@ -1,12 +1,12 @@
 #ifndef __TRANSFORM_COMPONENT_H__
 #define __TRANSFORM_COMPONENT_H__
 
-#include <engine\components\component.hpp>
+#include "component.hpp"
 #include <glm/glm.hpp>
 
 class TransformComponent : public Component {
     public:
-        TransformComponent(uint16_t UID, Handle* gameObject);
+        TransformComponent(uint16_t UID, GameObject* gameObject);
         void init();
         void update(float dt);
         ~TransformComponent();

@@ -6,23 +6,20 @@
 
 class GraphicComponent : public Component {
     public:
-        GraphicComponent(Handle* shader, uint16_t UID, Handle* gameObject);
+        GraphicComponent(uint16_t UID, GameObject* gameObject);
 
         void init();
         void update(float dt);
 
         void setMaterial(Material* material);
 
-        void setShader(Handle* shader);
         void setShader(Shader* shader);
         
         ~GraphicComponent();
 
-        void setMaterial(Material* material);
-
     protected:
-        Handle* _material = nullptr;
-        Handle* _shader = nullptr;
+        Material* _material = nullptr;
+        Shader* _shader = nullptr;
 };
 
 #endif

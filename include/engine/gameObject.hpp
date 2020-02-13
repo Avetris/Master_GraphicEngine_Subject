@@ -1,12 +1,10 @@
 #ifndef __GAME_OBJECT_H__
 #define __GAME_OBJECT_H__
 
-#include <cstdint>
+class Component;
+
 #include <vector>
-#include <engine\components\component.hpp>
 #include <engine\managers\componentManager.hpp>
-#include <engine\object.hpp>
-#include <engine\handle\handle.hpp>
 #include <glm/glm.hpp>
 
 class GameObject : public Object {
@@ -24,51 +22,61 @@ class GameObject : public Object {
         void setRotation(float angle, glm::vec3 rotation);
         void setScale(glm::vec3 scale);
 
-        template<typename Component>
-        Component* addComponent(TYPE componentType);
-        void removeComponent(Handle* component);
+        template<class T>
+        T* addComponent(TYPE componentType);
+        void removeComponent(Component* component);
         void removeComponent(TYPE componentType);
 
-        template<typename Component>
-        Component* getComponent(TYPE componentType) const;
+        template<class T>
+        T* getComponent(TYPE componentType) const;
 
-        template<typename Component>
-        Component* getComponent() const;
+        template<class T>
+        T* getComponent() const;
 
-        void addChildren(Handle* child);
-        std::vector<Handle*> getChildren() const;
+        void addChildren(GameObject* child);
+        std::vector<GameObject*> getChildren() const;
         GameObject* removeChildren(uint16_t UID);
 
     private:
-        Handle* _parent;
-        std::vector<Handle*> _children;
+        GameObject* _parent = nullptr;
+        std::vector<GameObject*> _children;
 
     private:
         glm::vec3 _position;
         glm::vec3 _rotation;
         float _rotationAngle;
         glm::vec3 _scale;
-        Handle* _componentList[NUMBER_COMPONENTS];
+        Component* _componentList[NUMBER_COMPONENTS] = { nullptr };
 };
 
 
-template<typename Component>
-inline Component* GameObject::getComponent(TYPE componentType) const
+template<class T>
+ T* GameObject::addComponent(TYPE componentType)
 {
-    Component* component = nullptr;
-    if (componentType >= 0 && _componentList[componentType] != nullptr) {
-        HandleManager::instance()->GetAs(_componentList[componentType], component);
+    T* component = dynamic_cast<T*>(_componentList[componentType]);
+    if (component == nullptr) {
+        component = ComponentManager::instance()->createComponent<T>(this);
+        _componentList[componentType] = component;
     }
     return component;
 }
 
-template<typename Component>
-inline Component* GameObject::getComponent<Component>() const
+template<class T>
+T* GameObject::getComponent(TYPE componentType) const
 {
-    Component* component = nullptr;
-    if (componentType >= 0 && _componentList[componentType] != nullptr) {
-        HandleManager::instance()->GetAs(_componentList[componentType], component);
+    return dynamic_cast<T*>(_componentList[componentType]);
+}
+
+template<class T>
+T* GameObject::getComponent() const
+{
+    T* output;
+    for (auto component : _systemList) {
+        output = dynamic_cast<T*>(component);
+        if (output) {
+            break;
+        }
     }
-    return component;
+    return output;
 }
 #endif

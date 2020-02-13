@@ -16,27 +16,26 @@ include(cmake/compiler.cmake)
 #Engine Source Files
 
 set(ENGINE_SRC_FILES
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/handle/handleManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/object.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/engine.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/gameObject.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/managers/gameObjectManager.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/message.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/managers/messageManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/managers/componentManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/component.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/transformComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/graphicComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/cameraComponent.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/geometryComponent/cube.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/geometryComponent.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/geometryComponent/quad.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/geometryComponent/sphere.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/geometryComponent/teapot.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent/cubeComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent/quadComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent/sphereComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent/teapotComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/system.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/cameraSystem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/graphicSystem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/transformSystem.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/geometrySystem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/renderSystem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/gpu.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/deps.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/mesh.cpp
@@ -50,32 +49,35 @@ set(ENGINE_SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/light/light.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/light/directionalLight.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/light/pointLight.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/light/spotLight.cpp)
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/light/spotLight.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/camera.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/quad.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/cube.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/sphere.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/teapot.cpp)
 
 set(ENGINE_HEADER_FILES
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/handle/handle.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/handle/handleManager.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/object.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/engine.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/gameObject.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/managers/gameObjectManager.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/message.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/managers/messageManager.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/managers/componentManager.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/component.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/cameraComponent.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/transformComponent.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/graphicComponent.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/geometryComponent.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/geometryComponent/cube.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/geometryComponent/quad.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/geometryComponent/sphere.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/geometryComponent/teapot.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/geometryComponent/teapotdata.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/renderComponent.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/renderComponent/cubeComponent.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/renderComponent/quadComponent.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/renderComponent/sphereComponent.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/renderComponent/teapotComponent.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/renderComponent/teapotdata.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/system.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/cameraSystem.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/graphicSystem.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/transformSystem.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/geometrySystem.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/renderSystem.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/gpu.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/input.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/mesh.hpp
@@ -89,7 +91,12 @@ set(ENGINE_HEADER_FILES
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/light/light.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/light/directionalLight.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/light/pointLight.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/light/spotLight.hpp)
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/light/spotLight.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/camera.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/quad.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/cube.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/sphere.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/teapot.hpp)
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/src/engine/ PREFIX "Source Files" FILES ${ENGINE_SRC_FILES})
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/include/engine PREFIX "Header Files" FILES ${ENGINE_HEADER_FILES})

@@ -1,11 +1,11 @@
 #define _USE_MATH_DEFINES
 
-#include <engine/components/geometryComponent/sphere.hpp>
+#include <engine/components/renderComponent/sphereComponent.hpp>
 
 #include <cmath>
 
-Sphere::Sphere(float radius, uint32_t stacks, uint32_t slices)
-    : _radius(radius), _stacks(stacks), _slices(slices) {
+SphereComponent::SphereComponent(uint16_t UID, GameObject* gameObject, float radius, uint32_t stacks, uint32_t slices)
+    : renderComponent(UID, gameObject), _radius(radius), _stacks(stacks), _slices(slices) {
 
     _nVertices = (slices + 1) * (stacks + 1);
     _nElements = (slices * 2 * (stacks - 1)) * 3;
@@ -25,7 +25,7 @@ Sphere::Sphere(float radius, uint32_t stacks, uint32_t slices)
     delete[] indices;
 }
 
-void Sphere::generateVertexData(float* positions, float* uvs, float* normals, uint32_t* indices) const {
+void SphereComponent::generateVertexData(float* positions, float* uvs, float* normals, uint32_t* indices) const {
     const auto thetaFac = static_cast<float>((2.0 * M_PI) / _slices); // Generate positions and normals
     const auto phiFac = static_cast<float>(M_PI / _stacks);
     uint32_t idx = 0, tIdx = 0;

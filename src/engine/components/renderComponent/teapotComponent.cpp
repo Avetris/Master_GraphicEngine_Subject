@@ -1,10 +1,10 @@
-#include <engine/components/geometryComponent/teapot.hpp>
-#include <engine/components/geometryComponent/teapotdata.hpp>
+#include <engine/components/renderComponent/teapotComponent.hpp>
+#include <engine/components/renderComponent/teapotdata.hpp>
 
 #include <glm/gtc/matrix_transform.hpp>
 
 
-Teapot::Teapot(uint32_t grid, glm::mat4 lidTransform) {
+TeapotComponent::TeapotComponent(uint16_t UID, GameObject* gameObject, uint32_t grid, glm::mat4 lidTransform) : renderComponent(UID, gameObject) {
     _nVertices = 32 * (grid + 1) * (grid + 1);
     const uint32_t faces = grid * grid * 32;
     _nElements = faces * 6;
@@ -25,7 +25,7 @@ Teapot::Teapot(uint32_t grid, glm::mat4 lidTransform) {
     delete[] indices;
 }
 
-void Teapot::generateVertexData(float* positions, float* uvs, float* normals, uint32_t* indices, uint32_t grid) const {
+void TeapotComponent::generateVertexData(float* positions, float* uvs, float* normals, uint32_t* indices, uint32_t grid) const {
     const auto B = new float[4 * (grid + 1)];  // Pre-computed Bernstein basis functions
     const auto dB = new float[4 * (grid + 1)]; // Pre-computed derivitives of basis functions
 
@@ -65,7 +65,7 @@ void Teapot::generateVertexData(float* positions, float* uvs, float* normals, ui
 
 
 
-void Teapot::buildPatchReflect(uint32_t patchNum, float *B, float *dB,
+void TeapotComponent::buildPatchReflect(uint32_t patchNum, float *B, float *dB,
     float* positions, float* uvs, float* normals, uint32_t* indices,
     uint32_t& idx, uint32_t& uvIdx, uint32_t& indicesIdx, int grid,
     bool reflectX, bool reflectY) {
@@ -107,7 +107,7 @@ void Teapot::buildPatchReflect(uint32_t patchNum, float *B, float *dB,
     }
 }
 
-void Teapot::buildPatch(glm::vec3 patch[][4], float* B, float* dB,
+void TeapotComponent::buildPatch(glm::vec3 patch[][4], float* B, float* dB,
     float* positions, float* uvs, float* normals, uint32_t* indices,
     uint32_t& idx, uint32_t& uvIdx, uint32_t& indicesIdx, uint32_t grid, glm::mat3 reflect,
     bool invertNormal) {
@@ -156,7 +156,7 @@ void Teapot::buildPatch(glm::vec3 patch[][4], float* B, float* dB,
     }
 }
 
-void Teapot::getPatch(int patchNum, glm::vec3 patch[][4], bool reverseV) {
+void TeapotComponent::getPatch(int patchNum, glm::vec3 patch[][4], bool reverseV) {
     for (uint32_t u = 0; u < 4; ++u) {       // Loop in u direction
         for (uint32_t v = 0; v < 4; ++v) {     // Loop in v direction
             if (reverseV) {
@@ -174,7 +174,7 @@ void Teapot::getPatch(int patchNum, glm::vec3 patch[][4], bool reverseV) {
     }
 }
 
-void Teapot::computeBasisFunctions(float * B, float * dB, uint32_t grid) {
+void TeapotComponent::computeBasisFunctions(float * B, float * dB, uint32_t grid) {
     const float inc = 1.0f / static_cast<float>(grid);
     for (uint32_t i = 0; i <= grid; ++i) {
         const float t = static_cast<float>(i) * inc;
@@ -194,7 +194,7 @@ void Teapot::computeBasisFunctions(float * B, float * dB, uint32_t grid) {
     }
 }
 
-glm::vec3 Teapot::evaluate(int gridU, int gridV, float *B, glm::vec3 patch[][4]) {
+glm::vec3 TeapotComponent::evaluate(int gridU, int gridV, float *B, glm::vec3 patch[][4]) {
     glm::vec3 p(0.0f, 0.0f, 0.0f);
     for (uint32_t i = 0; i < 4; ++i) {
         for (uint32_t j = 0; j < 4; ++j) {
@@ -204,7 +204,7 @@ glm::vec3 Teapot::evaluate(int gridU, int gridV, float *B, glm::vec3 patch[][4])
     return p;
 }
 
-glm::vec3 Teapot::evaluateNormal(int gridU, int gridV, float *B, float *dB, glm::vec3 patch[][4]) {
+glm::vec3 TeapotComponent::evaluateNormal(int gridU, int gridV, float *B, float *dB, glm::vec3 patch[][4]) {
     glm::vec3 du(0.0f, 0.0f, 0.0f);
     glm::vec3 dv(0.0f, 0.0f, 0.0f);
 
@@ -223,7 +223,7 @@ glm::vec3 Teapot::evaluateNormal(int gridU, int gridV, float *B, float *dB, glm:
     return norm;
 }
 
-void Teapot::moveLid(int grid, float* v, glm::mat4 lidTransform) {
+void TeapotComponent::moveLid(int grid, float* v, glm::mat4 lidTransform) {
     const uint32_t start = 3 * 12 * (grid + 1) * (grid + 1);
     const uint32_t end = 3 * 20 * (grid + 1) * (grid + 1);
 

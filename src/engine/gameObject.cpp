@@ -1,6 +1,4 @@
 #include <engine\gameObject.hpp>
-#include <engine\handle\handleManager.hpp>
-#include <engine\components\transformComponent.hpp>
 
 GameObject::GameObject(uint16_t UID) :
 	Object(UID),
@@ -17,10 +15,10 @@ GameObject::GameObject(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm
 GameObject::~GameObject()
 {
 	bool exist = false;
-	for (Handle* h : _componentList) {
-		Component* component;
-		exist = HandleManager::instance()->GetAs(h, component);
-		if (exist) delete component;
+	for (Component* component : _componentList) {
+		if (component != nullptr) {
+			delete component;
+		}
 	}
 }
 
@@ -60,18 +58,13 @@ void GameObject::setScale(glm::vec3 scale)
 	_scale = scale;
 }
 
-void GameObject::removeComponent(Handle* componentHandle)
+void GameObject::removeComponent(Component* component)
 {
-	Component* component;
-	if (HandleManager::instance()->GetAs(componentHandle, component)) {
-		Component* currentComponent;
-		for (size_t i = 0; i < NUMBER_COMPONENTS; i++) {
-			if (_componentList[i] != nullptr && HandleManager::instance()->GetAs(_componentList[i], currentComponent)) {
-				if (currentComponent->_UID == component->_UID) {
-					_componentList[i] = nullptr;
-					return;
-				}
-			}
+	for (size_t i = 0; i < NUMBER_COMPONENTS; i++) {
+		if (_componentList[i] != nullptr && _componentList[i] == component) {
+			delete _componentList[i];
+			_componentList[i] = nullptr;
+			return;
 		}
 	}
 }
@@ -83,26 +76,12 @@ void GameObject::removeComponent(TYPE componentType)
 	}
 }
 
-template<typename Component>
-Component* GameObject::addComponent(TYPE componentType)
-{
-	Component* component = getComponent(componentType);
-	if (component == nullptr) {
-		component = ComponentManager::instance()->createComponent(_handle, componentType);
-		_componentList[componentType] = component->getHandle();
-	}
-	return component;
-}
-
-void GameObject::addChildren(Handle* child)
+void GameObject::addChildren(GameObject* child)
 {
 	bool exist = false;
 	GameObject* gameobject;
-	GameObject* gameobjectChild;
-	HandleManager::instance()->GetAs(child, gameobjectChild);
 	for (auto it = _children.begin(); !exist && it < _children.end(); it++) {
-		HandleManager::instance()->GetAs(*it, gameobject);
-		exist = gameobject->_UID == gameobjectChild->_UID;
+		exist = (*it)->_UID == child->_UID;
 	}
 
 	if (!exist) {
@@ -110,22 +89,22 @@ void GameObject::addChildren(Handle* child)
 	}
 }
 
-std::vector<Handle*> GameObject::getChildren() const
+std::vector<GameObject*> GameObject::getChildren() const
 {
 	return _children;
 }
 
 GameObject* GameObject::removeChildren(uint16_t UID)
 {
-	GameObject* gameObject = nullptr;
+	GameObject* removedChild = nullptr;
 
 	for (auto it = _children.begin(); it < _children.end(); it++) {
-		HandleManager::instance()->GetAs(*it, gameObject);
-		if (gameObject->_UID == UID) {
+		if ((*it)->_UID == UID) {
+			removedChild = *it;
 			_children.erase(it);
 			break;
 		}
 	}
-	return gameObject;
+	return removedChild;
 }
 

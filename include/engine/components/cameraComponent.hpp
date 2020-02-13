@@ -1,5 +1,5 @@
-#ifndef __CAMERA_H__
-#define __CAMERA_H__
+#ifndef __CAMERA_COMPONENT_H__
+#define __CAMERA_COMPONENT_H__
 
 #include <engine/components/Component.hpp>
 #include <glm/glm.hpp>
@@ -19,7 +19,7 @@ class CameraComponent : public Component{
             Right = 3,
         };
 
-        CameraComponent(uint16_t UID, Handle* gameObject);
+        CameraComponent(uint16_t UID, GameObject* gameObject);
         void init();
         void update(float dt);
         ~CameraComponent();

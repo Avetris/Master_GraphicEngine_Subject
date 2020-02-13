@@ -4,7 +4,7 @@
 #include <engine\systems\graphicSystem.hpp>
 #include <engine\systems\cameraSystem.hpp>
 #include <engine\systems\transformSystem.hpp>
-#include <engine\systems\geometrySystem.hpp>
+#include <engine\systems\renderSystem.hpp>
 #include <iostream>
 
 Engine::Engine() {
@@ -17,11 +17,9 @@ void Engine::init()
 	_systemList.push_back(new TransformSystem());
 	_systemList.push_back(new CameraSystem());
 	_systemList.push_back(new GraphicSystem());
-	_systemList.push_back(new GeometrySystem());
-	std::cout << "SALE" << std::endl;
+	_systemList.push_back(new RenderSystem());
 	_nextGameTick = GetTickCount64();
 	window = Window::instance();
-	std::cout << _systemList.size() << std::endl;
 	for (auto it = _systemList.begin(); it < _systemList.end(); it++) {
 		(*it)->init();
 	}
@@ -45,14 +43,3 @@ void Engine::mainLoop() {
 		window->frame();
 	}
 }
-
-//template<typename System>
-//bool Engine::getSystem(System* outSystem) const {
-//	for (auto system : _systemList) {
-//		if (dynamic_cast<System*>(system)) {
-//			outSystem = system;
-//			return true;
-//		}
-//	}
-//	return false;
-//}

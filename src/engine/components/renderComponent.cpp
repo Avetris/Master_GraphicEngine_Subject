@@ -1,14 +1,16 @@
-#include <engine/components/geometryComponent.hpp>
+#include <engine/components/renderComponent.hpp>
 
 #include <glm/vec3.hpp>
 #include <glm/vec2.hpp>
 #include <engine/gpu.hpp>
 
-GeometryComponent::~GeometryComponent() {
+RenderComponent::RenderComponent(uint16_t UID, GameObject* gameObject): Component(UID, gameObject){}
+
+RenderComponent::~RenderComponent() {
     GPU::deleteBuffers(4, _VAO, _VBO);
 }
 
-void GeometryComponent::calcTangents(const float* positions, const float* uvs, const float* normals, float* tangents, float* biTangents) const {
+void RenderComponent::calcTangents(const float* positions, const float* uvs, const float* normals, float* tangents, float* biTangents) const {
     for (size_t i = 0; i < _nVertices; i += 3) {
         const uint32_t idx3 = i * 3;
         const uint32_t idx2 = i * 2;
@@ -59,7 +61,7 @@ void GeometryComponent::calcTangents(const float* positions, const float* uvs, c
     }
 }
 
-void GeometryComponent::uploadData(const float* positions, const float* uvs, const float* normals,
+void RenderComponent::uploadData(const float* positions, const float* uvs, const float* normals,
     const uint32_t* indices) {
     const size_t length = _nVertices * 3;
     const auto tangents = new float[length];
@@ -75,6 +77,14 @@ void GeometryComponent::uploadData(const float* positions, const float* uvs, con
     delete[] biTangents;
 }
 
-void GeometryComponent::render() const {
+void RenderComponent::init()
+{
+}
+
+void RenderComponent::update(float dt)
+{
+}
+
+void RenderComponent::render() const {
     GPU::render(_VAO, _nElements);
 }

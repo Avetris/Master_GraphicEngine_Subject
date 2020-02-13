@@ -1,14 +1,14 @@
-#ifndef __TEAPOT_H__
-#define __TEAPOT_H__ 1
+#ifndef __TEAPOT_COMPONENT_H__
+#define __TEAPOT_COMPONENT_H__ 1
 
-#include "../geometryComponent.hpp"
+#include "../renderComponent.hpp"
 
 #include <glm/glm.hpp>
 
-class Teapot final :public GeometryComponent {
+class TeapotComponent final :public RenderComponent {
     public:
-        Teapot() = delete;
-        explicit Teapot(uint32_t grid, glm::mat4 lidTransform = glm::mat4(1.0f));
+        TeapotComponent() = delete;
+        explicit TeapotComponent(uint16_t UID, GameObject* gameObject, uint32_t grid, glm::mat4 lidTransform = glm::mat4(1.0f));
 
     private:
         void generateVertexData(float* positions, float* uvs, float* normals, uint32_t* indices, uint32_t grid) const;

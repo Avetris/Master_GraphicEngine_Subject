@@ -1,12 +1,12 @@
-#ifndef __TRANSFORM_SYSTEM_H__
-#define __GRAPHIC_SYSTEM__TRANSFORM_SYSTEM_H___H__
+#ifndef __GEOMETRY_SYSTEM_H__
+#define __GEOMETRY_SYSTEM_H__
 
 #include <engine\systems\system.hpp>
 #include <engine\components\component.hpp>
 
-class GeometrySystem : public System{
+class RenderSystem : public System{
     public:
-        GeometrySystem();
+        RenderSystem();
         void init();
         void update(const float dt);
 };
