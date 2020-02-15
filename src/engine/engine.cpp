@@ -4,12 +4,14 @@
 #include <engine\systems\inputSystem.hpp>
 #include <engine\systems\cameraSystem.hpp>
 #include <engine\systems\transformSystem.hpp>
+#include <engine\systems\lightSystem.hpp>
 #include <engine\systems\renderSystem.hpp>
 
 Engine::Engine() {
 	_systemList.push_back(new InputSystem());
 	_systemList.push_back(new CameraSystem());
 	_systemList.push_back(new TransformSystem());
+	_systemList.push_back(new LighSystem());
 	_systemList.push_back(new RenderSystem());
 	_nextGameTick = GetTickCount64();
 	window = Window::instance();

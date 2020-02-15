@@ -13,6 +13,9 @@ class GameObject;
 #include <engine\components\renderComponent\cubeComponent.hpp>
 #include <engine\components\renderComponent\sphereComponent.hpp>
 #include <engine\components\renderComponent\teapotComponent.hpp>
+#include <engine\components\lightComponent\directionalLightComponent.hpp>
+#include <engine\components\lightComponent\pointLightComponent.hpp>
+#include <engine\components\lightComponent\spotLightComponent.hpp>
 #include <engine\systems\inputSystem.hpp>
 #include <engine\systems\transformSystem.hpp>
 #include <engine\systems\cameraSystem.hpp>
@@ -65,6 +68,18 @@ inline Component* ComponentManager::createComponent(GameObject* gameObject)
 	else if (std::is_same<Component, TeapotComponent>::value) {
 		component = (Component*)  new SphereComponent(_GUID, gameObject, 1.0f, 25, 25);
 		Engine::instance()->getSystem<RenderSystem>()->addComponent(component);
+	}
+	else if (std::is_same<Component, DirectionalLightComponent>::value) {
+		component = (Component*)  new DirectionalLightComponent(_GUID, gameObject);
+		Engine::instance()->getSystem<LightSystem>()->addComponent(component);
+	}
+	else if (std::is_same<Component, PointLightComponent>::value) {
+		component = (Component*)  new PointLightComponent(_GUID, gameObject);
+		Engine::instance()->getSystem<LightSystem>()->addComponent(component);
+	}
+	else if (std::is_same<Component, SpotLightComponent>::value) {
+		component = (Component*)  new SpotLightComponent(_GUID, gameObject);
+		Engine::instance()->getSystem<LightSystem>()->addComponent(component);
 	}
 	_GUID++;
 	return component;

@@ -15,7 +15,7 @@ const enum class ComponentType {
     CAMERA_COMPONENT = 4,
     RENDER_COMPONENT = 5,
     UI_COMPONENT = 6,
-    AUDIO_COMPONENT = 7
+    LIGHT_COMPONENT = 7
 };
 
 class Component : public Object{

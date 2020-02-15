@@ -30,9 +30,14 @@ set(ENGINE_SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent/quadComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent/sphereComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent/teapotComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/lightComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/lightComponent/directionalLightComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/lightComponent/pointLightComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/lightComponent/spotLightComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/cameraSystem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/transformSystem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/inputSystem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/lightSystem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/renderSystem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/gpu.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/deps.cpp
@@ -44,10 +49,6 @@ set(ENGINE_SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/fbo/fbo.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/fbo/shadow.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/window.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/light/light.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/light/directionalLight.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/light/pointLight.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/light/spotLight.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/camera.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/quad.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/cube.cpp
@@ -72,10 +73,15 @@ set(ENGINE_HEADER_FILES
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/renderComponent/sphereComponent.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/renderComponent/teapotComponent.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/renderComponent/teapotdata.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/lightComponent.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/lightComponent/directionalLightComponent.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/lightComponent/pointLightComponent.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/lightComponent/spotLightComponent.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/system.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/cameraSystem.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/transformSystem.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/inputSystem.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/lightSystem.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/renderSystem.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/gpu.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/mesh.hpp
@@ -86,10 +92,6 @@ set(ENGINE_HEADER_FILES
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/fbo/fbo.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/fbo/shadow.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/window.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/light/light.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/light/directionalLight.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/light/pointLight.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/light/spotLight.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/camera.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/quad.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/cube.hpp

@@ -1,18 +1,19 @@
-#ifndef __POINT_LIGHT_H__
-#define __POINT_LIGHT_H__ 1
+#ifndef __POINT_LIGHT_COMPONENT_H__
+#define __POINT_LIGHT_COMPONENT_H__ 1
 
 #include <glm/glm.hpp>
 #include <cstdint>
 #include <string>
 
-#include "light.hpp"
+#include "../lightComponent.hpp"
 
 class Shader;
 
-class PointLight : public Light {
+class PointLightComponent : public LightComponent {
     public:
-        explicit PointLight(std::string name, glm::vec3 position, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float constant, float linear, float quadratic);
-        PointLight() = delete;
+        explicit PointLightComponent(uint16_t UID, GameObject* gameObject);
+
+        void setIndex(int index) override;
 
         void setConstat(float constant);
         void setLinear(float linear);
