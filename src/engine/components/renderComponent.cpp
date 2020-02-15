@@ -3,8 +3,13 @@
 #include <glm/vec3.hpp>
 #include <glm/vec2.hpp>
 #include <engine/gpu.hpp>
+#include <engine\engine.hpp>
+#include <engine\systems\renderSystem.hpp>
+#include <engine\gameObject.hpp>
 
-RenderComponent::RenderComponent(uint16_t UID, GameObject* gameObject): Component(UID, gameObject){}
+RenderComponent::RenderComponent(uint16_t UID, GameObject* gameObject): Component(UID, gameObject){
+    _shader = Engine::instance()->getSystem<RenderSystem>()->getShader(GenericShaderType::BLINN);
+}
 
 RenderComponent::~RenderComponent() {
     GPU::deleteBuffers(4, _VAO, _VBO);
@@ -77,12 +82,30 @@ void RenderComponent::uploadData(const float* positions, const float* uvs, const
     delete[] biTangents;
 }
 
+void RenderComponent::setMaterial(Material* material)
+{
+    _material = material;
+}
+
+void RenderComponent::setShader(Shader* shader)
+{
+    _shader = shader;
+}
+
 void RenderComponent::init()
 {
 }
 
 void RenderComponent::update(float dt)
 {
+    _shader->use();
+    if(_material != nullptr)
+        _material->use(*_shader);
+    TransformComponent* transformComponent = _gameObject->getComponent<TransformComponent>(ComponentType::TRANSFORM_COMPONENT);
+    if (transformComponent != nullptr)  
+        transformComponent->renderMatrix(_shader);   
+    Engine::instance()->getSystem<CameraSystem>()->getMainCamera()->renderCamera(_shader);
+    render();
 }
 
 void RenderComponent::render() const {

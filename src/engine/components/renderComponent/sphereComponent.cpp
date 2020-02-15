@@ -5,7 +5,7 @@
 #include <cmath>
 
 SphereComponent::SphereComponent(uint16_t UID, GameObject* gameObject, float radius, uint32_t stacks, uint32_t slices)
-    : renderComponent(UID, gameObject), _radius(radius), _stacks(stacks), _slices(slices) {
+    : RenderComponent(UID, gameObject), _radius(radius), _stacks(stacks), _slices(slices) {
 
     _nVertices = (slices + 1) * (stacks + 1);
     _nElements = (slices * 2 * (stacks - 1)) * 3;

@@ -4,18 +4,12 @@
 #include <engine\gameObject.hpp>
 #include <engine\components\transformComponent.hpp>
 
-CameraComponent::CameraComponent(uint16_t UID, GameObject* gameObject):Component(UID, gameObject){ updateCameraVectors(); }
+CameraComponent::CameraComponent(uint16_t UID, GameObject* gameObject):Component(UID, gameObject){ 
+    updateCameraVectors(); 
+}
 
 void CameraComponent::init() {
     updateCameraVectors();
-}
-
-void CameraComponent::update(float dt) {
-
-}
-
-CameraComponent::~CameraComponent() {
-
 }
 
 glm::mat4 CameraComponent::getViewMatrix() const {
@@ -39,24 +33,31 @@ void CameraComponent::updateCameraVectors() {
 
     _right = glm::normalize(glm::cross(_front, _worldUp));
     _up = glm::normalize(glm::cross(_right, _front));
+    updateViewAndProjection();
 }
 
-void CameraComponent::handleKeyboard(Movement direction, float dt) {
+void CameraComponent::updateViewAndProjection()
+{
+    _viewMatrix = getViewMatrix();
+    _projection = glm::perspective(glm::radians(getFOV()), static_cast<float>(Window::instance()->getWidth()) / Window::instance()->getHeight(), 0.1f, 100.0f);
+}
+
+void CameraComponent::handleKeyboard(InputMovement direction, float dt) {
     const float velocity = k_Speed * dt;
     glm::vec3 movement(0,0,0);
 
     switch (direction) {
-        case Movement::Forward: movement = _front * velocity; break;
-        case Movement::Backward: movement = _front * -velocity; break;
-        case Movement::Left: movement = _right * -velocity; break;
-        case Movement::Right: movement = _right * velocity; break;
+        case InputMovement::Forward: movement = _front * velocity; break;
+        case InputMovement::Backward: movement = _front * -velocity; break;
+        case InputMovement::Left: movement = _right * -velocity; break;
+        case InputMovement::Right: movement = _right * velocity; break;
         default:;
     }
-    TransformComponent* transform = _gameObject->getComponent<TransformComponent>(TRANSFORM_COMPONENT);
+    TransformComponent* transform = _gameObject->getComponent<TransformComponent>(ComponentType::TRANSFORM_COMPONENT);
     if(transform != nullptr){
-        transform->move(movement);
+        transform->move(movement, true);
     }
-
+    updateViewAndProjection();
 }
 
 void CameraComponent::handleMouseMovement(float xoffset, float yoffset, bool constrainPitch) {
@@ -78,5 +79,12 @@ void CameraComponent::handleMouseScroll(float yoffset) {
     if (_fov >= 1.0f && _fov <= 45.0f) _fov -= yoffset;
     if (_fov <= 1.0f) _fov = 1.0f;
     if (_fov >= 45.0f) _fov = 45.0f;
+    updateViewAndProjection();
+}
+
+void CameraComponent::renderCamera(Shader* shader) const
+{
+    shader->set("view", _viewMatrix);
+    shader->set("proj", _projection);
 }
 

@@ -1,31 +1,31 @@
 #include "engine/engine.hpp"
 #include <windows.h>
 #include <engine\gpu.hpp>
-#include <engine\systems\graphicSystem.hpp>
+#include <engine\systems\inputSystem.hpp>
 #include <engine\systems\cameraSystem.hpp>
 #include <engine\systems\transformSystem.hpp>
 #include <engine\systems\renderSystem.hpp>
-#include <iostream>
 
 Engine::Engine() {
-	init();
+	_systemList.push_back(new InputSystem());
+	_systemList.push_back(new CameraSystem());
+	_systemList.push_back(new TransformSystem());
+	_systemList.push_back(new RenderSystem());
+	_nextGameTick = GetTickCount64();
+	window = Window::instance();
 }
 
 void Engine::init()
 {
 	// The order of insertion determine the orden of 
-	_systemList.push_back(new TransformSystem());
-	_systemList.push_back(new CameraSystem());
-	_systemList.push_back(new GraphicSystem());
-	_systemList.push_back(new RenderSystem());
-	_nextGameTick = GetTickCount64();
-	window = Window::instance();
 	for (auto it = _systemList.begin(); it < _systemList.end(); it++) {
 		(*it)->init();
 	}
+	GPU::clearColor(0.0f, 0.3f, 0.6f, 1.0f);
 }
 
 void Engine::update(const float dt) {
+	GPU::clearBuffer();
 	GPU::enableCullFace();
 	for (auto it = _systemList.begin(); it < _systemList.end(); it++) {
 		(*it)->update(dt);
@@ -34,12 +34,17 @@ void Engine::update(const float dt) {
 
 void Engine::mainLoop() {
 	while (_gameIsRunning && window->alive()){
-		_loops = 0;
-		while (GetTickCount64() > _nextGameTick && _loops < MAX_FRAMESKIP) {
-			update((_nextGameTick + SKIP_TICKS) - _nextGameTick);
-			_nextGameTick += SKIP_TICKS;
-			_loops++;
-		}
+
+		const float currentFrame = glfwGetTime();
+		const float deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+		update(deltaTime);
+		//_loops = 0;
+		//while (/*GetTickCount64() > _nextGameTick &&*/ _loops < 100) {
+		//	update(SKIP_TICKS);
+		//	_nextGameTick += SKIP_TICKS;
+		//	_loops++;
+		//}
 		window->frame();
 	}
 }

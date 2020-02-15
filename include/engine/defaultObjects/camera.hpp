@@ -7,7 +7,9 @@
 class Camera: public GameObject{
     public:
         Camera(uint16_t UID);
-        Camera(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale);
+        Camera(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale, float angle);
         ~Camera();
+
+        void init();
 };
 #endif

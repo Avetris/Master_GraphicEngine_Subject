@@ -1,12 +1,21 @@
 #include "engine/gpu.hpp"
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+void GPU::clearColor(float red, float green, float blue, float alpha)
+{
+    glClearColor(red, green, blue, alpha);
+}
+
+void GPU::clearBuffer() {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
 
 void GPU::enableCullFace()
 {
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
+
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
 }
 
 void GPU::bindGeometry(uint32_t& VAO, uint32_t* VBO, size_t nElements, size_t nVertex, const uint32_t* index, const float* positions, const float* uvs, const float* normals, const float* tangents, const float* biTangents)

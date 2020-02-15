@@ -7,7 +7,8 @@
 class Quad: public GameObject{
     public:
         Quad(uint16_t UID);
-        Quad(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale);
-        ~Quad();
+        Quad(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale, float angle);
+
+        void init();
 };
 #endif

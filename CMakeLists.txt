@@ -22,19 +22,17 @@ set(ENGINE_SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/managers/gameObjectManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/managers/messageManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/managers/componentManager.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/component.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/transformComponent.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/graphicComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/cameraComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/cameraInputComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent/cubeComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent/quadComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent/sphereComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent/teapotComponent.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/system.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/cameraSystem.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/graphicSystem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/transformSystem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/inputSystem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/renderSystem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/gpu.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/deps.cpp
@@ -66,7 +64,8 @@ set(ENGINE_HEADER_FILES
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/component.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/cameraComponent.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/transformComponent.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/graphicComponent.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/inputComponent.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/cameraInputComponent.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/renderComponent.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/renderComponent/cubeComponent.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/renderComponent/quadComponent.hpp
@@ -75,11 +74,10 @@ set(ENGINE_HEADER_FILES
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/renderComponent/teapotdata.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/system.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/cameraSystem.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/graphicSystem.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/transformSystem.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/inputSystem.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/renderSystem.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/gpu.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/input.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/mesh.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/model.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/shader.hpp

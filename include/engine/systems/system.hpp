@@ -14,8 +14,20 @@ class System{
                 delete *it;
             }
         }
-        virtual void init() = 0;
-        virtual void update(const float dt) = 0;
+        virtual void init() {
+            for (auto it = _componentList.begin(); it < _componentList.end(); it++) {
+                if ((*it)->isEnable()) {
+                    (*it)->init();
+                }
+            }
+        }
+        virtual void update(const float dt) {
+            for (auto it = _componentList.begin(); it < _componentList.end(); it++) {
+                if ((*it)->isEnable()) {
+                    (*it)->update(dt);
+                }
+            }
+        }
 
         void addComponent(Component* component) {
             _componentList.push_back(component);

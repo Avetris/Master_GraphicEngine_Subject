@@ -1,6 +1,6 @@
-#include <engine/components/geometryComponent/quadComponent.hpp>
+#include <engine/components/renderComponent/quadComponent.hpp>
 
-QuadComponent::QuadComponent(uint16_t UID, GameObject* gameObject, float size) : GeometryComponent(UID, gameObject), _size(size) {
+QuadComponent::QuadComponent(uint16_t UID, GameObject* gameObject, float size) : RenderComponent(UID, gameObject), _size(size) {
     _nVertices = 1 * 2 * 3;  //1 face * 2 triangles * 3 vertices
     _nElements = _nVertices;
 

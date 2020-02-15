@@ -6,32 +6,18 @@ class GameObject;
 #include <cstdint>
 #include <glm/glm.hpp>
 #include <engine\components\component.hpp>
-#include <engine\components\transformComponent.hpp>
+#include <engine\components\cameraInputComponent.hpp>
 #include <engine\components\cameraComponent.hpp>
-#include <engine\components\graphicComponent.hpp>
-#include <engine\components\geometryComponent\quadComponent.hpp>
-#include <engine\components\geometryComponent\cubeComponent.hpp>
-#include <engine\components\geometryComponent\sphereComponent.hpp>
-#include <engine\components\geometryComponent\teapotComponent.hpp>
+#include <engine\components\transformComponent.hpp>
+#include <engine\components\renderComponent\quadComponent.hpp>
+#include <engine\components\renderComponent\cubeComponent.hpp>
+#include <engine\components\renderComponent\sphereComponent.hpp>
+#include <engine\components\renderComponent\teapotComponent.hpp>
+#include <engine\systems\inputSystem.hpp>
 #include <engine\systems\transformSystem.hpp>
 #include <engine\systems\cameraSystem.hpp>
-#include <engine\systems\graphicSystem.hpp>
 #include <engine\systems\renderSystem.hpp>
 #include <engine\engine.hpp>
-
-const size_t NUMBER_COMPONENTS = 9;
-const enum TYPE {
-    NON_COMPONENT = -1,
-    INPUT_COMPONENT = 0,
-    TRANSFORM_COMPONENT = 1,
-    PHYSIC_COMPONENT = 2,
-    LOGIC_COMPONENT = 3,
-    CAMERA_COMPONENT = 4,
-    GRAPHIC_COMPONENT = 5,
-    GEOMETRY_COMPONENT = 6,
-    UI_COMPONENT = 7,
-    AUDIO_COMPONENT = 8
-};
 
 class ComponentManager{
     public:
@@ -60,9 +46,9 @@ inline Component* ComponentManager::createComponent(GameObject* gameObject)
 		component = (Component*) new CameraComponent(_GUID, gameObject);
 		Engine::instance()->getSystem<CameraSystem>()->addComponent(component);
 	}
-	else if (std::is_same<Component, GraphicComponent>::value) {
-		component = (Component*) new GraphicComponent(_GUID, gameObject);
-		Engine::instance()->getSystem<GraphicSystem>()->addComponent(component);
+	else if (std::is_same<Component, CameraInputComponent>::value) {
+		component = (Component*) new CameraInputComponent(_GUID, gameObject);
+		Engine::instance()->getSystem<InputSystem>()->addComponent(component);
 	}
 	else if (std::is_same<Component, QuadComponent>::value) {
 		component = (Component*) new QuadComponent(_GUID, gameObject, 1.0f);

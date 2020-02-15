@@ -3,14 +3,15 @@
 
 CameraSystem::CameraSystem() {}
 
-void CameraSystem::init() {
-
-}
-
-void CameraSystem::update(const float dt) {
-	for (auto it = _componentList.begin(); it < _componentList.end(); it++) {
-		if ((*it)->isEnable()) {
-
+CameraComponent* CameraSystem::getMainCamera()
+{
+	if (_mainCamera == nullptr){
+		if (_componentList.size() > 0) {
+			_mainCamera = static_cast<CameraComponent*>(_componentList.at(0));
+		}
+		else {
+			throw "No Main Camera Exception";
 		}
 	}
+	return _mainCamera;
 }

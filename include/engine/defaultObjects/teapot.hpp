@@ -7,7 +7,8 @@
 class Teapot: public GameObject{
     public:
         Teapot(uint16_t UID);
-        Teapot(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale);
-        ~Teapot();
+        Teapot(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale, float angle);
+        
+        void init();
 };
 #endif

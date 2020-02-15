@@ -7,7 +7,8 @@
 class Sphere: public GameObject{
     public:
         Sphere(uint16_t UID);
-        Sphere(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale);
-        ~Sphere();
+        Sphere(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale, float angle);
+
+        void init();
 };
 #endif

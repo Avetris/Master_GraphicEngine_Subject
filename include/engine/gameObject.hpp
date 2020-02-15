@@ -4,13 +4,13 @@
 class Component;
 
 #include <vector>
-#include <engine\managers\componentManager.hpp>
 #include <glm/glm.hpp>
+#include <engine\managers\componentManager.hpp>
 
 class GameObject : public Object {
     public:
         GameObject(uint16_t UID);
-        GameObject(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale);
+        GameObject(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale, float rotationAngle);
         ~GameObject();
 
         glm::vec3 getPosition() const;
@@ -23,12 +23,12 @@ class GameObject : public Object {
         void setScale(glm::vec3 scale);
 
         template<class T>
-        T* addComponent(TYPE componentType);
+        T* addComponent(ComponentType componentType);
         void removeComponent(Component* component);
-        void removeComponent(TYPE componentType);
+        void removeComponent(ComponentType componentType);
 
         template<class T>
-        T* getComponent(TYPE componentType) const;
+        T* getComponent(ComponentType componentType) const;
 
         template<class T>
         T* getComponent() const;
@@ -44,27 +44,27 @@ class GameObject : public Object {
     private:
         glm::vec3 _position;
         glm::vec3 _rotation;
-        float _rotationAngle;
+        float _rotationAngle = 0.0f;
         glm::vec3 _scale;
         Component* _componentList[NUMBER_COMPONENTS] = { nullptr };
 };
 
 
 template<class T>
- T* GameObject::addComponent(TYPE componentType)
+ T* GameObject::addComponent(ComponentType componentType)
 {
-    T* component = dynamic_cast<T*>(_componentList[componentType]);
+    T* component = dynamic_cast<T*>(_componentList[(int) componentType]);
     if (component == nullptr) {
         component = ComponentManager::instance()->createComponent<T>(this);
-        _componentList[componentType] = component;
+        _componentList[(int) componentType] = component;
     }
     return component;
 }
 
 template<class T>
-T* GameObject::getComponent(TYPE componentType) const
+T* GameObject::getComponent(ComponentType componentType) const
 {
-    return dynamic_cast<T*>(_componentList[componentType]);
+    return dynamic_cast<T*>(_componentList[(int) componentType]);
 }
 
 template<class T>

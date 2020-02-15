@@ -2,6 +2,8 @@
 #define __WINDOW_H__
 
 #include <cstdint>
+#include <engine\gpu.hpp>
+#include <engine\window.hpp>
 
 class GLFWwindow;
 
@@ -23,7 +25,7 @@ class Window {
 
         bool keyPressed(int key) const;
 
-        void setCaptureMode(bool toggle) const;
+        void setCaptureMode() const;
 
     private:
         Window();

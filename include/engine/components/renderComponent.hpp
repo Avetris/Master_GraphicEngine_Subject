@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include "component.hpp"
+#include <engine\material.hpp>
 
 //Attributes
 //0 - positions
@@ -19,6 +20,10 @@ class RenderComponent : public Component{
 
         RenderComponent(RenderComponent&&) noexcept = default;
         RenderComponent& operator=(RenderComponent&&) noexcept = default;
+        
+        void setMaterial(Material* material);
+
+        void setShader(Shader* shader);
 
         void init();
         void update(float dt);
@@ -36,6 +41,8 @@ class RenderComponent : public Component{
         uint32_t _VBO[6] { 0,0,0,0,0,0 };
         uint32_t _nVertices = 0;
         uint32_t _nElements = 0;
+        Material* _material = nullptr;
+        Shader* _shader = nullptr;
 
 };
 #endif

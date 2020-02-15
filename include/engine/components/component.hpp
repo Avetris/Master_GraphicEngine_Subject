@@ -5,15 +5,30 @@ class GameObject;
 
 #include <engine\object.hpp>
 
+const size_t NUMBER_COMPONENTS = 8;
+const enum class ComponentType {
+    NON_COMPONENT = -1,
+    INPUT_COMPONENT = 0,
+    TRANSFORM_COMPONENT = 1,
+    PHYSIC_COMPONENT = 2,
+    LOGIC_COMPONENT = 3,
+    CAMERA_COMPONENT = 4,
+    RENDER_COMPONENT = 5,
+    UI_COMPONENT = 6,
+    AUDIO_COMPONENT = 7
+};
 
 class Component : public Object{
     public:
-        Component(uint16_t UID, GameObject* gameObject);
-        virtual void init() = 0;
-        virtual void update(float dt) = 0;
-        ~Component();
+        Component(uint16_t UID, GameObject* gameObject) :
+            Object(UID),
+            _gameObject(gameObject) {}
+        virtual void init() {}
+        virtual void update(float dt) {}
 
-        bool isEnable() const;
+        bool isEnable() const {
+            return _enable;
+        }
 
     protected:
         GameObject* _gameObject;

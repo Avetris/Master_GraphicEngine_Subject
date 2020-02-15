@@ -4,7 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 
-TeapotComponent::TeapotComponent(uint16_t UID, GameObject* gameObject, uint32_t grid, glm::mat4 lidTransform) : renderComponent(UID, gameObject) {
+TeapotComponent::TeapotComponent(uint16_t UID, GameObject* gameObject, uint32_t grid, glm::mat4 lidTransform) : RenderComponent(UID, gameObject) {
     _nVertices = 32 * (grid + 1) * (grid + 1);
     const uint32_t faces = grid * grid * 32;
     _nElements = faces * 6;

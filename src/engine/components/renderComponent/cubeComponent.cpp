@@ -1,10 +1,10 @@
 #define _USE_MATH_DEFINES
 
-#include <engine/components/geometryComponent/cubeComponent.hpp>
+#include <engine/components/renderComponent/cubeComponent.hpp>
 
 #include <cmath>
 
-CubeComponent::CubeComponent(uint16_t UID, GameObject* gameObject, float size) : GeometryComponent(UID, gameObject), _size(size) {
+CubeComponent::CubeComponent(uint16_t UID, GameObject* gameObject, float size) : RenderComponent(UID, gameObject), _size(size) {
     _nVertices = 6 * 4;   //6 faces * 4 vertices;
     _nElements = 6 * 2 * 3; // 6 faces * 2 triangles * 3 vertices
 

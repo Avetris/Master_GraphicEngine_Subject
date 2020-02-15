@@ -6,11 +6,12 @@ GameObject::GameObject(uint16_t UID) :
 	_rotation(0.0f), 
 	_scale(1.0f){}
 
-GameObject::GameObject(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale) :
+GameObject::GameObject(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale, float _rotationAngle) :
 	Object(UID),
 	_position(position),
-	_rotation(rotation), 
-	_scale(scale){}
+	_rotation(rotation),
+	_scale(scale),
+	_rotationAngle(_rotationAngle){}
 
 GameObject::~GameObject()
 {
@@ -69,10 +70,10 @@ void GameObject::removeComponent(Component* component)
 	}
 }
 
-void GameObject::removeComponent(TYPE componentType)
+void GameObject::removeComponent(ComponentType componentType)
 {
-	if (componentType > 0) {
-		_componentList[componentType] = nullptr;
+	if ((int) componentType > 0) {
+		_componentList[(int) componentType] = nullptr;
 	}
 }
 

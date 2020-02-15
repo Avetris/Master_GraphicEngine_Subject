@@ -3,6 +3,7 @@
 
 #include "component.hpp"
 #include <glm/glm.hpp>
+#include <engine\shader.hpp>
 
 class TransformComponent : public Component {
     public:
@@ -15,10 +16,12 @@ class TransformComponent : public Component {
         void scale(glm::vec3 scale, bool add = false);
         void rotate(float angle, glm::vec3 axis, bool add = false);
 
-        bool modelNeedsToUpdate() const;
         void updateModel(glm::mat4 parentModel = glm::mat4(1.0f));
 
-    protected:
+        void renderMatrix(Shader* shader) const;
+
+    private:
+        bool modelNeedsToUpdate() const;
         glm::mat4 _model = glm::mat4(1.0f);
         glm::mat4 _normalMat = glm::mat4(1.0f);
         bool _modelToUpdate = true;

@@ -64,7 +64,6 @@ void Shader::use() const {
 
 void Shader::loadShader(const char* path, std::string* code) {
     std::ifstream file;
-
     file.open(path, std::ios_base::in);
     if (file) {
         std::stringstream stream;

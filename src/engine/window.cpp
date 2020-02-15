@@ -1,10 +1,12 @@
-#include "engine/input.hpp"
 #include "engine/window.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <iostream>
+#include <engine\gpu.hpp>
+#include <engine\systems\inputSystem.hpp>
+#include <engine\engine.hpp>
 
 void onChangeFrameBufferSize(GLFWwindow*, const int32_t width, const int32_t height) noexcept {
     Window::instance()->setWidth(width);
@@ -14,19 +16,30 @@ void onChangeFrameBufferSize(GLFWwindow*, const int32_t width, const int32_t hei
 }
 
 void onKeyPress(GLFWwindow* window, int key, int scancode, int action, int mods) {
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-        glfwSetWindowShouldClose(window, true);
-    } else {
-        Input::instance()->keyPressed(key, action);
+    GPU::KeyId keyId = (GPU::KeyId) key;
+    GPU::KeyActions keyAction = (GPU::KeyActions) action;
+    if (keyAction == GPU::KeyActions::PRESS) {
+        if (keyId == GPU::KeyId::ESCAPE) {
+            glfwSetWindowShouldClose(window, true);
+        }
+        else  if (keyId == GPU::KeyId::LEFT_ALT) {
+            Window::instance()->setCaptureMode();
+        }
+        else {
+            Engine::instance()->getSystem<InputSystem>()->keyPressed(keyId, keyAction);
+        }
+    }
+    else{
+        Engine::instance()->getSystem<InputSystem>()->keyPressed(keyId, keyAction);
     }
 }
 
 void onMouseMove(GLFWwindow* window, double x, double y) {
-    Input::instance()->mouseMoved(x, y);
+    Engine::instance()->getSystem<InputSystem>()->mouseMoved(x, y);
 }
 
 void onScrollMove(GLFWwindow* window, double x, double y) {
-    Input::instance()->scrollMove(x, y);
+    Engine::instance()->getSystem<InputSystem>()->scrollMoved(x, y);
 }
 
 Window::Window() {
@@ -58,7 +71,7 @@ Window::Window() {
     glfwSetCursorPosCallback(_window, onMouseMove);
     glfwSetScrollCallback(_window, onScrollMove);
 
-    setCaptureMode(true);
+    setCaptureMode();
 }
 
 Window::~Window() {
@@ -78,8 +91,9 @@ bool Window::keyPressed(int key) const {
     return glfwGetKey(_window, key) == GLFW_PRESS;
 }
 
-void Window::setCaptureMode(bool toggle) const {
-    if (toggle) {
+void Window::setCaptureMode() const {
+    int inputMode = glfwGetInputMode(_window, GLFW_CURSOR);
+    if (inputMode == GLFW_CURSOR_NORMAL) {
         glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     } else {
         glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);

@@ -7,6 +7,8 @@
 class Cube: public GameObject{
     public:
         Cube(uint16_t UID);
-        Cube(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale);
+        Cube(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale, float angle);
+
+        void init();
 };
 #endif

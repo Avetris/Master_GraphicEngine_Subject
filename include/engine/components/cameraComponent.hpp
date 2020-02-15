@@ -2,6 +2,7 @@
 #define __CAMERA_COMPONENT_H__
 
 #include <engine/components/Component.hpp>
+#include <engine/shader.hpp>
 #include <glm/glm.hpp>
 
 const float k_Yaw = -90.0f;
@@ -10,33 +11,36 @@ const float k_Speed = 2.5f;
 const float k_Sensitivity = 0.1f;
 const float k_FOV = 45.0f;
 
+
+const enum class InputMovement {
+    Forward = 0,
+    Backward = 1,
+    Left = 2,
+    Right = 3,
+};
+
 class CameraComponent : public Component{
     public:
-        enum class Movement {
-            Forward = 0,
-            Backward = 1,
-            Left = 2,
-            Right = 3,
-        };
-
         CameraComponent(uint16_t UID, GameObject* gameObject);
         void init();
-        void update(float dt);
-        ~CameraComponent();
 
         glm::mat4 getViewMatrix() const;
         glm::vec3 getCameraDirection() const;
         float getFOV() const;
 
-        void handleKeyboard(Movement direction, float dt);
+        void handleKeyboard(InputMovement direction, float dt);
         void handleMouseMovement(float xoffset, float yoffset, bool constrainPitch = true);
         void handleMouseScroll(float yoffset);
+        void renderCamera(Shader* shader) const;
 
     private:
-        glm::vec3 _front, _up = glm::vec3(0.0f, 1.0f, 0.0f), _right, _worldUp;
+        glm::vec3 _front, _up = glm::vec3(0.0f, 1.0f, 0.0f), _right, _worldUp = _up;
+        glm::mat4 _viewMatrix;
+        glm::mat4 _projection;
         float _yaw = k_Yaw, _pitch = k_Pitch;
         float _fov;
         void updateCameraVectors();
+        void updateViewAndProjection();
 };
 
 #endif

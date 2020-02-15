@@ -3,11 +3,12 @@
 
 #include <cstdint>
 #include <engine\systems\system.hpp>
-#include <engine\window.hpp>
 
-const int TICKS_PER_SECOND = 25;
+class Window;
+
+const int TICKS_PER_SECOND = 1000;
 const int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
-const int MAX_FRAMESKIP = 5;
+const int MAX_FRAMESKIP = 10;
 
 class Engine {
     public:
@@ -25,9 +26,10 @@ class Engine {
         Engine();
         Window* window;
         std::vector<System*> _systemList;
-        int _nextGameTick;
+        int _nextGameTick = 0;
         int _loops = 0;
         bool _gameIsRunning = true;
+        float lastFrame = 0.0f;
 };
 
 template<typename System>
