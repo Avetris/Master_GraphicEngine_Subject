@@ -30,6 +30,10 @@ class Component : public Object{
             return _enable;
         }
 
+        virtual void setEnable(bool enable) {
+            _enable = enable;
+        }
+
     protected:
         GameObject* _gameObject;
     private:

@@ -22,8 +22,12 @@ class RenderComponent : public Component{
         RenderComponent& operator=(RenderComponent&&) noexcept = default;
         
         void setMaterial(Material* material);
-
+        void setColor(glm::vec3 color);
         void setShader(Shader* shader);
+
+        Shader* getShader() const;
+
+        void setEnable(bool enable);
 
         void init();
         void update(float dt);
@@ -43,6 +47,7 @@ class RenderComponent : public Component{
         uint32_t _nElements = 0;
         Material* _material = nullptr;
         Shader* _shader = nullptr;
+        glm::vec3 _color = glm::vec3(0.0f);
 
 };
 #endif

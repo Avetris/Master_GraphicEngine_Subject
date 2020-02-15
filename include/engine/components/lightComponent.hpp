@@ -19,7 +19,6 @@ class LightComponent : public Component {
         
     protected:
         std::string _name = "";
-        glm::vec3 _color = glm::vec3(0.0f);
         glm::vec3 _ambient = glm::vec3(0.0f);
         glm::vec3 _diffuse = glm::vec3(0.0f);
         glm::vec3 _specular = glm::vec3(0.0f);

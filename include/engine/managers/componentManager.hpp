@@ -20,6 +20,7 @@ class GameObject;
 #include <engine\systems\transformSystem.hpp>
 #include <engine\systems\cameraSystem.hpp>
 #include <engine\systems\renderSystem.hpp>
+#include <engine\systems\lightSystem.hpp>
 #include <engine\engine.hpp>
 
 class ComponentManager{

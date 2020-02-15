@@ -87,9 +87,18 @@ void RenderComponent::setMaterial(Material* material)
     _material = material;
 }
 
+void RenderComponent::setColor(glm::vec3 color) {
+    _color = color;
+}
+
 void RenderComponent::setShader(Shader* shader)
 {
     _shader = shader;
+    Engine::instance()->getSystem<RenderSystem>()->setReloadShaders();
+}
+
+Shader* RenderComponent::getShader() const {
+    return _shader;
 }
 
 void RenderComponent::init()
@@ -99,8 +108,11 @@ void RenderComponent::init()
 void RenderComponent::update(float dt)
 {
     _shader->use();
-    if(_material != nullptr)
+
+    if (_material != nullptr)
         _material->use(*_shader);
+    else
+        _shader->set("modelColor", _color);
     TransformComponent* transformComponent = _gameObject->getComponent<TransformComponent>(ComponentType::TRANSFORM_COMPONENT);
     if (transformComponent != nullptr)  
         transformComponent->renderMatrix(_shader);   
@@ -110,4 +122,9 @@ void RenderComponent::update(float dt)
 
 void RenderComponent::render() const {
     GPU::render(_VAO, _nElements);
+}
+
+void RenderComponent::setEnable(bool enable) {
+    Component::setEnable(enable);
+    Engine::instance()->getSystem<RenderSystem>()->setReloadShaders();
 }

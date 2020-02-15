@@ -29,10 +29,10 @@ class System{
             }
         }
 
-        void addComponent(Component* component) {
+        virtual void addComponent(Component* component) {
             _componentList.push_back(component);
         }
-        void removeComponent(Component* component) {
+        virtual void removeComponent(Component* component) {
             for (auto it = _componentList.begin(); it < _componentList.end(); it++) {
                 if ((*it)->_UID == component->_UID) {
                     _componentList.erase(it);

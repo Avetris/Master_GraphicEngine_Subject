@@ -15,6 +15,8 @@ void RenderSystem::update(const float dt) {
 	}
 }
 
+
+
 Shader* RenderSystem::getShader(GenericShaderType type)
 {
 	Shader* shader = nullptr;
@@ -48,4 +50,33 @@ Shader* RenderSystem::getShader(GenericShaderType type)
 		_defaultShaders[type] = shader;
 	}
 	return shader;
+}
+
+void RenderSystem::addComponent(Component* component) {
+	System::addComponent(component);
+	_reloadShaders = true;
+}
+
+void RenderSystem::removeComponent(Component* component) {
+	System::removeComponent(component);
+	_reloadShaders = true;
+}
+
+void RenderSystem::setReloadShaders() {
+	_reloadShaders = true;
+}
+
+std::vector<Shader*> RenderSystem::getUsedShaders() {
+	if (_reloadShaders) {
+		_usedShaders.clear();
+		for (auto it = _componentList.begin(); it < _componentList.end(); it++) {
+			if ((*it)->isEnable()) {
+				RenderComponent* component = static_cast<RenderComponent*>(*it);
+				if (std::count(_usedShaders.begin(), _usedShaders.end(), component->getShader())) {
+					_usedShaders.push_back(component->getShader());
+				}
+			}
+		}
+	}
+	return _usedShaders;
 }

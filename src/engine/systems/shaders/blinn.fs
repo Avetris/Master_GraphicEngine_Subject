@@ -18,6 +18,7 @@ struct Material {
 };
 uniform bool hasMaterial = false;
 uniform Material material;
+uniform vec3 modelColor;
 
 struct DirLight {
     vec3 direction;
@@ -156,14 +157,14 @@ vec3 calcSpotLight(SpotLight light, vec4 fragPosLighSpace, vec3 normal, vec3 vie
 }
 
 void main() {
-    vec3 albedo = hasMaterial ? vec3(texture(material.diffuse, uv)) : vec3(0.5, 0.5, 0.5);
-    vec3 specular =  hasMaterial ? vec3(texture(material.diffuse, uv)) : vec3(0.5, 0.5, 0.5);
+    vec3 albedo = hasMaterial ? vec3(texture(material.diffuse, uv)) : modelColor;
+    vec3 specular =  hasMaterial ? vec3(texture(material.diffuse, uv)) : modelColor;
 
     vec3 norm = normalize(normal);
     vec3 viewDir = normalize(viewPos - fragPos);
 
     int indexFragPosLightSpace = 0;
-    vec3 phong = vec3(0.0, 0.0, 0.0);
+    vec3 phong = modelColor;//vec3(0.0, 0.0, 0.0);
     for(int i = 0; i < numDirectLight; i++){
         phong += calcDirectionalLight(dirLight[i], fragPosLighSpace[indexFragPosLightSpace], norm, viewDir, albedo, specular);
         indexFragPosLightSpace++;

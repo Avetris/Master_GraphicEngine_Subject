@@ -1,3 +1,4 @@
+
 #include "engine/engine.hpp"
 #include <windows.h>
 #include <engine\gpu.hpp>
@@ -11,7 +12,7 @@ Engine::Engine() {
 	_systemList.push_back(new InputSystem());
 	_systemList.push_back(new CameraSystem());
 	_systemList.push_back(new TransformSystem());
-	_systemList.push_back(new LighSystem());
+	_systemList.push_back(new LightSystem());
 	_systemList.push_back(new RenderSystem());
 	_nextGameTick = GetTickCount64();
 	window = Window::instance();

@@ -6,8 +6,8 @@ in vec3 normal;
 in vec3 fragPos;
 in vec2 uv;
 
-uniform vec3 lightColor;
+uniform vec3 modelColor;
 
 void main() {
-    FragColor = vec4(lightColor, 1.0f);
+    FragColor = vec4(modelColor, 1.0f);
 }

@@ -2,6 +2,7 @@
 #define __RENDER_SYSTEM_H__
 
 #include <unordered_map>
+#include <vector>
 #include <engine\systems\system.hpp>
 #include <engine\components\component.hpp>
 #include <engine\shader.hpp>
@@ -21,8 +22,14 @@ class RenderSystem : public System{
         void init();
         void update(const float dt);
         Shader* getShader(GenericShaderType type);
+        virtual void addComponent(Component* component) override;
+        virtual void removeComponent(Component* component) override;
+        void setReloadShaders();
+        std::vector<Shader*> getUsedShaders();
     private:
         std::unordered_map<GenericShaderType, Shader*> _defaultShaders;
+        std::vector<Shader*> _usedShaders;
+        bool _reloadShaders;
 };
 
 #endif

@@ -11,7 +11,8 @@ Quad::Quad(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale
 }
 
 void Quad::init() {
-	addComponent<QuadComponent>(ComponentType::RENDER_COMPONENT);
+	QuadComponent* comp = addComponent<QuadComponent>(ComponentType::RENDER_COMPONENT);
+	comp->setColor(glm::vec3(1.0f, 0.0f, 0.0f));
 	addComponent<TransformComponent>(ComponentType::TRANSFORM_COMPONENT);
 
 }
