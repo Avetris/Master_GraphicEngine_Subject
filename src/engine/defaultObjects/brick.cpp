@@ -13,6 +13,8 @@ Cube::Cube(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale
 
 void Cube::init() {
 	RenderComponent* renderComponent = addComponent<CubeComponent>(ComponentType::RENDER_COMPONENT);
+	renderComponent->setMaterial(MaterialManager::instance()->getMaterial("../assets/textures/bricks_albedo.png", "../assets/textures/bricks_specular.png", "", 32));
+	renderComponent->setColor(glm::vec3(0.0f, 1.0f, 0.0f));
 	addComponent<TransformComponent>(ComponentType::TRANSFORM_COMPONENT);
 
 }

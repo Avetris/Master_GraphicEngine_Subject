@@ -10,6 +10,11 @@ Material::Material(Texture* diffuse, Texture* specular, Texture* normal, int shi
 Material::Material(Texture* diffuse, Texture* specular, int shininess) : _diffuse(diffuse), _specular(specular), _shininess(shininess) {
 }
 
+bool Material::sameMaterial(Texture* diffuse, Texture* specular, Texture* normal, int shininess) const
+{
+    return _diffuse == diffuse && _specular == specular && _normal == normal && _shininess == shininess;
+}
+
 void Material::use(const Shader& shader) const {
     _diffuse->use(shader, "material.diffuse", 0);
     _specular->use(shader, "material.specular", 1);

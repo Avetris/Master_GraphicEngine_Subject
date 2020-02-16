@@ -1,4 +1,4 @@
-#include "engine/fbo/shadow.hpp"
+#include "engine/systems/shadowFBO.hpp"
 
 #include <glad/glad.h>
 #include <glm/vec3.hpp>
@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-ShadowFBO::ShadowFBO(const uint32_t k_shadow_height, const uint32_t k_shadow_width) {
+ShadowFBO::ShadowFBO(const uint32_t k_shadow_height, const uint32_t k_shadow_width, Shader* depthShader) : _depthShader(depthShader) {
     glGenFramebuffers(1, &_fbo);
     glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
 
@@ -51,8 +51,13 @@ void ShadowFBO::render() const {
     glEnable(GL_DEPTH_TEST);
 }
 
-void ShadowFBO::renderTexture(const Shader& shader) const {
+void ShadowFBO::renderTexture(const Shader* shader) const {
     glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, _depthMap);
-    shader.set("depthMap", 2);
+    shader->set("depthMap", 2);
+}
+
+Shader* ShadowFBO::getShadowShader() const
+{
+    return _depthShader;
 }

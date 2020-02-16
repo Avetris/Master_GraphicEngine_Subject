@@ -108,17 +108,28 @@ void RenderComponent::init()
 void RenderComponent::update(float dt)
 {
     _shader->use();
+    uploadToShader(true, _shader);
+}
 
-    if (_material != nullptr)
-        _material->use(*_shader);
-    else
-        _shader->set("modelColor", _color);
+void RenderComponent::uploadToShader(bool renderColor, Shader* shader)
+{
+    if (renderColor) {
+        if (_material != nullptr) {
+            _material->use(*shader);
+        }
+        else
+        {
+            shader->set("hasMaterial", false);
+            shader->set("modelColor", _color);
+        }
+    }
     TransformComponent* transformComponent = _gameObject->getComponent<TransformComponent>(ComponentType::TRANSFORM_COMPONENT);
-    if (transformComponent != nullptr)  
-        transformComponent->renderMatrix(_shader);   
-    Engine::instance()->getSystem<CameraSystem>()->getMainCamera()->renderCamera(_shader);
+    if (transformComponent != nullptr)
+        transformComponent->renderMatrix(shader);
     render();
 }
+
+
 
 void RenderComponent::render() const {
     GPU::render(_VAO, _nElements);

@@ -23,16 +23,17 @@ class SpotLightComponent : public LightComponent {
         void setOuterCutOff(const float outerCutOff);
 
         glm::vec3 getDirection() const;
+        glm::mat4 getSpaceMatrix(float shadowNear, float shadowFar) const;
 
-        void use(const Shader& shader) const;
+        void use(const Shader* shader) const;
 
     private:
         glm::vec3 _direction =glm::vec3(0,0,0);
-        float _constant = 0.0f;
-        float _linear = 0.0f;
-        float _quadratic = 0.0f;
-        float _cutOff = 0.0f;
-        float _outerCutOff = 0.0f;
+        float _constant = 1.0f;
+        float _linear = 0.2f;
+        float _quadratic = 0.06f;
+        float _cutOff = glm::cos(glm::radians(20.0f));
+        float _outerCutOff = glm::cos(glm::radians(25.0f));
 };
 
 #endif

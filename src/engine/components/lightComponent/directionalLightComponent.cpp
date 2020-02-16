@@ -16,9 +16,9 @@ void DirectionalLightComponent::setDirection(const glm::vec3 direction) {
 	_direction = direction;
 }
 
-void DirectionalLightComponent::use(const Shader& shader) const {
-    shader.set((_name + ".direction").c_str(), _direction);
-    shader.set((_name + ".ambient").c_str(), _ambient);
-    shader.set((_name + ".diffuse").c_str(), _diffuse);
-    shader.set((_name + ".specular").c_str(), _specular);
+void DirectionalLightComponent::use(const Shader* shader) const {
+    shader->set((_name + ".direction").c_str(), _direction);
+    shader->set((_name + ".ambient").c_str(), _ambient);
+    shader->set((_name + ".diffuse").c_str(), _diffuse);
+    shader->set((_name + ".specular").c_str(), _specular);
 }

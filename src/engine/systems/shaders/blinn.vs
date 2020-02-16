@@ -10,20 +10,20 @@ uniform mat4 proj;
 uniform mat3 normalMat;
 
 #define NUMBER_GLOBAL_LIGHTS 11
-uniform int numberOfLights = 0;
+uniform int numberOfShadows = 0;
 uniform mat4 lightSpaceMatrix[NUMBER_GLOBAL_LIGHTS];
 
 out vec3 normal;
 out vec3 fragPos;
 out vec2 uv;
-out vec4 fragPosLighSpace[NUMBER_GLOBAL_LIGHTS];
+out vec4 fragPosLightSpace[NUMBER_GLOBAL_LIGHTS];
 
 void main() {
     uv = aUv;
     normal = normalMat * aNormal;
     fragPos = vec3(model * vec4(aPos, 1.0));
-    for(int i = 0; i < numberOfLights; i++){
-        fragPosLighSpace[i] = lightSpaceMatrix[i] * vec4(fragPos, 1.0);
+    for(int i = 0; i < numberOfShadows; i++){
+        fragPosLightSpace[i] = lightSpaceMatrix[i] * vec4(fragPos, 1.0);
     }
     gl_Position = proj * view * model * vec4(aPos, 1.0);
 }

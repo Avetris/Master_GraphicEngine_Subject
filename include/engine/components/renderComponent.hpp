@@ -31,6 +31,7 @@ class RenderComponent : public Component{
 
         void init();
         void update(float dt);
+        void uploadToShader(bool renderColor, Shader* shader);
 
         virtual void render() const;
 

@@ -106,6 +106,13 @@ void GPU::deleteTexture(uint32_t id)
     glDeleteTextures(1, &id);
 }
 
+void GPU::changeViewPort(float width, float height)
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glViewport(0, 0, width, height);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
 void GPU::render(const uint32_t VAO, uint16_t nElements)
 {
     glBindVertexArray(VAO);
@@ -151,4 +158,5 @@ uint32_t GPU::format2GL(Format format)
     default:return GL_RGB;
     };
 }
+
 

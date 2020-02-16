@@ -21,6 +21,7 @@ class RenderSystem : public System{
         RenderSystem();
         void init();
         void update(const float dt);
+        void renderForShadow(Shader* shader);
         Shader* getShader(GenericShaderType type);
         virtual void addComponent(Component* component) override;
         virtual void removeComponent(Component* component) override;

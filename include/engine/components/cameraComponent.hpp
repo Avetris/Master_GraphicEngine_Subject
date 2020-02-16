@@ -38,7 +38,7 @@ class CameraComponent : public Component{
         glm::mat4 _viewMatrix;
         glm::mat4 _projection;
         float _yaw = k_Yaw, _pitch = k_Pitch;
-        float _fov;
+        float _fov = k_FOV;
         void updateCameraVectors();
         void updateViewAndProjection();
 };

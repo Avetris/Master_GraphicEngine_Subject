@@ -6,7 +6,7 @@
 
 class ShadowFBO {
     public:
-        ShadowFBO(const uint32_t k_shadow_height, const uint32_t k_shadow_width);
+        ShadowFBO(const uint32_t k_shadow_height, const uint32_t k_shadow_width, Shader* depthShader);
         ~ShadowFBO();
 
         ShadowFBO(const ShadowFBO&) = default;
@@ -19,11 +19,15 @@ class ShadowFBO {
         uint32_t getFrameTexture() const;
 
         void render() const;
-        void renderTexture(const Shader& shader) const;
+        void renderTexture(const Shader* shader) const;
+        void use(const Shader* shader) const;
+
+        Shader* getShadowShader() const;
 
     protected:
         uint32_t _fbo = 0;
         uint32_t _depthMap = 0;
+        Shader* _depthShader;
 
 };
 #endif

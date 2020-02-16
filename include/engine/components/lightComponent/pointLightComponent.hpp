@@ -19,13 +19,12 @@ class PointLightComponent : public LightComponent {
         void setLinear(float linear);
         void setQuadratic(float quadratic);
 
-        void use(const Shader& shader) const;
+        void use(const Shader* shader) const;
 
     private:
-        float _constant = 0.0f;
-        float _linear = 0.0f;
-        float _quadratic = 0.0f;
-
+        float _constant = 1.0f;
+        float _linear = 0.2f;
+        float _quadratic = 0.06f;
 };
 
 #endif

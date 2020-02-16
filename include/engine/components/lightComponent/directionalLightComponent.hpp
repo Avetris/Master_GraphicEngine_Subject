@@ -14,7 +14,7 @@ class DirectionalLightComponent : public LightComponent {
 
         void setIndex(int index) override;
         void setDirection(const glm::vec3 direction);
-        void use(const Shader& shader) const;
+        void use(const Shader* shader) const;
         
     private:
         glm::vec3 _direction;

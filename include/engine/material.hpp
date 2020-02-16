@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <string>
 #include "texture.hpp"
+#include <memory>
 
 class Shader;
 
@@ -18,6 +19,7 @@ class Material {
         Material& operator=(const Material&) = default;
         Material& operator=(Material&&) = default;
 
+        bool sameMaterial(Texture* diffuse, Texture* specular, Texture* normal, int shininess) const;
         void use(const Shader& shader) const;
         
     private:

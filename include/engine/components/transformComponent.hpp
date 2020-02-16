@@ -23,7 +23,7 @@ class TransformComponent : public Component {
     private:
         bool modelNeedsToUpdate() const;
         glm::mat4 _model = glm::mat4(1.0f);
-        glm::mat4 _normalMat = glm::mat4(1.0f);
+        glm::mat3 _normalMat = glm::mat3(1.0f);
         bool _modelToUpdate = true;
 };
 

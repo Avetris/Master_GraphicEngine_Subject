@@ -92,6 +92,7 @@ class GPU {
         static void applyFilter(std::pair<GPU::GPU::Filter, GPU::Filter> filter, std::pair<GPU::GPU::Filter, GPU::Filter> filterMipMap);
         static void useTexture(uint32_t id, uint32_t unit);
         static void deleteTexture(uint32_t id);
+        static void changeViewPort(float width, float height);
 
     private:
         static uint32_t wrap2GL(Wrap wrap);

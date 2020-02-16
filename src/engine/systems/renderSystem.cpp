@@ -1,6 +1,8 @@
 #include <engine/systems/renderSystem.hpp>
 #include <engine/components/renderComponent.hpp>
 #include <iostream>
+#include <engine\engine.hpp>
+#include <engine\systems\cameraSystem.hpp>
 
 RenderSystem::RenderSystem(){}
 
@@ -8,12 +10,30 @@ void RenderSystem::init() {
 }
 
 void RenderSystem::update(const float dt) {
+	std::vector<Shader*> shaders = getUsedShaders();
+	for (auto shad = shaders.begin(); shad < shaders.end(); shad++) {
+		(*shad)->use();
+		Engine::instance()->getSystem<CameraSystem>()->getMainCamera()->renderCamera(*shad);
+		Engine::instance()->getSystem<LightSystem>()->renderLights(*shad);
+	}
 	for (auto it = _componentList.begin(); it < _componentList.end(); it++) {
 		if ((*it)->isEnable()) {
 			(*it)->update(dt);
 		}
 	}
 }
+
+void RenderSystem::renderForShadow(Shader* shader)
+{
+	for (auto it = _componentList.begin(); it < _componentList.end(); it++) {
+		if ((*it)->isEnable()) {
+			RenderComponent* component = static_cast<RenderComponent*>(*it);
+			component->uploadToShader(false, shader);
+		}
+	}
+}
+
+
 
 
 
@@ -67,12 +87,12 @@ void RenderSystem::setReloadShaders() {
 }
 
 std::vector<Shader*> RenderSystem::getUsedShaders() {
-	if (_reloadShaders) {
+	if (_reloadShaders || _usedShaders.size() == 0) {
 		_usedShaders.clear();
 		for (auto it = _componentList.begin(); it < _componentList.end(); it++) {
 			if ((*it)->isEnable()) {
 				RenderComponent* component = static_cast<RenderComponent*>(*it);
-				if (std::count(_usedShaders.begin(), _usedShaders.end(), component->getShader())) {
+				if (!std::count(_usedShaders.begin(), _usedShaders.end(), component->getShader())) {
 					_usedShaders.push_back(component->getShader());
 				}
 			}

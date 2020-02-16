@@ -22,6 +22,7 @@ set(ENGINE_SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/managers/gameObjectManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/managers/messageManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/managers/componentManager.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/managers/materialManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/transformComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/cameraComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/cameraInputComponent.cpp
@@ -37,6 +38,7 @@ set(ENGINE_SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/cameraSystem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/transformSystem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/inputSystem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/shadowFBO.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/lightSystem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/renderSystem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/gpu.cpp
@@ -47,13 +49,14 @@ set(ENGINE_SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/texture.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/material.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/fbo/fbo.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/fbo/shadow.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/window.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/camera.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/quad.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/cube.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/sphere.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/teapot.cpp)
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/teapot.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/pointLight.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/spotLight.cpp)
 
 set(ENGINE_HEADER_FILES
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/object.hpp
@@ -62,6 +65,7 @@ set(ENGINE_HEADER_FILES
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/managers/gameObjectManager.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/managers/messageManager.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/managers/componentManager.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/managers/materialManager.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/component.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/cameraComponent.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/transformComponent.hpp
@@ -81,6 +85,7 @@ set(ENGINE_HEADER_FILES
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/cameraSystem.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/transformSystem.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/inputSystem.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/shadowFBO.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/lightSystem.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/renderSystem.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/gpu.hpp
@@ -90,13 +95,14 @@ set(ENGINE_HEADER_FILES
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/texture.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/material.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/fbo/fbo.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/fbo/shadow.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/window.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/camera.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/quad.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/cube.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/sphere.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/teapot.hpp)
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/teapot.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/pointLight.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/spotLight.hpp)
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/src/engine/ PREFIX "Source Files" FILES ${ENGINE_SRC_FILES})
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/include/engine PREFIX "Header Files" FILES ${ENGINE_HEADER_FILES})
