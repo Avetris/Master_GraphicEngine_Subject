@@ -1,14 +1,14 @@
-#include "engine/mesh.hpp"
+#include "engine/components/renderComponent/meshComponent.hpp"
 #include "engine/shader.hpp"
 #include <glad/glad.h>
 
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<uint32_t> indices,
+MeshComponent::MeshComponent(std::vector<Vertex> vertices, std::vector<uint32_t> indices,
   std::vector<Texture2> textures): vertices_(vertices), indices_ (indices),
   textures_ (textures) {
   setupMesh();
 }
 
-void Mesh::setupMesh() {
+void MeshComponent::setupMesh() {
   // create buffers/arrays
   glGenVertexArrays(1, &VAO_);
   glGenBuffers(1, &VBO_);
@@ -42,7 +42,7 @@ void Mesh::setupMesh() {
   glBindVertexArray(0);
 }
 
-void Mesh::render(const Shader& shader) const {
+void MeshComponent::render(const Shader* shader) const {
   // bind appropriate textures
   uint32_t diffuseNr = 1;
   uint32_t specularNr = 1;
@@ -63,7 +63,7 @@ void Mesh::render(const Shader& shader) const {
       number = std::to_string(heightNr++); // transfer unsigned int to stream
 
                        // now set the sampler to the correct texture unit
-    shader.set((name + number).c_str(), i);
+    shader->set((name + number).c_str(), i);
     // and finally bind the texture
     glBindTexture(GL_TEXTURE_2D, textures_[i].id);
   }

@@ -21,5 +21,6 @@ void Material::use(const Shader& shader) const {
     if(_normal != nullptr)
         _normal->use(shader, "material.normal", 2);
     shader.set("hasMaterial", true);
+    shader.set("normalsEnabled", true);
     shader.set("material.shininess", _shininess);
 }

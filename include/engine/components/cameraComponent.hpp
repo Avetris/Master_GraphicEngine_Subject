@@ -32,6 +32,7 @@ class CameraComponent : public Component{
         void handleMouseMovement(float xoffset, float yoffset, bool constrainPitch = true);
         void handleMouseScroll(float yoffset);
         void renderCamera(Shader* shader) const;
+        void reset();
 
     private:
         glm::vec3 _front, _up = glm::vec3(0.0f, 1.0f, 0.0f), _right, _worldUp = _up;

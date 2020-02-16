@@ -15,6 +15,8 @@ public:
     void init() override;
     void update(float dt) override;
 
+    void setEnable(bool enable);
+
     private:
         float lastX = 0.0f, lastY = 0.0f;
         bool firstMouse = true;

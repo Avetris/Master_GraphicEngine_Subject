@@ -1,4 +1,4 @@
-#include "engine/model.hpp"
+#include "engine/components/renderComponent/modelComponent.hpp"
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
@@ -6,12 +6,14 @@
 #include <glad/glad.h>
 #include <stb_image.h>
 
-Model::Model(std::string const &path, bool gamma) : gammaCorrection_(gamma) {
-  loadModel(path);
+ModelComponent::ModelComponent(uint16_t UID, GameObject* gameObject) : RenderComponent(UID, gameObject) {}
+
+void ModelComponent::setInitialParameters(std::string const& path, bool gamma) {
+    gammaCorrection_ = gamma;
+    loadModel(path);
 }
 
-
-void Model::loadModel(std::string const path) {
+void ModelComponent::loadModel(std::string const path) {
   // read file via ASSIMP
   Assimp::Importer importer;
   const aiScene* scene = importer.ReadFile(path.c_str(),
@@ -28,7 +30,7 @@ void Model::loadModel(std::string const path) {
   processNode(scene->mRootNode, scene);
 }
 
-void Model::processNode(aiNode *node, const aiScene *scene) {
+void ModelComponent::processNode(aiNode *node, const aiScene *scene) {
   // process each mesh located at the current node
   for (uint32_t i = 0; i < node->mNumMeshes; i++) {
     // the node object only contains indices to index the actual objects in the scene.
@@ -42,7 +44,7 @@ void Model::processNode(aiNode *node, const aiScene *scene) {
   }
 }
 
-Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
+MeshComponent ModelComponent::processMesh(aiMesh *mesh, const aiScene *scene) {
   // data to fill
   std::vector<Vertex> vertices;
   std::vector<uint32_t> indices;
@@ -115,7 +117,7 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
   textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
   // return a mesh object created from the extracted mesh data
-  return Mesh(vertices, indices, textures);
+  return MeshComponent(vertices, indices, textures);
 }
 
 static unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma)
@@ -158,7 +160,7 @@ static unsigned int TextureFromFile(const char *path, const std::string &directo
   return textureID;
 }
 
-std::vector<Texture2> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType type,
+std::vector<Texture2> ModelComponent::loadMaterialTextures(aiMaterial *mat, aiTextureType type,
   std::string typeName) {
   std::vector<Texture2> textures;
   for (uint32_t i = 0; i < mat->GetTextureCount(type); i++) {
@@ -185,7 +187,7 @@ std::vector<Texture2> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType
   return textures;
 }
 
-void Model::render(const Shader& shader) const {
+void ModelComponent::render(const Shader* shader) const {
   for (uint32_t i = 0; i < meshes_.size(); i++)
     meshes_[i].render(shader);
 }

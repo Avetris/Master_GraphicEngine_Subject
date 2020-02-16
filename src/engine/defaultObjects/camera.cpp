@@ -11,7 +11,8 @@ Camera::Camera(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm::vec3 s
 }
 
 void Camera::init() {
-	addComponent<CameraInputComponent>(ComponentType::INPUT_COMPONENT);
+	CameraInputComponent* input = addComponent<CameraInputComponent>(ComponentType::INPUT_COMPONENT);
 	addComponent<TransformComponent>(ComponentType::TRANSFORM_COMPONENT);
 	addComponent<CameraComponent>(ComponentType::CAMERA_COMPONENT);
+	input->setEnable(false);
 }

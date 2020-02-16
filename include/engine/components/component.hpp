@@ -34,6 +34,10 @@ class Component : public Object{
             _enable = enable;
         }
 
+        GameObject* getGameObject() const {
+            return _gameObject;
+        }
+
     protected:
         GameObject* _gameObject;
     private:

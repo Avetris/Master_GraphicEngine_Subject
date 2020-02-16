@@ -4,14 +4,16 @@ GameObject::GameObject(uint16_t UID) :
 	Object(UID),
 	_position(0.0f), 
 	_rotation(0.0f), 
-	_scale(1.0f){}
+	_scale(1.0f),
+	_originalPosition(0.0f){}
 
 GameObject::GameObject(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale, float _rotationAngle) :
 	Object(UID),
 	_position(position),
 	_rotation(rotation),
 	_scale(scale),
-	_rotationAngle(_rotationAngle){}
+	_rotationAngle(_rotationAngle),
+	_originalPosition(position) {}
 
 GameObject::~GameObject()
 {
@@ -109,3 +111,7 @@ GameObject* GameObject::removeChildren(uint16_t UID)
 	return removedChild;
 }
 
+void GameObject::resetPosition()
+{
+	setPosition(_originalPosition);
+}

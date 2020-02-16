@@ -7,6 +7,8 @@
 #include <engine\gpu.hpp>
 #include <engine\systems\inputSystem.hpp>
 #include <engine\engine.hpp>
+#include <engine\systems\cameraSystem.hpp>
+#include <engine\gameObject.hpp>
 
 void onChangeFrameBufferSize(GLFWwindow*, const int32_t width, const int32_t height) noexcept {
     Window::instance()->setWidth(width);
@@ -24,6 +26,11 @@ void onKeyPress(GLFWwindow* window, int key, int scancode, int action, int mods)
         }
         else  if (keyId == GPU::KeyId::LEFT_ALT) {
             Window::instance()->setCaptureMode();
+        }
+        else  if (keyId == GPU::KeyId::LEFT_CONTROL) {
+            GameObject* gameObject = Engine::instance()->getSystem<CameraSystem>()->getMainCamera()->getGameObject();
+            InputComponent* input = gameObject->getComponent<InputComponent>(ComponentType::INPUT_COMPONENT);
+            input->setEnable(!input->isEnable());
         }
         else {
             Engine::instance()->getSystem<InputSystem>()->keyPressed(keyId, keyAction);

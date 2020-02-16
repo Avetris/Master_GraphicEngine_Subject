@@ -13,6 +13,7 @@ class GameObject;
 #include <engine\components\renderComponent\cubeComponent.hpp>
 #include <engine\components\renderComponent\sphereComponent.hpp>
 #include <engine\components\renderComponent\teapotComponent.hpp>
+#include <engine\components\renderComponent\modelComponent.hpp>
 #include <engine\components\lightComponent\directionalLightComponent.hpp>
 #include <engine\components\lightComponent\pointLightComponent.hpp>
 #include <engine\components\lightComponent\spotLightComponent.hpp>
@@ -68,6 +69,10 @@ inline Component* ComponentManager::createComponent(GameObject* gameObject)
 	}
 	else if (std::is_same<Component, TeapotComponent>::value) {
 		component = (Component*)  new SphereComponent(_GUID, gameObject, 1.0f, 25, 25);
+		Engine::instance()->getSystem<RenderSystem>()->addComponent(component);
+	}
+	else if (std::is_same<Component, ModelComponent>::value) {
+		component = (Component*)  new ModelComponent(_GUID, gameObject);
 		Engine::instance()->getSystem<RenderSystem>()->addComponent(component);
 	}
 	else if (std::is_same<Component, DirectionalLightComponent>::value) {

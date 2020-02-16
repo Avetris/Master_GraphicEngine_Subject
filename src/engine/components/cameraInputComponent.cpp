@@ -48,3 +48,9 @@ void CameraInputComponent::update(float dt) {
         }
     }
 }
+
+void CameraInputComponent::setEnable(bool enable)
+{
+    Component::setEnable(enable);
+    _gameObject->getComponent<CameraComponent>(ComponentType::CAMERA_COMPONENT)->reset();
+}

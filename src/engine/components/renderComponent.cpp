@@ -72,10 +72,16 @@ void RenderComponent::uploadData(const float* positions, const float* uvs, const
     const auto tangents = new float[length];
     const auto biTangents = new float[length];
 
-    memset(tangents, 0.0f, length * sizeof(float));
-    memset(biTangents, 0.0f, length * sizeof(float));
 
-    //calcTangents(positions, uvs, normals, tangents, biTangents);
+    // TODO improve tangents getter for sphere
+    if (dynamic_cast<SphereComponent*>(this)) {
+        memset(tangents, 0.0f, length * sizeof(float));
+        memset(biTangents, 0.0f, length * sizeof(float));
+    }
+    else {
+        calcTangents(positions, uvs, normals, tangents, biTangents);
+    }
+
     GPU::bindGeometry(_VAO, _VBO, _nElements, _nVertices, indices, positions, uvs, normals, tangents, biTangents);
 
     delete[] tangents;
@@ -121,12 +127,20 @@ void RenderComponent::uploadToShader(bool renderColor, Shader* shader)
         {
             shader->set("hasMaterial", false);
             shader->set("modelColor", _color);
+            shader->set("normalsEnabled", false);
         }
     }
     TransformComponent* transformComponent = _gameObject->getComponent<TransformComponent>(ComponentType::TRANSFORM_COMPONENT);
     if (transformComponent != nullptr)
         transformComponent->renderMatrix(shader);
-    render();
+    ModelComponent* modelComponent = dynamic_cast<ModelComponent*>(this);
+    if (modelComponent) {
+        shader->set("hasMaterial", true);
+        shader->set("normalsEnabled", true);
+        modelComponent->render(shader);
+    }else{
+        render();
+    }
 }
 
 

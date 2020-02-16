@@ -3,8 +3,9 @@
 out vec4 FragColor;
 
 in vec3 normal;
-in vec3 fragPos;
+in vec3 tangentFragPos;
 in vec2 uv;
+
 #define NUMBER_GLOBAL_LIGHTS 11
 #define NUMBER_LIGHTS 5
 #define NUMBER_DIRECT_LIGHTS 1
@@ -14,11 +15,14 @@ in vec4 fragPosLightSpace[NUMBER_GLOBAL_LIGHTS];
 struct Material {
     sampler2D diffuse;
     sampler2D specular;
+    sampler2D normal;
     int shininess;
 };
 uniform bool hasMaterial = false;
 uniform Material material;
 uniform vec3 modelColor;
+
+uniform bool normalsEnabled = false;
 
 struct DirLight {
     vec3 direction;
@@ -44,6 +48,7 @@ struct PointLight {
 };
 uniform int numPointLight = 0;
 uniform PointLight pointLight[NUMBER_LIGHTS];
+in vec3 tangentPointLight[NUMBER_LIGHTS];
 
 struct SpotLight {
     vec3 position;
@@ -61,8 +66,9 @@ struct SpotLight {
 };
 uniform int numSpotLight = 0;
 uniform SpotLight spotLight[NUMBER_LIGHTS];
+in vec3 tangentSpotLight[NUMBER_LIGHTS];
 
-uniform vec3 viewPos;
+in vec3 tangentViewPos;
 
 uniform sampler2D depthMap;
 
@@ -115,15 +121,15 @@ vec3 calcDirectionalLight(DirLight light, vec3 normal, vec3 viewDir, vec3 albedo
 }
 
 
-vec3 calcPointLight(PointLight light, vec3 normal, vec3 viewDir, vec3 fragPos, vec3 albedoMap, vec3 specularMap) {
-    float distance = length(light.position - fragPos);
+vec3 calcPointLight(PointLight light, vec3 lightPos, vec3 normal, vec3 viewDir, vec3 fragPos, vec3 albedoMap, vec3 specularMap) {
+    float distance = length(lightPos - fragPos);
     float attenuation = 1.0 / (light.constant +
         light.linear * distance +
         light.quadratic * distance * distance);
 
     vec3 ambient = albedoMap * light.ambient;
 
-    vec3 lightDir = normalize(light.position - fragPos);
+    vec3 lightDir = normalize(lightPos - fragPos);
     float diff = max(dot(normal, lightDir), 0.0);
     vec3 diffuse = diff * albedoMap * light.diffuse;
 
@@ -137,15 +143,15 @@ vec3 calcPointLight(PointLight light, vec3 normal, vec3 viewDir, vec3 fragPos, v
     return (ambient + ((1.0 - shadow) * (diffuse + specular))) * attenuation;
 }
 
-vec3 calcSpotLight(SpotLight light, vec3 normal, vec3 viewDir, vec3 fragPos, vec3 albedoMap, vec3 specularMap) {
-    float distance = length(light.position - fragPos);
+vec3 calcSpotLight(SpotLight light, vec3 lightPos, vec3 normal, vec3 viewDir, vec3 fragPos, vec3 albedoMap, vec3 specularMap) {
+    float distance = length(lightPos - fragPos);
     float attenuation = 1.0 / (light.constant +
         light.linear * distance +
         light.quadratic * distance * distance);
 
     vec3 ambient = albedoMap * light.ambient;
 
-    vec3 lightDir = normalize(light.position - fragPos);
+    vec3 lightDir = normalize(lightPos - fragPos);
     float diff = max(dot(normal, lightDir), 0.0);
     vec3 diffuse = diff * albedoMap * light.diffuse;
 
@@ -169,8 +175,16 @@ void main() {
     vec3 albedo = hasMaterial ? vec3(texture(material.diffuse, uv)) : modelColor;
     vec3 specular =  hasMaterial ? vec3(texture(material.specular, uv)) : modelColor;
 
-    vec3 norm = normalize(normal);
-    vec3 viewDir = normalize(viewPos - fragPos);
+    vec3 norm = vec3(0.0, 0.0, 0.0);
+
+    if(normalsEnabled){
+        norm = vec3(texture(material.normal, uv));
+        norm = normalize(norm * 2.0 - 1.0);
+    }else{
+        norm = normalize(normal);
+    }
+
+    vec3 viewDir = normalize(tangentViewPos - tangentFragPos);
 
     int indexFragPosLightSpace = 0;
     vec4 currentFragPosLightSpace = vec4(1.0, 1.0, 1.0, 1.0);
@@ -188,14 +202,14 @@ void main() {
             currentFragPosLightSpace = fragPosLightSpace[indexFragPosLightSpace];
             indexFragPosLightSpace++;
         }
-        phong += calcPointLight(pointLight[i], norm, viewDir, fragPos, albedo, specular);
+        phong += calcPointLight(pointLight[i], tangentPointLight[i], norm, viewDir, tangentFragPos, albedo, specular);
     }
     for(int i = 0; i < numSpotLight; i++){
         if(indexFragPosLightSpace < numberOfShadows){
             currentFragPosLightSpace = fragPosLightSpace[indexFragPosLightSpace];
             indexFragPosLightSpace++;
         }
-        phong += calcSpotLight(spotLight[i], norm, viewDir, fragPos, albedo, specular);
+        phong += calcSpotLight(spotLight[i], tangentSpotLight[i], norm, viewDir, tangentFragPos, albedo, specular);
     }
     FragColor = vec4(phong, 1.0f);
 }

@@ -10,6 +10,11 @@ class Camera: public GameObject{
         Camera(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale, float angle);
         ~Camera();
 
+        void resetPosition();
+
         void init();
+    private:
+        glm::vec3 _originalPosition;
+
 };
 #endif

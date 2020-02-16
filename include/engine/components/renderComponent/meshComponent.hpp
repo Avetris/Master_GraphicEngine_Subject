@@ -1,5 +1,5 @@
-#ifndef __MESH_H__
-#define __MESH_H__ 1
+#ifndef __MESH_COMPONENT_H__
+#define __MESH_COMPONENT_H__ 1
 
 #include <glm/glm.hpp>
 #include <string>
@@ -21,11 +21,11 @@ struct Texture2 {
   std::string path;
 };
 
-class Mesh {
+class MeshComponent {
 public:
-  Mesh(std::vector<Vertex> vertices, std::vector<uint32_t> indices, std::vector<Texture2> textures);
+    MeshComponent(std::vector<Vertex> vertices, std::vector<uint32_t> indices, std::vector<Texture2> textures);
 
-  void render(const Shader& shader) const;
+  void render(const Shader* shader) const;
 
   std::vector<Vertex> vertices_;
   std::vector<uint32_t> indices_;

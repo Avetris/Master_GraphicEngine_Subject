@@ -88,3 +88,14 @@ void CameraComponent::renderCamera(Shader* shader) const
     shader->set("proj", _projection);
 }
 
+void CameraComponent::reset()
+{
+    _gameObject->resetPosition();
+    _up = glm::vec3(0.0f, 1.0f, 0.0f);
+    _yaw = k_Yaw;
+    _pitch = k_Pitch;
+    _fov = k_FOV;
+
+    updateCameraVectors();
+}
+
