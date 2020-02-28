@@ -15,5 +15,4 @@ void SimpleBrick::init() {
 	Brick::init();
 	RenderComponent* renderComponent = getComponent<RenderComponent>(ComponentType::RENDER_COMPONENT);
 	renderComponent->setMaterial(MaterialManager::instance()->getMaterial("../assets/textures/bricks_albedo.png", "../assets/textures/bricks_specular.png", "../assets/textures/bricks_normal.png", 32));
-
 }

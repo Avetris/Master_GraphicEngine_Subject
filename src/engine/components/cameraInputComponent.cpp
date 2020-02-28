@@ -4,7 +4,6 @@
 CameraInputComponent::CameraInputComponent(uint16_t UID, GameObject* gameObject) : InputComponent(UID, gameObject) {}
 
 void CameraInputComponent::onKeyPressed(GPU::KeyId key, GPU::KeyActions action) {
-   
 }
 
 void CameraInputComponent::onMouseMoved(float x, float y) {

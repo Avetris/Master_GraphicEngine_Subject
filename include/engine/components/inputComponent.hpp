@@ -2,36 +2,29 @@
 #define __INPUT_COMPONENT_H__
 
 #include <engine\window.hpp>
-#include <engine\components\component.hpp>
-
-class GameObject;
+#include "component.hpp"
+#include <iostream>
 
 class InputComponent: public Component {
     public:
-        InputComponent(uint16_t UID, GameObject* gameObject) : Component(UID, gameObject){}
+        InputComponent(uint16_t UID, GameObject* gameObject);
 
-        virtual void onKeyPressed(GPU::KeyId key, GPU::KeyActions action) = 0;
-        virtual void onMouseMoved(float x, float y) = 0;
-        virtual void onScrollMoved(float x, float y) = 0;
+        virtual void onKeyPressed(GPU::KeyId key, GPU::KeyActions action);
+
+        virtual void onMouseMoved(float x, float y);
+
+        virtual void onScrollMoved(float x, float y);
     
-        virtual void onKeyDown(GPU::KeyId key) {
+        void onKeyDown(GPU::KeyId key);
 
-        }
+        void onKeyUp(GPU::KeyId key);
 
-        virtual void onKeyUp(GPU::KeyId key) {
+        void onKeyRepeat(GPU::KeyId key);
 
-        }
+        virtual void init();
+        virtual void update(float dt);
 
-        virtual void onKeyRepeat(GPU::KeyId key) {
-
-        }
-
-        virtual void init() = 0;
-        virtual void update(float dt) = 0;
-
-        bool isKeyPressed(GPU::KeyId key) {
-            return Window::instance()->keyPressed((int)key);
-        }
+        static bool isKeyPressed(GPU::KeyId key);
     };
 
 #endif

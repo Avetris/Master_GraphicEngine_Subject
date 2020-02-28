@@ -22,6 +22,7 @@ set(ENGINE_SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/managers/messageManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/managers/materialManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/transformComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/inputComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/cameraComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/cameraInputComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent/cubeComponent.cpp
@@ -31,6 +32,10 @@ set(ENGINE_SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent/teapotComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent/meshComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent/modelComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/physicComponent/colliderComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/physicComponent/boxColliderComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/physicComponent/circleColliderComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/physicComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/lightComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/lightComponent/directionalLightComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/lightComponent/pointLightComponent.cpp
@@ -38,6 +43,7 @@ set(ENGINE_SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/cameraSystem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/transformSystem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/inputSystem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/physicSystem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/shadowFBO.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/lightSystem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/systems/renderSystem.cpp
@@ -55,8 +61,10 @@ set(ENGINE_SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/teapot.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/pointLight.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/spotLight.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/wall.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/models/generator.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/wall.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/bar.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/ball.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/bricks/brick.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/bricks/simpleBrick.cpp)
 
@@ -81,6 +89,10 @@ set(ENGINE_HEADER_FILES
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/renderComponent/teapotdata.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/renderComponent/meshComponent.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/renderComponent/modelComponent.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/physicComponent/colliderComponent.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/physicComponent/boxColliderComponent.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/physicComponent/circleColliderComponent.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/physicComponent.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/lightComponent.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/lightComponent/directionalLightComponent.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/lightComponent/pointLightComponent.hpp
@@ -89,6 +101,7 @@ set(ENGINE_HEADER_FILES
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/cameraSystem.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/transformSystem.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/inputSystem.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/physicSystem.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/shadowFBO.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/lightSystem.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/systems/renderSystem.hpp
@@ -107,6 +120,9 @@ set(ENGINE_HEADER_FILES
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/spotLight.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/wall.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/models/generator.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/wall.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/bar.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/ball.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/bricks/brick.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/bricks/simpleBrick.hpp)
 

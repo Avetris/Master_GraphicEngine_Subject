@@ -2,6 +2,7 @@
 #include <engine\components\renderComponent\cubeComponent.hpp>
 #include <engine\components\transformComponent.hpp>
 #include <engine\managers\materialManager.hpp>
+#include <engine\components\physicComponent.hpp>
 
 Wall::Wall(uint16_t UID) : GameObject(UID) {
 	init();
@@ -15,5 +16,6 @@ void Wall::init() {
 	RenderComponent* renderComponent = addComponent<CubeComponent>(ComponentType::RENDER_COMPONENT);
 	renderComponent->setColor(glm::vec3(0.8f, 0.8f, 0.8f));
 	addComponent<TransformComponent>(ComponentType::TRANSFORM_COMPONENT);
-
+	PhysicComponent* physicComponent = addComponent<PhysicComponent>(ComponentType::PHYSIC_COMPONENT);
+	physicComponent->setCollider(ColliderType::BOX);
 }

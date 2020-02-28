@@ -48,7 +48,7 @@ class RenderComponent : public Component{
         uint32_t _nElements = 0;
         Material* _material = nullptr;
         Shader* _shader = nullptr;
-        glm::vec3 _color = glm::vec3(0.0f);
+        glm::vec3 _color = glm::vec3(0.5f, 0.5f, 0.5f);
 
 };
 #endif

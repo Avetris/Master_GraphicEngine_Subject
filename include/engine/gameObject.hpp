@@ -38,12 +38,28 @@ class GameObject : public Object {
         GameObject* removeChildren(uint16_t UID);
         void resetPosition();
 
+        void setTag(std::string tag);
+        bool isTag(std::string tag);
+
+
+        // TODO remove from here Input Control
+        virtual void onKeyPressed(GPU::KeyId key, GPU::KeyActions action) {}
+        virtual void onMouseMoved(float x, float y) {}
+        virtual void onScrollMoved(float x, float y) {}
+        virtual void onKeyDown(GPU::KeyId keyId) {}
+        virtual void onKeyUp(GPU::KeyId key) {}
+        virtual void onKeyRepeat(GPU::KeyId key) {}
+        virtual void onUpdateInput(float dt) {}
+        
+        // TODO remove from here Collision
+        virtual void onCollision(GameObject* collisionGameObject) {}
+
     private:
+        std::string _tag = "";
         glm::vec3 _originalPosition;
         GameObject* _parent = nullptr;
         std::vector<GameObject*> _children;
 
-    private:
         glm::vec3 _position;
         glm::vec3 _rotation;
         float _rotationAngle = 0.0f;

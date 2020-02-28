@@ -39,6 +39,7 @@ class System{
                     return;
                 }
             }
+            delete component;
         }
 
     protected:

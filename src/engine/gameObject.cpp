@@ -18,10 +18,12 @@ GameObject::GameObject(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm
 GameObject::~GameObject()
 {
 	bool exist = false;
+	int type = 0;
 	for (Component* component : _componentList) {
 		if (component != nullptr) {
-			delete component;
+			ComponentManager::instance()->removeComponent(component, static_cast<ComponentType>(type));
 		}
+		type++;
 	}
 }
 
@@ -114,4 +116,14 @@ GameObject* GameObject::removeChildren(uint16_t UID)
 void GameObject::resetPosition()
 {
 	setPosition(_originalPosition);
+}
+
+void GameObject::setTag(std::string tag)
+{
+	_tag = tag;
+}
+
+bool GameObject::isTag(std::string tag)
+{
+	return _tag == tag;
 }

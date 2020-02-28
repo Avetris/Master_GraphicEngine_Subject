@@ -3,6 +3,7 @@
 #include <windows.h>
 #include <engine\gpu.hpp>
 #include <engine\systems\inputSystem.hpp>
+#include <engine\systems\physicSystem.hpp>
 #include <engine\systems\cameraSystem.hpp>
 #include <engine\systems\transformSystem.hpp>
 #include <engine\systems\lightSystem.hpp>
@@ -10,6 +11,7 @@
 
 Engine::Engine() {
 	_systemList.push_back(new InputSystem());
+	_systemList.push_back(new PhysicSystem());
 	_systemList.push_back(new CameraSystem());
 	_systemList.push_back(new TransformSystem());
 	_systemList.push_back(new LightSystem());
