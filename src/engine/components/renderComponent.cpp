@@ -7,8 +7,13 @@
 #include <engine\systems\renderSystem.hpp>
 #include <engine\gameObject.hpp>
 
-RenderComponent::RenderComponent(uint16_t UID, GameObject* gameObject): Component(UID, gameObject){
-    _shader = Engine::instance()->getSystem<RenderSystem>()->getShader(GenericShaderType::BLINN);
+RenderComponent::RenderComponent(uint16_t UID, GameObject* gameObject, Shader* shader) : Component(UID, gameObject) {
+    if (!shader) {
+        _shader = Engine::instance()->getSystem<RenderSystem>()->getShader(GenericShaderType::BLINN);
+    }
+    else {
+        _shader = shader;
+    }
 }
 
 RenderComponent::~RenderComponent() {
@@ -71,7 +76,6 @@ void RenderComponent::uploadData(const float* positions, const float* uvs, const
     const size_t length = _nVertices * 3;
     const auto tangents = new float[length];
     const auto biTangents = new float[length];
-
 
     // TODO improve tangents getter for sphere
     if (dynamic_cast<SphereComponent*>(this)) {
@@ -142,8 +146,6 @@ void RenderComponent::uploadToShader(bool renderColor, Shader* shader)
         render();
     }
 }
-
-
 
 void RenderComponent::render() const {
     GPU::render(_VAO, _nElements);

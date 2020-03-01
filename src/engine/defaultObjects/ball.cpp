@@ -36,4 +36,7 @@ void Ball::init() {
 	PhysicComponent* physicComponent = addComponent<PhysicComponent>(ComponentType::PHYSIC_COMPONENT);
 	physicComponent->setCollider(ColliderType::CIRCLE);
 	physicComponent->setRigid(false);
+	SphereComponent* sphereComponent = getComponent<SphereComponent>(ComponentType::RENDER_COMPONENT);
+	sphereComponent->setShader(Engine::instance()->getSystem<RenderSystem>()->getShader(GenericShaderType::LIGHT));
+	sphereComponent->setColor(glm::vec3(1.0f, 1.0f, 1.0f));
 }

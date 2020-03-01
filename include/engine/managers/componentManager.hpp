@@ -14,6 +14,7 @@ class GameObject;
 #include <engine\components\renderComponent\sphereComponent.hpp>
 #include <engine\components\renderComponent\teapotComponent.hpp>
 #include <engine\components\renderComponent\modelComponent.hpp>
+#include <engine\components\renderComponent\uiTextComponent.hpp>
 #include <engine\components\physicComponent.hpp>
 #include <engine\components\lightComponent\directionalLightComponent.hpp>
 #include <engine\components\lightComponent\pointLightComponent.hpp>
@@ -80,6 +81,11 @@ inline Component* ComponentManager::createComponent(GameObject* gameObject)
 	else if (std::is_same<Component, ModelComponent>::value) {
 		component = (Component*)  new ModelComponent(_GUID, gameObject);
 		Engine::instance()->getSystem<RenderSystem>()->addComponent(component);
+	}
+	else if (std::is_same<Component, UITextComponent>::value) {
+		RenderSystem* renderSystem = Engine::instance()->getSystem<RenderSystem>();
+		component = (Component*)  new UITextComponent(_GUID, gameObject, renderSystem->getShader(GenericShaderType::UI));
+		renderSystem->addComponent(component);
 	}
 	else if (std::is_same<Component, DirectionalLightComponent>::value) {
 		component = (Component*)  new DirectionalLightComponent(_GUID, gameObject);

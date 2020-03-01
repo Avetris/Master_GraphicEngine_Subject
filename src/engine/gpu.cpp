@@ -18,6 +18,11 @@ void GPU::enableCullFace()
     glDepthFunc(GL_LESS);
 }
 
+void GPU::enableBlend() {
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
 void GPU::bindGeometry(uint32_t& VAO, uint32_t* VBO, size_t nElements, size_t nVertex, const uint32_t* index, const float* positions, const float* uvs, const float* normals, const float* tangents, const float* biTangents)
 {
     glGenVertexArrays(1, &VAO);
@@ -29,7 +34,7 @@ void GPU::bindGeometry(uint32_t& VAO, uint32_t* VBO, size_t nElements, size_t nV
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * nElements, index, GL_STATIC_DRAW);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);                 //positions
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * nVertex * 3, positions, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * nVertex * 2, positions, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
     glEnableVertexAttribArray(0);
 
@@ -60,6 +65,34 @@ void GPU::bindGeometry(uint32_t& VAO, uint32_t* VBO, size_t nElements, size_t nV
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
+void GPU::bindUIText(uint32_t& VAO, uint32_t* VBO, size_t nElements, size_t nVertex, const uint32_t* index, const float* positions, const float* uvs)
+{
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(3, VBO);
+
+    glBindVertexArray(VAO);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, VBO[0]);         //elements
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * nElements, index, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);                 //positions
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * nVertex * 2, positions, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, VBO[2]);                 //uvs
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * nVertex * 2, uvs, GL_STATIC_DRAW);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+    glEnableVertexAttribArray(1);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    glBindVertexArray(0);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+
 void GPU::deleteBuffers(uint16_t nBuffers, uint32_t VAO, uint32_t* VBO)
 {
     glDeleteBuffers(nBuffers, VBO);
@@ -86,7 +119,7 @@ void GPU::bindTexture(uint32_t& id, std::pair<GPU::Wrap, GPU::Wrap> wrap, std::p
 void GPU::applyWrapping(std::pair<GPU::Wrap, GPU::Wrap> wrap)
 {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrap2GL(wrap.first));
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrap2GL(wrap.second));
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrap2GL(wrap.second));
 }
 
 void GPU::applyFilter(std::pair<GPU::GPU::Filter, GPU::Filter> filter, std::pair<GPU::GPU::Filter, GPU::Filter> filterMipMap)
@@ -133,20 +166,20 @@ uint32_t GPU::wrap2GL(GPU::Wrap wrap)
 uint32_t GPU::filter2GL(GPU::Filter filter, GPU::Filter mipMap)
 {
     switch (filter) {
-    case GPU::Filter::Nearest: switch (mipMap) {
-    case GPU::Filter::None: return GL_NEAREST;
-    case GPU::Filter::Nearest: return GL_NEAREST_MIPMAP_NEAREST;
-    case GPU::Filter::Linear: return GL_NEAREST_MIPMAP_LINEAR;
-    default: return GL_NEAREST;
-    };
-    case GPU::Filter::Linear: switch (mipMap) {
-    case GPU::Filter::None: return GL_LINEAR;
-    case GPU::Filter::Nearest: return GL_LINEAR_MIPMAP_NEAREST;
-    case GPU::Filter::Linear: return GL_LINEAR_MIPMAP_LINEAR;
-    default: return GL_LINEAR;
-    };
-    case GPU::Filter::None:
-    default: return GL_NEAREST;
+        case GPU::Filter::Nearest: switch (mipMap) {
+                case GPU::Filter::None: return GL_NEAREST;
+                case GPU::Filter::Nearest: return GL_NEAREST_MIPMAP_NEAREST;
+                case GPU::Filter::Linear: return GL_NEAREST_MIPMAP_LINEAR;
+                default: return GL_NEAREST;
+            };
+        case GPU::Filter::Linear: switch (mipMap) {
+            case GPU::Filter::None: return GL_LINEAR;
+            case GPU::Filter::Nearest: return GL_LINEAR_MIPMAP_NEAREST;
+            case GPU::Filter::Linear: return GL_LINEAR_MIPMAP_LINEAR;
+            default: return GL_LINEAR;
+        };
+        case GPU::Filter::None:
+        default: return GL_NEAREST;
     }
 }
 

@@ -12,7 +12,7 @@
 
 class RenderComponent : public Component{
     public:
-        RenderComponent(uint16_t UID, GameObject* gameObject);
+        RenderComponent(uint16_t UID, GameObject* gameObject, Shader* shader = nullptr);
         virtual ~RenderComponent();
 
         RenderComponent(const RenderComponent&) = default;
@@ -29,9 +29,9 @@ class RenderComponent : public Component{
 
         void setEnable(bool enable);
 
-        void init();
+        virtual void init();
         void update(float dt);
-        void uploadToShader(bool renderColor, Shader* shader);
+        virtual void uploadToShader(bool renderColor, Shader* shader);
 
         virtual void render() const;
 

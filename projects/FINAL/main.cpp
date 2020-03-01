@@ -11,12 +11,14 @@
 #include <engine\defaultObjects\models\generator.hpp>
 #include <engine\defaultObjects\ball.hpp>
 #include <engine\defaultObjects\bar.hpp>
+#include <engine\defaultObjects\ui\uiObject.hpp>
 
 int main(int, char* []) {
     Engine* engine = Engine::instance();
-    GameObjectManager::instance()->createGameObject<Camera>(glm::vec3(0.0f, 5.5f, 0.0f), glm::vec3(0.0f), glm::vec3(0.0f));
-
     Window* window = Window::instance();
+    GameObjectManager::instance()->createGameObject<Camera>(glm::vec3(0.0f, 5.5f, 0.0f), glm::vec3(0.0f), glm::vec3(0.0f));
+    GameObjectManager::instance()->createGameObject<UIObject>(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f), glm::vec3(0.5f));
+
     
     // Creating Walls
     float z = -15.0f;

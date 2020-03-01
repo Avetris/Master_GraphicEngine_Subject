@@ -27,11 +27,12 @@ void Engine::init()
 		(*it)->init();
 	}
 	GPU::clearColor(0.0f, 0.3f, 0.6f, 1.0f);
+	GPU::enableCullFace();
+	GPU::enableBlend();
 }
 
 void Engine::update(const float dt) {
 	GPU::clearBuffer();
-	GPU::enableCullFace();
 	for (auto it = _systemList.begin(); it < _systemList.end(); it++) {
 		(*it)->update(dt);
 	}

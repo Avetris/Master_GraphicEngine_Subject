@@ -78,9 +78,12 @@ class GPU {
         static void clearBuffer();
         static void clearColor(float red, float green, float blue, float alpha);
         static void enableCullFace();
+        static void enableBlend();
 
         // Geometry
         static void bindGeometry(uint32_t& VAO, uint32_t* VBO, size_t nElements, size_t nVertex, const uint32_t* index, const float* positions, const float* uvs, const float* normals, const float* tangents, const float* biTangents);
+
+        static void bindUIText(uint32_t& VAO, uint32_t* VBO, size_t nElements, size_t nVertex, const uint32_t* index, const float* positions, const float* uvs);
 
         static void deleteBuffers(uint16_t nBuffers, uint32_t VAO, uint32_t* VBO);
 

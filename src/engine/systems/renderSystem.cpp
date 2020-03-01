@@ -7,6 +7,9 @@
 RenderSystem::RenderSystem(){}
 
 void RenderSystem::init() {
+	for (auto it = _componentList.begin(); it < _componentList.end(); it++) {
+		(*it)->init();
+	}
 }
 
 void RenderSystem::update(const float dt) {
@@ -32,10 +35,6 @@ void RenderSystem::renderForShadow(Shader* shader)
 		}
 	}
 }
-
-
-
-
 
 Shader* RenderSystem::getShader(GenericShaderType type)
 {
@@ -64,6 +63,10 @@ Shader* RenderSystem::getShader(GenericShaderType type)
 		case GenericShaderType::SHADOW:
 			vertexShader.append("depth.vs");
 			fragmentShader.append("depth.fs");
+			break;
+		case GenericShaderType::UI:
+			vertexShader.append("ui.vs");
+			fragmentShader.append("ui.fs");
 			break;
 		}
 		shader = new Shader(vertexShader.c_str(), fragmentShader.c_str());

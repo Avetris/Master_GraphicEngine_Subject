@@ -54,8 +54,10 @@ class GameObject : public Object {
         // TODO remove from here Collision
         virtual void onCollision(GameObject* collisionGameObject) {}
 
-    private:
+    protected:
         std::string _tag = "";
+
+    private:
         glm::vec3 _originalPosition;
         GameObject* _parent = nullptr;
         std::vector<GameObject*> _children;

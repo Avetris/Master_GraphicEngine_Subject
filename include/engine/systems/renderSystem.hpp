@@ -14,6 +14,7 @@ const enum class GenericShaderType {
     BLEND,
     LIGHT,
     SHADOW,
+    UI,
 };
 
 class RenderSystem : public System{

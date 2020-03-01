@@ -30,6 +30,7 @@ set(ENGINE_SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent/quadComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent/sphereComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent/teapotComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent/uiTextComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent/meshComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/renderComponent/modelComponent.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/components/physicComponent/colliderComponent.cpp
@@ -54,6 +55,7 @@ set(ENGINE_SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/material.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/fbo/fbo.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/window.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/ui/uiObject.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/camera.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/quad.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/cube.cpp
@@ -87,6 +89,7 @@ set(ENGINE_HEADER_FILES
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/renderComponent/sphereComponent.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/renderComponent/teapotComponent.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/renderComponent/teapotdata.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/renderComponent/uiTextComponent.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/renderComponent/meshComponent.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/renderComponent/modelComponent.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/components/physicComponent/colliderComponent.hpp
@@ -111,6 +114,7 @@ set(ENGINE_HEADER_FILES
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/material.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/fbo/fbo.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/window.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/ui/uiObject.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/camera.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/quad.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/cube.hpp

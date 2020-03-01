@@ -18,6 +18,9 @@ void Brick::hit()
 	_hitNeccesaries--;
 	if (_hitNeccesaries <= 0) {
 		actionOnBreak();
+		if (GameObjectManager::instance()->getGameObjectNumberByTag(_tag) <= 1) {
+
+		}
 		GameObjectManager::instance()->deleteGameObject(_UID);
 	}
 }
