@@ -27,7 +27,7 @@ void Wall::init() {
 		ModelComponent* modelComponent = addComponent<ModelComponent>(ComponentType::RENDER_COMPONENT);
 		modelComponent->setInitialParameters("../assets/models/tower/wooden watch tower2.obj");
 		BoxColliderComponent* collider = static_cast<BoxColliderComponent*>(physicComponent->getCollider());
-		collider->setSize(glm::vec3(3.0f, 30.0f, 3.0f));
+		collider->setSize(glm::vec3(3.0f, 40.0f, 3.0f));
 	}
 
 }

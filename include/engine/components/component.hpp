@@ -5,16 +5,15 @@ class GameObject;
 
 #include <engine\object.hpp>
 
-const size_t NUMBER_COMPONENTS = 8;
+const size_t NUMBER_COMPONENTS = 6;
 const enum class ComponentType {
     NON_COMPONENT = -1,
     INPUT_COMPONENT = 0,
     TRANSFORM_COMPONENT = 1,
     PHYSIC_COMPONENT = 2,
-    LOGIC_COMPONENT = 3,
-    CAMERA_COMPONENT = 4,
-    RENDER_COMPONENT = 5,
-    LIGHT_COMPONENT = 6
+    CAMERA_COMPONENT = 3,
+    RENDER_COMPONENT = 4,
+    LIGHT_COMPONENT = 5
 };
 
 class Component : public Object{
