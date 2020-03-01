@@ -55,15 +55,19 @@ set(ENGINE_SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/material.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/fbo/fbo.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/window.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/ui/uiObject.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/ui/uiTextObject.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/ui/scoreUIObject.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/ui/lifesUIObject.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/ui/finalUIObject.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/gameManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/camera.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/quad.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/cube.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/sphere.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/teapot.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/directionalLight.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/pointLight.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/spotLight.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/models/generator.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/wall.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/bar.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/defaultObjects/ball.cpp
@@ -114,7 +118,11 @@ set(ENGINE_HEADER_FILES
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/material.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/fbo/fbo.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/window.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/ui/uiObject.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/ui/uiTextObject.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/ui/scoreUIObject.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/ui/lifesUIObject.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/ui/finalUIObject.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/gameManager.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/camera.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/quad.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/cube.hpp
@@ -122,8 +130,8 @@ set(ENGINE_HEADER_FILES
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/teapot.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/pointLight.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/spotLight.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/directionalLight.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/wall.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/models/generator.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/wall.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/bar.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/defaultObjects/ball.hpp

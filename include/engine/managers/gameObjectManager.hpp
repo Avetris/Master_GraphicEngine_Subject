@@ -15,8 +15,8 @@ class GameObjectManager{
         template<typename GameObject>
         GameObject* createGameObject(glm::vec3 position = glm::vec3(0.0f), glm::vec3 rotation = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f), float angle = 0.0f);
 
-        template<typename GameObject>
-        GameObject* createBrick(glm::vec3 position);
+        template<typename Brick>
+        Brick* createBrick(glm::vec3 position, uint8_t hitNeccesaries);
         
         void deleteGameObject(uint16_t UID);
         void applyDelete();
@@ -39,10 +39,14 @@ inline GameObject* GameObjectManager::createGameObject(glm::vec3 position, glm::
     return gm;
 }
 
-template<typename GameObject>
-inline GameObject* GameObjectManager::createBrick(glm::vec3 position)
+template<typename Brick>
+inline Brick* GameObjectManager::createBrick(glm::vec3 position, uint8_t hitNeccesaries)
 {
-    return createGameObject<GameObject>(position, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 0.5f, 0.5f), 0.0f);
+    _objects.push_back(new Brick(_GUID++, position, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 0.5f, 0.5f), 0.0f, hitNeccesaries));
+
+    Brick* gm = static_cast<Brick*>(_objects.back());
+
+    return gm;
 }
 
 inline GameObject* GameObjectManager::getGameObjectByTag(std::string tag)

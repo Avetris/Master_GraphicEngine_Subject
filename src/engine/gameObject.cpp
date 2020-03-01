@@ -80,6 +80,12 @@ void GameObject::removeComponent(ComponentType componentType)
 		_componentList[(int) componentType] = nullptr;
 	}
 }
+void GameObject::enableComponent(ComponentType componentType, bool enable)
+{
+	Component* component = _componentList[(int)componentType];
+	if (component)
+		component->setEnable(enable);
+}
 
 void GameObject::addChildren(GameObject* child)
 {
@@ -115,7 +121,13 @@ GameObject* GameObject::removeChildren(uint16_t UID)
 
 void GameObject::resetPosition()
 {
-	setPosition(_originalPosition);
+	TransformComponent* transformComponent = getComponent<TransformComponent>(ComponentType::TRANSFORM_COMPONENT);
+	if (transformComponent) {
+		transformComponent->move(_originalPosition, false);
+	}
+	else {
+		setPosition(_originalPosition);
+	}
 }
 
 void GameObject::setTag(std::string tag)

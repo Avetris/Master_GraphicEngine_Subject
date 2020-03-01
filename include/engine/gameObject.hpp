@@ -33,6 +33,8 @@ class GameObject : public Object {
         template<class T>
         T* getComponent() const;
 
+        void enableComponent(ComponentType componentType, bool enable);
+
         void addChildren(GameObject* child);
         std::vector<GameObject*> getChildren() const;
         GameObject* removeChildren(uint16_t UID);

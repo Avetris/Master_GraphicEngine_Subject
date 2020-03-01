@@ -1,5 +1,6 @@
 #include <engine/systems/inputSystem.hpp>
 #include <engine\components\inputComponent.hpp>
+#include <engine\defaultObjects\gameManager.hpp>
 
 class Window;
 
@@ -14,7 +15,14 @@ void InputSystem::init() {
 void InputSystem::update(const float dt) {
 	for (auto it = _componentList.begin(); it < _componentList.end(); it++) {
 		if ((*it)->isEnable()) {
-			(*it)->update(dt);
+			if (!GameManager::instance()->isPaused()) {
+				(*it)->update(dt);
+			}
+			else {				
+				if (static_cast<CameraInputComponent*>(*it)) {
+					(*it)->update(dt);
+				}
+			}
 		}
 	}	
 }

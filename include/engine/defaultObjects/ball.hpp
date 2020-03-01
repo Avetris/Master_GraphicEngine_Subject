@@ -6,6 +6,7 @@
 
 class Ball : public Sphere{
     public:
+        static std::string TAG() { return "BALL"; };
         Ball(uint16_t UID);
         Ball(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale, float angle);
 
@@ -15,6 +16,8 @@ class Ball : public Sphere{
         void setLaunched(bool launched);
 
         void init();
+
+        void reset();
     private:
         bool _launched = false;
 };

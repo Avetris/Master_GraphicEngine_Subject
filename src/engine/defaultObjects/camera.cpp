@@ -15,4 +15,5 @@ void Camera::init() {
 	addComponent<TransformComponent>(ComponentType::TRANSFORM_COMPONENT);
 	addComponent<CameraComponent>(ComponentType::CAMERA_COMPONENT);
 	input->setEnable(false);
+	//pointLightComponent->
 }

@@ -14,5 +14,4 @@ void Quad::init() {
 	QuadComponent* comp = addComponent<QuadComponent>(ComponentType::RENDER_COMPONENT);
 	comp->setColor(glm::vec3(1.0f, 0.0f, 0.0f));
 	addComponent<TransformComponent>(ComponentType::TRANSFORM_COMPONENT);
-
 }

@@ -6,9 +6,11 @@
 
 class SimpleBrick: public Brick{
     public:
-        SimpleBrick(uint16_t UID);
-        SimpleBrick(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale, float angle);
+        SimpleBrick(uint16_t UID, uint8_t hitNeccesaries);
+        SimpleBrick(uint16_t UID, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale, float angle, uint8_t hitNeccesaries);
 
         void init();
+
+        void checkHitStatus() override;
 };
 #endif

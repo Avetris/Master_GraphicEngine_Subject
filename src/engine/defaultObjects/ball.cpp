@@ -4,6 +4,7 @@
 #include <engine\managers\materialManager.hpp>
 #include <engine\components\physicComponent.hpp>
 #include <engine\defaultObjects\bricks\brick.hpp>
+#include <engine\defaultObjects\gameManager.hpp>
 
 Ball::Ball(uint16_t UID) : Sphere(UID) {
 	init();
@@ -24,14 +25,16 @@ void Ball::setLaunched(bool launched) {
 
 void Ball::onCollision(GameObject* collisionGameObject)
 {
-	if (collisionGameObject->isTag("brick")) {
+	if (collisionGameObject->isTag(Brick::TAG())) {
 		static_cast<Brick*>(collisionGameObject)->hit();
+	}else if (collisionGameObject->isTag("gameEnd")) {
+		GameManager::instance()->die();
 	}
 }
 
 void Ball::init() {
 	Sphere::init();
-	setTag("ball");
+	setTag(TAG());
 	addComponent<SpotLightComponent>(ComponentType::LIGHT_COMPONENT);
 	PhysicComponent* physicComponent = addComponent<PhysicComponent>(ComponentType::PHYSIC_COMPONENT);
 	physicComponent->setCollider(ColliderType::CIRCLE);
@@ -39,4 +42,14 @@ void Ball::init() {
 	SphereComponent* sphereComponent = getComponent<SphereComponent>(ComponentType::RENDER_COMPONENT);
 	sphereComponent->setShader(Engine::instance()->getSystem<RenderSystem>()->getShader(GenericShaderType::LIGHT));
 	sphereComponent->setColor(glm::vec3(1.0f, 1.0f, 1.0f));
+}
+
+void Ball::reset()
+{
+	setLaunched(false);
+	PhysicComponent* physicComponent = getComponent<PhysicComponent>(ComponentType::PHYSIC_COMPONENT);
+	if (physicComponent) {
+		physicComponent->setVelocity(glm::vec3(0.0f), 0.0f);
+	}
+	resetPosition();
 }

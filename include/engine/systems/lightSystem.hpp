@@ -25,7 +25,7 @@ class LightSystem : public System{
         bool _useShadows = true;
         int _numberShadows = 0;
         float _shadowNear = 1.0f;
-        float _shadowFar = 10.5f;
+        float _shadowFar = 7.5f;
         std::vector<glm::mat4> _lightSpaceMatrix;
         ShadowFBO* _shadowFBO;
 

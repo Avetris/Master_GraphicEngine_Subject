@@ -34,6 +34,7 @@ struct DirLight {
 
 uniform int numDirectLight = 0;
 uniform DirLight dirLight[NUMBER_DIRECT_LIGHTS];
+in vec3 tangentDirLight[NUMBER_LIGHTS];
 
 struct PointLight {
     vec3 position;
@@ -73,32 +74,51 @@ in vec3 tangentViewPos;
 uniform sampler2D depthMap;
 
 float ShadowCalculation(float bias) {
+//    float shadow = 0.0;
+//    for(int i = 0; i < numberOfShadows; i++){
+//
+//        float currentShadow = 0.0;
+//
+//        vec3 projCoords = fragPosLightSpace[i].xyz / fragPosLightSpace[i].w;
+//        projCoords = projCoords * 0.5 + 0.5;
+//       // float closestDepth = texture(depthMap, projCoords.xy).r;
+//        float currentDepth = projCoords.z;
+//
+//        vec2 texelSize = 1.0 / textureSize(depthMap, 0);
+//        for(int x = -1; x <= 1; ++x) {
+//            for (int y = -1; y <=1; ++y) {
+//                float pcf = texture(depthMap, projCoords.xy + vec2(x,y) * texelSize).r;
+//            
+//                currentShadow += currentDepth - (bias / 
+//        fragPosLightSpace[i].w) > pcf ? 1.0 : 0.0;
+//            }
+//	    }
+//        currentShadow  /= 9.0;
+//
+//        if (projCoords.z > 1.0) {
+//          currentShadow  = 0.0;
+//	    }
+//        shadow += currentShadow;
+//    }
+
+    vec3 projCoords = fragPosLightSpace[0].xyz / fragPosLightSpace[0].w;
+    projCoords = projCoords * 0.5 + 0.5;
+    //float closestDepth = texture(depthMap, projCoords.xy).r;
+    float currentDepth = projCoords.z;
+
     float shadow = 0.0;
-    for(int i = 0; i < numberOfShadows; i++){
+    vec2 texelSize = 1.0 / textureSize(depthMap, 0);
+    for(int x = -1; x <= 1; ++x) {
+        for (int y = -1; y <=1; ++y) {
+            float pcf = texture(depthMap, projCoords.xy + vec2(x,y) * texelSize).r;
+            shadow += currentDepth -bias > pcf ? 1.0 : 0.0;
+        }
+	}
+    shadow /= 9.0;
 
-        float currentShadow = 0.0;
-
-        vec3 projCoords = fragPosLightSpace[i].xyz / fragPosLightSpace[i].w;
-        projCoords = projCoords * 0.5 + 0.5;
-       // float closestDepth = texture(depthMap, projCoords.xy).r;
-        float currentDepth = projCoords.z;
-
-        vec2 texelSize = 1.0 / textureSize(depthMap, 0);
-        for(int x = -1; x <= 1; ++x) {
-            for (int y = -1; y <=1; ++y) {
-                float pcf = texture(depthMap, projCoords.xy + vec2(x,y) * texelSize).r;
-            
-                currentShadow += currentDepth - (bias / 
-        fragPosLightSpace[i].w) > pcf ? 1.0 : 0.0;
-            }
-	    }
-        currentShadow  /= 9.0;
-
-        if (projCoords.z > 1.0) {
-          currentShadow  = 0.0;
-	    }
-        shadow += currentShadow;
-    }
+    if (projCoords.z > 1.0) {
+     shadow = 0.0;
+	}
 
     return shadow;
 }

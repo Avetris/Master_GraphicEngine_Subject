@@ -30,9 +30,9 @@ void Bar::onUpdateInput(float dt) {
 	PhysicComponent* physic = getComponent<PhysicComponent>(ComponentType::PHYSIC_COMPONENT);
 	physic->setVelocity(direction, physic->getVelocity());
 	if (_ball) {
-		PhysicComponent* ph = _ball->getComponent<PhysicComponent>(ComponentType::PHYSIC_COMPONENT);
+ 		PhysicComponent* ph = _ball->getComponent<PhysicComponent>(ComponentType::PHYSIC_COMPONENT);
 		if (launchBall && !_ball->isLaunched()) {
-			ph->setVelocity(glm::vec3(1.0f, 1.0f, 0.0f), 0.1f);
+			ph->setVelocity(glm::vec3(1.0f, 1.0f, 0.0f), 0.2f);
 			_ball->setLaunched(true);
 		}
 		else if(!_ball->isLaunched()) {
@@ -48,10 +48,20 @@ void Bar::setBall(Ball* ball)
 
 void Bar::init() {
 	Cube::init();
-	setTag("bar");
+	setTag(TAG());
 	PhysicComponent* physicComponent = addComponent<PhysicComponent>(ComponentType::PHYSIC_COMPONENT);
 	physicComponent->setCollider(ColliderType::BOX);
 	physicComponent->setRigid(true);
-	physicComponent->setVelocity(glm::vec3(0.0f), 0.1f);
-	InputComponent* inputComponent = addComponent<InputComponent>(ComponentType::INPUT_COMPONENT);
+	physicComponent->setVelocity(glm::vec3(0.0f), 0.3f);
+	addComponent<InputComponent>(ComponentType::INPUT_COMPONENT);
+}
+
+void Bar::reset()
+{
+	PhysicComponent* physicComponent = getComponent<PhysicComponent>(ComponentType::PHYSIC_COMPONENT);
+	if (physicComponent) {
+		physicComponent->setVelocity(glm::vec3(0.0f), 0.3f);
+	}
+	resetPosition();
+	_ball->reset();
 }

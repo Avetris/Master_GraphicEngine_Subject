@@ -9,6 +9,7 @@
 #include <engine\engine.hpp>
 #include <engine\systems\cameraSystem.hpp>
 #include <engine\gameObject.hpp>
+#include <engine\defaultObjects\gameManager.hpp>
 
 void onChangeFrameBufferSize(GLFWwindow*, const int32_t width, const int32_t height) noexcept {
     Window::instance()->setWidth(width);
@@ -31,6 +32,12 @@ void onKeyPress(GLFWwindow* window, int key, int scancode, int action, int mods)
             GameObject* gameObject = Engine::instance()->getSystem<CameraSystem>()->getMainCamera()->getGameObject();
             InputComponent* input = gameObject->getComponent<InputComponent>(ComponentType::INPUT_COMPONENT);
             input->setEnable(!input->isEnable());
+        }
+        else if (GameManager::instance()->isPaused() && keyId == GPU::KeyId::R) {
+            GameManager::instance()->reset();
+        }
+        else if (keyId == GPU::KeyId::P) {
+            GameManager::instance()->pause();
         }
         else {
             Engine::instance()->getSystem<InputSystem>()->keyPressed(keyId, keyAction);

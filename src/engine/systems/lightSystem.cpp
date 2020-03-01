@@ -23,12 +23,12 @@ void LightSystem::update(const float dt) {
 		_lightSpaceMatrix.clear();
 		_shadowFBO->render();
 		Shader* depthShader = _shadowFBO->getShadowShader();
+		depthShader->use();
 		for (auto it = _componentList.begin(); it < _componentList.end(); it++) {
 			if ((*it)->isEnable()) {
 				LightComponent* component = static_cast<LightComponent*>(*it);
 				glm::mat4 lightSpaceMatrix = component->getSpaceMatrix(_shadowNear, _shadowFar);
 				_lightSpaceMatrix.push_back(lightSpaceMatrix);
-				depthShader->use();
 				depthShader->set("lightSpaceMatrix", lightSpaceMatrix);
 				Engine::instance()->getSystem<RenderSystem>()->renderForShadow(depthShader);
 			}
@@ -41,8 +41,8 @@ void LightSystem::renderLights(Shader* shader) {
 	for (auto it = _componentList.begin(); it < _componentList.end(); it++) {
 		if ((*it)->isEnable()) {
 			LightComponent* component = static_cast<LightComponent*>(*it);
-			component->use(shader);
 			updateIndex(component);
+			component->use(shader);
 		}
 	}
 	shader->set("numberOfShadows", _numberShadows);
